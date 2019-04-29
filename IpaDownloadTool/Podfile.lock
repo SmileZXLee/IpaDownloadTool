@@ -1,0 +1,26 @@
+PODS:
+  - SDWebImage (5.0.1):
+    - SDWebImage/Core (= 5.0.1)
+  - SDWebImage/Core (5.0.1)
+  - ZXDataHandle (1.0.3)
+  - ZXTableView (1.0.5)
+
+DEPENDENCIES:
+  - SDWebImage
+  - ZXDataHandle
+  - ZXTableView
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SDWebImage
+    - ZXDataHandle
+    - ZXTableView
+
+SPEC CHECKSUMS:
+  SDWebImage: 27dd2c9ea07a2252f94557c9fbb6105ee94b74c9
+  ZXDataHandle: 2d5c2fdc7f19c1843fb6ca352963b2998d3aae17
+  ZXTableView: d2ba4d9331b0331a8402be59b3b294d874e8ed44
+
+PODFILE CHECKSUM: d04152846b3e1cbebb560e1b16c9c6948afa70f8
+
+COCOAPODS: 1.6.1

@@ -1,0 +1,31 @@
+//
+//  PrefixHeader.pch
+//  IpaDownloadTool
+//
+//  Created by 李兆祥 on 2019/4/28.
+//  Copyright © 2019 李兆祥. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+#import "ZXDataHandle.h"
+#import "ZXDataHandleLog.h"
+#import "ZXTableView.h"
+#import "ZXPlaceView.h"
+#import "ZXFileDownload.h"
+#import "ZXFileManage.h"
+
+#import "NSString+ZXIpaRegular.h"
+#import "UIImage+Rendering.h"
+#import "UIAlertController+ZXTheme.h"
+#import "UIImage+ZXTheme.h"
+#import "NSObject+ZXKVO.h"
+
+#import "ALToastView.h"
+
+#define MainColor [UIColor colorWithRed:250/255.0 green:103/255.0 blue:123/255.0 alpha:1]
+#define MainTitle @"IPA下载"
+#define ZXIpaDownloadedPath @"ZXIpaDownloadedArr"
+#define ZXPlistCachePath @"ZXPlistCache.plist"
+#define ZXUA @"com.apple.appstored/1.0 iOS/12.1.2 model/iPhone10,2 hwp/t8015 build/16C101 (6; dt:158)"
+#endif /* PrefixHeader_pch */
