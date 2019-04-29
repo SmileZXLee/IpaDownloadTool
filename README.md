@@ -1,4 +1,5 @@
 # IpaDownloadTool
+### 项目中使用的第三方:[ALToastView](https://github.com/alexleutgoeb/ALToastView)、[SGQRCode](https://github.com/kingsic/SGQRCode)、[BackButtonHandler](https://github.com/onegray/UIViewController-BackButtonHandler)
 ### 功能
 * 此工具用来快捷下载第三方来源的ipa
 * 支持蒲公英、fir下载页面拦截ipa地址
