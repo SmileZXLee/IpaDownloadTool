@@ -120,7 +120,8 @@ typedef enum {
 -(void)setDownloadedData{
     [self.tableView.zxDatas removeAllObjects];
     NSArray *resArr = [ZXIpaModel zx_dbQuaryWhere:[NSString stringWithFormat:@"localPath!=''"]];
-    for (ZXIpaModel *ipaModel in resArr) {
+    for (int i = (int)(resArr.count - 1);i >= 0;i--) {
+        ZXIpaModel *ipaModel = resArr[i];
         ZXLocalIpaDownloadModel *downloadedModel = [[ZXLocalIpaDownloadModel alloc]init];
         downloadedModel.title = ipaModel.title;
         downloadedModel.downloadUrl = ipaModel.downloadUrl;
