@@ -21,8 +21,10 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet ZXTableView *tableView;
 @property (assign, nonatomic) DownloadType downloadType;
 @property (strong, nonatomic) ZXFileDownload *fileDownload;
+@property(nonatomic,strong) NSURLSession *downloadSession;
 @property (strong, nonatomic) ZXLocalIpaDownloadModel *downloadingModel;
 @property (weak, nonatomic) ZXPlaceView *placeView;
+;
 @end
 
 @implementation ZXLocalIpaVC
@@ -88,7 +90,7 @@ typedef enum {
     }
     self.fileDownload = [[ZXFileDownload alloc]init];
     __weak __typeof(self) weakSelf = self;
-    [self.fileDownload downLoadWithUrlStr:self.ipaModel.downloadUrl callBack:^(BOOL result, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite, NSString * _Nonnull path) {
+    self.downloadSession = [self.fileDownload downLoadWithUrlStr:self.ipaModel.downloadUrl callBack:^(BOOL result, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite, NSString * _Nonnull path) {
         if(result){
             weakSelf.downloadingModel.totalBytesWritten = totalBytesWritten;
             weakSelf.downloadingModel.totalBytesExpectedToWrite = totalBytesExpectedToWrite;
@@ -150,6 +152,7 @@ typedef enum {
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
         UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"关闭页面" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self.navigationController popViewControllerAnimated:YES];
+            [self.downloadSession invalidateAndCancel];
         }];
         [alertController addThemeAction:cancelAction];
         [alertController addThemeAction:confirmAction];
