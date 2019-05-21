@@ -112,3 +112,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Ignore System File
+.DS_Store
+Thumbs.db
