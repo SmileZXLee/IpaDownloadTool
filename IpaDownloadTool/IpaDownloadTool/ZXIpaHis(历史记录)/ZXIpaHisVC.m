@@ -13,7 +13,6 @@
 #import "ZXIpaDetailVC.h"
 @interface ZXIpaHisVC ()
 @property (weak, nonatomic) IBOutlet ZXTableView *tableView;
-@property (weak, nonatomic) ZXPlaceView *placeView;
 @end
 
 @implementation ZXIpaHisVC
@@ -70,19 +69,13 @@
     self.tableView.zxDatas = (NSMutableArray *)[[allData reverseObjectEnumerator] allObjects];
     
     if(!self.tableView.zxDatas.count){
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if(self.placeView){
-                [self.placeView removeFromSuperview];
-            }
-            ZXPlaceView *placeView = [ZXPlaceView showWithNotice:@"暂无数据" superV:self.view];
-            self.placeView = placeView;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self showPlaceViewWithText:@"暂无数据"];
         });
         self.navigationItem.rightBarButtonItem.enabled = NO;
        
     }else{
-        if(self.placeView){
-            [self.placeView removeFromSuperview];
-        }
+        [self removePlaceView];
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }
     [self.tableView reloadData];

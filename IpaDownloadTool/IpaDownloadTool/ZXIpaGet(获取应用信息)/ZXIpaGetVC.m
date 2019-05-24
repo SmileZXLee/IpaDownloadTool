@@ -15,7 +15,6 @@
 #import "ZXLocalIpaVC.h"
 @interface ZXIpaGetVC ()<UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) ZXPlaceView *placeView;
 @end
 
 @implementation ZXIpaGetVC
@@ -39,9 +38,8 @@
     self.webView.delegate = self;
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.opaque =NO;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        ZXPlaceView *placeView = [ZXPlaceView showWithNotice:@"点击右上角开始" superV:self.view];
-        self.placeView = placeView;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self showPlaceViewWithText:@"点击右上角开始"];
     });
     
 }
@@ -59,6 +57,10 @@
 }
 #pragma mark 点击了二维码
 -(void)qrcodeItemAction{
+    if(![UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]){
+        [ALToastView showToastWithText:@"摄像头不可用"];
+        return;
+    }
     SGQRCodeScanningVC *VC = [[SGQRCodeScanningVC alloc] init];
     VC.resultBlock = ^(NSString *resultStr) {
         [self handelWithUrlStr:resultStr];
@@ -164,9 +166,7 @@
     [self.webView loadRequest:req];
     [[NSUserDefaults standardUserDefaults]setObject:urlStr forKey:@"cacheUrlStr"];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    if(self.placeView){
-        [self.placeView removeFromSuperview];
-    }
+    [self removePlaceView];
     self.title = @"加载中...";
 }
 @end

@@ -55,6 +55,7 @@
 		7436DAE02277578D007AA858 /* UIViewController+BackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7436DADF2277578D007AA858 /* UIViewController+BackButtonHandler.m */; };
 		7436DAE4227759BB007AA858 /* ZXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7436DAE3227759BB007AA858 /* ZXAppDelegate.m */; };
 		7436DAE722776218007AA858 /* NSObject+ZXKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = 7436DAE522776217007AA858 /* NSObject+ZXKVO.m */; };
+		74C951D52297D0B90004B834 /* UIViewController+ZXPlaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 74C951D42297D0B80004B834 /* UIViewController+ZXPlaceView.m */; };
 		817ED973205571CCC5CD8E1E /* libPods-IpaDownloadTool.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD04927DA37E844A4569D3F6 /* libPods-IpaDownloadTool.a */; };
 /* End PBXBuildFile section */
 
@@ -167,6 +168,8 @@
 		7436DAE3227759BB007AA858 /* ZXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXAppDelegate.m; sourceTree = "<group>"; };
 		7436DAE522776217007AA858 /* NSObject+ZXKVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ZXKVO.m"; sourceTree = "<group>"; };
 		7436DAE622776217007AA858 /* NSObject+ZXKVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ZXKVO.h"; sourceTree = "<group>"; };
+		74C951D32297D0B80004B834 /* UIViewController+ZXPlaceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZXPlaceView.h"; sourceTree = "<group>"; };
+		74C951D42297D0B80004B834 /* UIViewController+ZXPlaceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ZXPlaceView.m"; sourceTree = "<group>"; };
 		BD04927DA37E844A4569D3F6 /* libPods-IpaDownloadTool.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IpaDownloadTool.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8557D045E8526F4397D077 /* Pods-IpaDownloadTool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IpaDownloadTool.debug.xcconfig"; path = "Target Support Files/Pods-IpaDownloadTool/Pods-IpaDownloadTool.debug.xcconfig"; sourceTree = "<group>"; };
 		C66E0A54C44B9F06EA0FCA39 /* Pods-IpaDownloadTool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IpaDownloadTool.release.xcconfig"; path = "Target Support Files/Pods-IpaDownloadTool/Pods-IpaDownloadTool.release.xcconfig"; sourceTree = "<group>"; };
@@ -477,6 +480,8 @@
 			children = (
 				7436DAB722769D81007AA858 /* ZXPlaceView.h */,
 				7436DAB822769D81007AA858 /* ZXPlaceView.m */,
+				74C951D32297D0B80004B834 /* UIViewController+ZXPlaceView.h */,
+				74C951D42297D0B80004B834 /* UIViewController+ZXPlaceView.m */,
 			);
 			path = PlaceView;
 			sourceTree = "<group>";
@@ -718,6 +723,7 @@
 				7436DABC2276B92D007AA858 /* ZXFileDownload.m in Sources */,
 				741B92F82275F93A00F24EED /* ZXIpaHisCell.m in Sources */,
 				7436DAA022768B15007AA858 /* SGQRCodeScanningVC.m in Sources */,
+				74C951D52297D0B90004B834 /* UIViewController+ZXPlaceView.m in Sources */,
 				741B92ED2275F7B400F24EED /* ZXIpaHisVC.m in Sources */,
 				7436DA9F22768B15007AA858 /* YSLContainerViewController.m in Sources */,
 				7436DAA122768B15007AA858 /* SGWebView.m in Sources */,

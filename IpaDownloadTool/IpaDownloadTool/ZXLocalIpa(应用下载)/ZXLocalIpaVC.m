@@ -23,8 +23,6 @@ typedef enum {
 @property (strong, nonatomic) ZXFileDownload *fileDownload;
 @property(nonatomic,strong) NSURLSession *downloadSession;
 @property (strong, nonatomic) ZXLocalIpaDownloadModel *downloadingModel;
-@property (weak, nonatomic) ZXPlaceView *placeView;
-;
 @end
 
 @implementation ZXLocalIpaVC
@@ -39,8 +37,9 @@ typedef enum {
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
+    __weak __typeof(self) weakSelf = self;
     [self.segView zx_obsKey:@"selectedSegmentIndex" handler:^(id newData, id oldData, id owner) {
-        self.downloadType = [newData boolValue];
+        weakSelf.downloadType = [newData boolValue];
     }];
     if(self.ipaModel){
         [self startDownload];
@@ -63,18 +62,13 @@ typedef enum {
 #pragma mark 切换下载中与已下载
 - (IBAction)segChangeAction:(id)sender {
     self.downloadType = (BOOL)self.segView.selectedSegmentIndex;
-    if(self.placeView){
-        [self.placeView removeFromSuperview];
-    }
+    [self removePlaceView];
     [self.tableView.zxDatas removeAllObjects];
     if(self.downloadType == DownloadTypeDownloaded){
         [self setDownloadedData];
     }else{
         if(!self.downloadingModel || self.downloadingModel.totalBytesExpectedToWrite == 0 || self.downloadingModel.isFinish){
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                ZXPlaceView *placeView = [ZXPlaceView showWithNotice:@"暂无下载中的文件" superV:self.view];
-                self.placeView = placeView;
-            });
+            [self showPlaceViewWithText:@"暂无下载中的文件"];
         }else{
             [self.tableView.zxDatas addObject:self.downloadingModel];
         }
@@ -136,9 +130,8 @@ typedef enum {
     }
     [self.tableView reloadData];
     if(!self.tableView.zxDatas.count){
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            ZXPlaceView *placeView = [ZXPlaceView showWithNotice:@"暂无已下载的文件" superV:self.view];
-            self.placeView = placeView;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self showPlaceViewWithText:@"暂无已下载的文件"];
         });
         
     }
