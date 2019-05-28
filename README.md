@@ -14,3 +14,7 @@
 
 ### 预览
 <img src="https://github.com/SmileZXLee/IpaDownloadTool/blob/master/DemoImg/demo1.gif?raw=true"/>
+
+*** 
+
+<img src="https://github.com/SmileZXLee/IpaDownloadTool/blob/master/DemoImg/demo2.png?raw=true"/>
