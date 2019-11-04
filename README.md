@@ -15,8 +15,8 @@
 
 ### 预览
 * 操作演示
-<img src="https://github.com/SmileZXLee/IpaDownloadTool/blob/master/DemoImg/demo1.gif?raw=true"/>
+<img src="https://upload-images.jianshu.io/upload_images/17729343-0fd01feb157e0162.gif?imageMogr2/auto-orient/strip"/>
 
 *** 
 * 应用详情页面
-<img src="https://github.com/SmileZXLee/IpaDownloadTool/blob/master/DemoImg/demo2.png?raw=true"/>
+<img src="https://upload-images.jianshu.io/upload_images/17729343-ab4b953d0a0696a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"/>
