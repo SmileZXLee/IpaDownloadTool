@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZXIpaGetVC">
             <connections>
+                <outlet property="githubBtn" destination="43e-VL-V8a" id="ewx-Yf-tlT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="vxn-7K-wp1" id="Hkr-7v-8R0"/>
             </connections>

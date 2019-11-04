@@ -15,6 +15,7 @@
 #import "ZXLocalIpaVC.h"
 @interface ZXIpaGetVC ()<UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIButton *githubBtn;
 @end
 
 @implementation ZXIpaGetVC
@@ -41,6 +42,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self showPlaceViewWithText:@"点击右上角开始"];
     });
+    [self.githubBtn setTitleColor:MainColor forState:UIControlStateNormal];
     
 }
 
@@ -147,6 +149,7 @@
 #pragma mark 网页加载完成
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     self.title = MainTitle;
+    self.githubBtn.hidden = YES;
 }
 #pragma mark 网页加载失败
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
