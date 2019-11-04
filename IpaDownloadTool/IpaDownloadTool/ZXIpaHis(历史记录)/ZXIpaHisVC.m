@@ -4,7 +4,7 @@
 //
 //  Created by 李兆祥 on 2019/4/28.
 //  Copyright © 2019 李兆祥. All rights reserved.
-//
+//  https://github.com/SmileZXLee/IpaDownloadTool
 
 #import "ZXIpaHisVC.h"
 #import "ZXIpaHisCell.h"
@@ -26,6 +26,7 @@
     self.title = @"历史记录";
     __weak __typeof(self) weakSelf = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"清空" style:UIBarButtonItemStyleDone target:self action:@selector(cleanAction)];
+    
     self.tableView.zx_setCellClassAtIndexPath = ^Class(NSIndexPath *indexPath) {
         return [ZXIpaHisCell class];
     };

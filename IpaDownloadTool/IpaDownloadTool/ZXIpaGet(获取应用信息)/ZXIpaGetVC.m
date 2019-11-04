@@ -4,7 +4,7 @@
 //
 //  Created by 李兆祥 on 2019/4/28.
 //  Copyright © 2019 李兆祥. All rights reserved.
-//
+//  https://github.com/SmileZXLee/IpaDownloadTool
 
 #import "ZXIpaGetVC.h"
 #import "ZXIpaHttpRequest.h"
@@ -45,6 +45,14 @@
 }
 
 #pragma mark - Actions
+#pragma mark 点击了github地址
+- (IBAction)githubAction:(UIButton *)sender {
+    NSString *urlStr = sender.currentTitle;
+    NSURL *url = [NSURL URLWithString:urlStr];
+    if([[UIApplication sharedApplication]canOpenURL:url]){
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
 #pragma mark 点击了历史
 -(void)historyAction{
     ZXIpaHisVC *VC = [[ZXIpaHisVC alloc]init];
