@@ -15,7 +15,7 @@
 
 ### 预览
 * 操作演示
-<img src="https://upload-images.jianshu.io/upload_images/17729343-0fd01feb157e0162.gif?imageMogr2/auto-orient/strip"/>
+<img src="http://www.zxlee.cn/IpaDownloadToolDemo.gif"/>
 
 *** 
 * 应用详情页面
