@@ -97,6 +97,10 @@ typedef enum {
                 [[NSFileManager defaultManager] moveItemAtURL:[NSURL fileURLWithPath:path] toURL:[NSURL fileURLWithPath:weakSelf.downloadingModel.localPath] error:&fileErr];
                 if(fileErr){
                     [ALToastView showToastWithText:fileErr.localizedDescription];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"文件错误" message:fileErr.localizedDescription preferredStyle:UIAlertControllerStyleActionSheet];
+                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleDefault handler:nil];
+                    [alertController addThemeAction:okAction];
+                    [self presentViewController:alertController animated:YES completion:nil];
                 }else{
                     [weakSelf.ipaModel zx_dbUpdateWhere:[NSString stringWithFormat:@"sign='%@'",weakSelf.ipaModel.sign]];
                     [weakSelf.segView setSelectedSegmentIndex:1];
