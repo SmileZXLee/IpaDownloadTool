@@ -9,7 +9,7 @@
 #import "ZXFileManage.h"
 #import "ZXDataHandle.h"
 
-#define ExtentDocPath [NSString stringWithFormat:@"%@/%@",ZXDocPath,pathComponent]
+#define ExtentDocPath(pathComponent) [NSString stringWithFormat:@"%@/%@",ZXDocPath,pathComponent]
 @interface ZXFileManage()
 @property (strong, nonatomic) UIDocumentInteractionController *documentController;
 @end
@@ -36,7 +36,7 @@
     
 }
 +(PathAttr)getPathAttrWithPathComponent:(NSString *)pathComponent{
-    return [self getPathAttrWithPath:ExtentDocPath];
+    return [self getPathAttrWithPath:ExtentDocPath(pathComponent)];
     
 }
 
@@ -58,7 +58,7 @@
     }
 }
 +(void)delFileWithPathComponent:(NSString *)pathComponent{
-    [self delFileWithPath:ExtentDocPath];
+    [self delFileWithPath:ExtentDocPath(pathComponent)];
 }
 
 +(void)creatDirWithPath:(NSString *)path{
@@ -68,7 +68,7 @@
     }
 }
 +(void)creatDirWithPathComponent:(NSString *)pathComponent{
-    [self creatDirWithPath:ExtentDocPath];
+    [self creatDirWithPath:ExtentDocPath(pathComponent)];
 }
 +(long long)getFileSizeWithPath:(NSString *)path{
     if([self isExistWithPath:path]){
@@ -78,7 +78,7 @@
 }
 
 +(long long)getFileSizeWithPathComponent:(NSString *)pathComponent{
-    return [self getFileSizeWithPath:ExtentDocPath];
+    return [self getFileSizeWithPath:ExtentDocPath(pathComponent)];
 }
 -(void)shareFileWithPath:(NSString *)path{
     NSLog(@"shareFileWithPath--%@",path);

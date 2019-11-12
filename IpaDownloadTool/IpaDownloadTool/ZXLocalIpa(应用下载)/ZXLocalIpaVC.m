@@ -96,11 +96,15 @@ typedef enum {
                 NSError *fileErr;
                 [[NSFileManager defaultManager] moveItemAtURL:[NSURL fileURLWithPath:path] toURL:[NSURL fileURLWithPath:weakSelf.downloadingModel.localPath] error:&fileErr];
                 if(fileErr){
-                    [ALToastView showToastWithText:fileErr.localizedDescription];
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"文件错误" message:fileErr.localizedDescription preferredStyle:UIAlertControllerStyleActionSheet];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"文件错误" message:[NSString stringWithFormat:@"%@",fileErr] preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleDefault handler:nil];
                     [alertController addThemeAction:okAction];
                     [self presentViewController:alertController animated:YES completion:nil];
+                    
+                    UIAlertController *alertController2 = [UIAlertController alertControllerWithTitle:@"文件错误" message:[NSString stringWithFormat:@"%@",fileErr.userInfo] preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *okAction2 = [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleDefault handler:nil];
+                    [alertController2 addThemeAction:okAction2];
+                    [self presentViewController:alertController2 animated:YES completion:nil];
                 }else{
                     [weakSelf.ipaModel zx_dbUpdateWhere:[NSString stringWithFormat:@"sign='%@'",weakSelf.ipaModel.sign]];
                     [weakSelf.segView setSelectedSegmentIndex:1];
