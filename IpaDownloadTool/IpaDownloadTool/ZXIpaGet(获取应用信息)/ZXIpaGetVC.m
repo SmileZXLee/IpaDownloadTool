@@ -39,10 +39,14 @@
     self.webView.delegate = self;
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.opaque =NO;
+    self.webView.scalesPageToFit = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self showPlaceViewWithText:@"点击右上角开始"];
     });
     [self.githubBtn setTitleColor:MainColor forState:UIControlStateNormal];
+    UISwipeGestureRecognizer *swipGr = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(goBackAction)];
+    [self.webView addGestureRecognizer:swipGr];
+   
     
 }
 
@@ -105,6 +109,13 @@
     }];
     
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+#pragma mark 网页返回上一级
+- (void)goBackAction{
+    if([self.webView canGoBack]){
+        [self.webView goBack];
+    }
 }
 #pragma mark - UIWebViewDelegate
 #pragma mark 网页将要开始加载

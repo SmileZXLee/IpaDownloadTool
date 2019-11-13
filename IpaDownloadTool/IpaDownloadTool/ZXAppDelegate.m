@@ -8,6 +8,7 @@
 
 #import "ZXAppDelegate.h"
 #import "ZXIpaGetVC.h"
+
 @implementation ZXAppDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     UIWindow *window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
@@ -28,4 +29,17 @@
 -(void)creatIpaDownloadedPath{
     [ZXFileManage creatDirWithPathComponent:ZXIpaDownloadedPath];
 }
+
+-(void)applicationDidEnterBackground:(UIApplication *)application{
+    [ self comeToBackgroundMode];
+}
+
+-(void)comeToBackgroundMode{
+    UIApplication*  app = [UIApplication sharedApplication];
+    self.bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        [app endBackgroundTask:self.bgTask];
+        self.bgTask = UIBackgroundTaskInvalid;
+    }];
+}
+
 @end

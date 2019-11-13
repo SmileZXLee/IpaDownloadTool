@@ -9,7 +9,6 @@
 #import "ZXLocalIpaVC.h"
 #import "ZXLocalIpaDownloadCell.h"
 #import "ZXLocalIpaDownloadModel.h"
-
 #import "UIViewController+BackButtonHandler.h"
 typedef enum {
     DownloadTypeDownloading = 0x00,    // 下载中
@@ -21,7 +20,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet ZXTableView *tableView;
 @property (assign, nonatomic) DownloadType downloadType;
 @property (strong, nonatomic) ZXFileDownload *fileDownload;
-@property(nonatomic,strong) NSURLSession *downloadSession;
+@property(strong, nonatomic) NSURLSession *downloadSession;
+@property(strong, nonatomic) NSURLConnection *downloadConnection;
 @property (strong, nonatomic) ZXLocalIpaDownloadModel *downloadingModel;
 @end
 
@@ -84,34 +84,19 @@ typedef enum {
     }
     self.fileDownload = [[ZXFileDownload alloc]init];
     __weak __typeof(self) weakSelf = self;
-    self.downloadSession = [self.fileDownload downLoadWithUrlStr:self.ipaModel.downloadUrl callBack:^(BOOL result, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite, NSString * _Nonnull path) {
+    self.downloadConnection = [self.fileDownload downLoadWithUrlStrByURLConnection:self.ipaModel.downloadUrl filePath:self.downloadingModel.localPath callBack:^(BOOL result, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite, NSString * _Nonnull path) {
         if(result){
             weakSelf.downloadingModel.totalBytesWritten = totalBytesWritten;
             weakSelf.downloadingModel.totalBytesExpectedToWrite = totalBytesExpectedToWrite;
-            if(totalBytesExpectedToWrite == totalBytesWritten && totalBytesExpectedToWrite && path){
-                //下载结束
+            if(totalBytesExpectedToWrite == totalBytesWritten && totalBytesExpectedToWrite && totalBytesExpectedToWrite > 1024){
                 weakSelf.downloadingModel.finish = YES;
-                [ZXFileManage delFileWithPath:weakSelf.downloadingModel.localPath];
-                path = [path stringByReplacingOccurrencesOfString:@"file://" withString:@""];
-                NSError *fileErr;
-                [[NSFileManager defaultManager] moveItemAtURL:[NSURL fileURLWithPath:path] toURL:[NSURL fileURLWithPath:weakSelf.downloadingModel.localPath] error:&fileErr];
-                if(fileErr){
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"文件错误" message:[NSString stringWithFormat:@"%@",fileErr] preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleDefault handler:nil];
-                    [alertController addThemeAction:okAction];
-                    [self presentViewController:alertController animated:YES completion:nil];
-                    
-                    UIAlertController *alertController2 = [UIAlertController alertControllerWithTitle:@"文件错误" message:[NSString stringWithFormat:@"%@",fileErr.userInfo] preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *okAction2 = [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleDefault handler:nil];
-                    [alertController2 addThemeAction:okAction2];
-                    [self presentViewController:alertController2 animated:YES completion:nil];
-                }else{
-                    [weakSelf.ipaModel zx_dbUpdateWhere:[NSString stringWithFormat:@"sign='%@'",weakSelf.ipaModel.sign]];
-                    [weakSelf.segView setSelectedSegmentIndex:1];
-                    [weakSelf setDownloadedData];
-                }
+                [weakSelf.ipaModel zx_dbUpdateWhere:[NSString stringWithFormat:@"sign='%@'",weakSelf.ipaModel.sign]];
+                [weakSelf.segView setSelectedSegmentIndex:1];
+                [weakSelf setDownloadedData];
             }else if(!totalBytesExpectedToWrite){
                 weakSelf.downloadingModel.finish = YES;
+                weakSelf.downloadingModel.totalBytesWritten = 0;
+                weakSelf.downloadingModel.totalBytesExpectedToWrite = 0;
             }
         }else{
             weakSelf.downloadingModel.finish = YES;
@@ -132,7 +117,7 @@ typedef enum {
         downloadedModel.sign = ipaModel.sign;
         downloadedModel.finish = YES;
         downloadedModel.totalBytesExpectedToWrite = [ZXFileManage getFileSizeWithPath:downloadedModel.localPath];
-        if([ZXFileManage isExistWithPath:downloadedModel.localPath]){
+        if([ZXFileManage isExistWithPath:downloadedModel.localPath] && downloadedModel.totalBytesExpectedToWrite > 3000){
             [self.tableView.zxDatas addObject:downloadedModel];
         }
     }
@@ -153,7 +138,8 @@ typedef enum {
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
         UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"关闭页面" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self.navigationController popViewControllerAnimated:YES];
-            [self.downloadSession invalidateAndCancel];
+            //[self.downloadSession invalidateAndCancel];
+            [self.downloadConnection cancel];
         }];
         [alertController addThemeAction:cancelAction];
         [alertController addThemeAction:confirmAction];
@@ -179,7 +165,6 @@ typedef enum {
         _downloadingModel.title = self.ipaModel.title;
         _downloadingModel.downloadUrl = self.ipaModel.downloadUrl;
         _downloadingModel.sign = self.ipaModel.sign;
-        
     }
     return _downloadingModel;
 }
