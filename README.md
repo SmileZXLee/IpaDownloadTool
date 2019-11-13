@@ -12,11 +12,11 @@
 * 支持下载历史记录列表，可以本地储存任意数量的ipa，无需担心下载页面失效导致ipa丢失
 * 支持ipa本地下载，分享给朋友或隔空投送发送至电脑
 * 不支持App Store ipa下载
-
+### 更新日志
+#### 2019.11.14
+* 修复在iOS13中重签名之后无法正常下载ipa的问题，感谢[@ningQAQ](https://github.com/ningQAQ)的帮助。
 ### 预览
-* 操作演示
-<img src="http://www.zxlee.cn/IpaDownloadToolDemo.gif"/>
+操作演示 | 应用详情   
+-|-
+![](http://www.zxlee.cn/IpaDownloadToolDemo.gif) | ![](https://upload-images.jianshu.io/upload_images/17729343-ab4b953d0a0696a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240) |
 
-*** 
-* 应用详情页面
-<img src="https://upload-images.jianshu.io/upload_images/17729343-ab4b953d0a0696a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"/>
