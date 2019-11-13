@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4073AAD8633C8FF7D216DF149066830C"
+               BlueprintIdentifier = "5A69CA03AB7490726E6AE23AF79D96B4"
                BuildableName = "libZXDataHandle.a"
                BlueprintName = "ZXDataHandle"
                ReferencedContainer = "container:Pods.xcodeproj">

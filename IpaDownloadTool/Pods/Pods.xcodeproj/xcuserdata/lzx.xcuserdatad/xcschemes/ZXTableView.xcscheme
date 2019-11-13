@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2F4AC661DF279DCFE14BBE0828CBA435"
+               BlueprintIdentifier = "C8EF29C43CDC88EDAC591FADF7AA807A"
                BuildableName = "libZXTableView.a"
                BlueprintName = "ZXTableView"
                ReferencedContainer = "container:Pods.xcodeproj">

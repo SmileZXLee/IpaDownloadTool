@@ -1,4 +1,9 @@
 PODS:
+  - NJKWebViewProgress (0.2.3):
+    - NJKWebViewProgress/Core (= 0.2.3)
+    - NJKWebViewProgress/ProgressView (= 0.2.3)
+  - NJKWebViewProgress/Core (0.2.3)
+  - NJKWebViewProgress/ProgressView (0.2.3)
   - SDWebImage (5.0.1):
     - SDWebImage/Core (= 5.0.1)
   - SDWebImage/Core (5.0.1)
@@ -6,21 +11,24 @@ PODS:
   - ZXTableView (1.0.5)
 
 DEPENDENCIES:
+  - NJKWebViewProgress
   - SDWebImage
   - ZXDataHandle
   - ZXTableView
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - NJKWebViewProgress
     - SDWebImage
     - ZXDataHandle
     - ZXTableView
 
 SPEC CHECKSUMS:
+  NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   SDWebImage: 27dd2c9ea07a2252f94557c9fbb6105ee94b74c9
   ZXDataHandle: 2d5c2fdc7f19c1843fb6ca352963b2998d3aae17
   ZXTableView: d2ba4d9331b0331a8402be59b3b294d874e8ed44
 
-PODFILE CHECKSUM: d04152846b3e1cbebb560e1b16c9c6948afa70f8
+PODFILE CHECKSUM: 28a297d9111c19dc393c559a8029bcec5911bbef
 
 COCOAPODS: 1.6.1

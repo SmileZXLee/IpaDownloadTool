@@ -3,4 +3,5 @@ target 'IpaDownloadTool' do
 pod 'ZXDataHandle'
 pod 'ZXTableView'
 pod 'SDWebImage'
+pod 'NJKWebViewProgress'
 end

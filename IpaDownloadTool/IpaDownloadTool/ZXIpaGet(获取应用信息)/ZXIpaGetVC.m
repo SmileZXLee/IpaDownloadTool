@@ -10,12 +10,16 @@
 #import "ZXIpaHttpRequest.h"
 #import "ZXIpaModel.h"
 #import "SGQRCodeScanningVC.h"
+#import "NJKWebViewProgress.h"
+#import "NJKWebViewProgressView.h"
 
 #import "ZXIpaHisVC.h"
 #import "ZXLocalIpaVC.h"
-@interface ZXIpaGetVC ()<UIWebViewDelegate>
+@interface ZXIpaGetVC ()<UIWebViewDelegate,NJKWebViewProgressDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIButton *githubBtn;
+@property (strong, nonatomic)NJKWebViewProgressView *progressView;
+@property (strong, nonatomic)NJKWebViewProgress *progressProxy;
 @end
 
 @implementation ZXIpaGetVC
@@ -46,8 +50,23 @@
     [self.githubBtn setTitleColor:MainColor forState:UIControlStateNormal];
     UISwipeGestureRecognizer *swipGr = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(goBackAction)];
     [self.webView addGestureRecognizer:swipGr];
-   
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self initWebViewProgressView];
+    });
     
+}
+
+- (void)initWebViewProgressView{
+    self.progressProxy = [[NJKWebViewProgress alloc] init];
+    self.webView.delegate = _progressProxy;
+    self.progressProxy.webViewProxyDelegate = self;
+    self.progressProxy.progressDelegate = self;
+    CGRect barFrame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 2);
+    self.progressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
+    self.progressView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
+    self.progressView.progressBarView.backgroundColor = MainColor;
+    [self.view addSubview:self.progressView];
+    self.progressView.alpha = 0;
 }
 
 #pragma mark - Actions
@@ -121,6 +140,7 @@
 #pragma mark 网页将要开始加载
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     self.title = @"加载中...";
+    self.progressView.alpha = 1;
     NSString *urlStr = request.URL.absoluteString;
     if([urlStr hasPrefix:@"itms-services://"]){
         urlStr = [urlStr getPlistPathUrlStr];
@@ -171,6 +191,12 @@
         [ALToastView showToastWithText:errInfo];
     }
 }
+
+#pragma mark - NJKWebViewProgressDelegate
+-(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress{
+    [self.progressView setProgress:progress animated:YES];
+}
+
 
 #pragma mark - private
 #pragma mark 处理url
