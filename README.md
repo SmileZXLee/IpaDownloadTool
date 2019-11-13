@@ -1,7 +1,11 @@
 # IpaDownloadTool
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/skx926/KSPhotoBrowser/master/LICENSE)&nbsp;
 [![Support](https://img.shields.io/badge/support-iOS%208.0%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
-### 项目中使用的第三方:[ALToastView](https://github.com/alexleutgoeb/ALToastView)、[SGQRCode](https://github.com/kingsic/SGQRCode)、[BackButtonHandler](https://github.com/onegray/UIViewController-BackButtonHandler)
+### 项目中使用的第三方:
+* [ALToastView](https://github.com/alexleutgoeb/ALToastView)
+* [SGQRCode](https://github.com/kingsic/SGQRCode)
+* [BackButtonHandler](https://github.com/onegray/UIViewController-BackButtonHandler)
+* [NJKWebViewProgress](https://github.com/ninjinkun/NJKWebViewProgress)
 ### Release版本
 * [点击此处直接下载IpaDownloadTool安装包](https://static.ifafu.cn/IpaDownloadTool.ipa)
 ### 功能
