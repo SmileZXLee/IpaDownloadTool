@@ -48,8 +48,9 @@
         [self showPlaceViewWithText:@"点击右上角开始"];
     });
     [self.githubBtn setTitleColor:MainColor forState:UIControlStateNormal];
-    UISwipeGestureRecognizer *swipGr = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(goBackAction)];
-    [self.webView addGestureRecognizer:swipGr];
+    UIScreenEdgePanGestureRecognizer *panGes = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(goBackAction:)];
+    panGes.edges = UIRectEdgeLeft;
+    [self.view addGestureRecognizer:panGes];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self initWebViewProgressView];
     });
@@ -131,9 +132,13 @@
 }
 
 #pragma mark 网页返回上一级
-- (void)goBackAction{
-    if([self.webView canGoBack]){
-        [self.webView goBack];
+- (void)goBackAction:(UIScreenEdgePanGestureRecognizer *)panGes{
+    if (panGes.state == UIGestureRecognizerStateEnded || panGes.state == UIGestureRecognizerStateCancelled) {
+        if([self.webView canGoBack]){
+            [self.webView goBack];
+        }else{
+            [self historyAction];
+        }
     }
 }
 #pragma mark - UIWebViewDelegate
@@ -188,6 +193,7 @@
     if(!errInfo)return;
     if(![errInfo isEqualToString:@"Frame load interrupted"]){
         self.title = @"加载失败";
+        self.progressView.alpha = 0;
         [ALToastView showToastWithText:errInfo];
     }
 }
@@ -208,6 +214,7 @@
     NSURL *url = [NSURL URLWithString:urlStr];
     if(!url){
         self.title = @"URL无效";
+        self.progressView.alpha = 0;
         return;
     }
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
