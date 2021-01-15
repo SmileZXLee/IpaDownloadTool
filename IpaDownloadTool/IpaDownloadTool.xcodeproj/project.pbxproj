@@ -904,7 +904,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XW95KAQH96;
+				DEVELOPMENT_TEAM = 8YXY7BQ54F;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/IpaDownloadTool/PrefixHeader.pch";
 				INFOPLIST_FILE = IpaDownloadTool/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -924,7 +924,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XW95KAQH96;
+				DEVELOPMENT_TEAM = 8YXY7BQ54F;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/IpaDownloadTool/PrefixHeader.pch";
 				INFOPLIST_FILE = IpaDownloadTool/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

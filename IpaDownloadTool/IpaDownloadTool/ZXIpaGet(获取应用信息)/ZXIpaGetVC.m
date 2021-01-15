@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *githubBtn;
 @property (strong, nonatomic)NJKWebViewProgressView *progressView;
 @property (strong, nonatomic)NJKWebViewProgress *progressProxy;
+@property (copy, nonatomic)NSString *urlStr;
 @end
 
 @implementation ZXIpaGetVC
@@ -42,7 +43,7 @@
     self.navigationItem.rightBarButtonItems = @[inputItem,qrcodeItem];
     self.webView.delegate = self;
     self.webView.backgroundColor = [UIColor clearColor];
-    self.webView.opaque =NO;
+    self.webView.opaque = NO;
     self.webView.scalesPageToFit = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self showPlaceViewWithText:@"点击右上角开始"];
@@ -147,7 +148,23 @@
     self.title = @"加载中...";
     self.progressView.alpha = 1;
     NSString *urlStr = request.URL.absoluteString;
-    if([urlStr hasPrefix:@"itms-services://"]){
+    if([urlStr hasSuffix:@".mobileprovision"]){
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件，IpaDownloadTool无法处理这个描述文件，请使用Safari打开并安装此描述文件，安装后Safari会自动加载一个新的链接，请在安装描述文件后复制Safari中的链接并粘贴到IpaDownloadTool中即可获取IPA安装信息。" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"跳转到Safari打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSURL *url = [NSURL URLWithString:urlStr];
+            if([[UIApplication sharedApplication]canOpenURL:url]){
+                [[UIApplication sharedApplication] openURL:url];
+            }else{
+                [ALToastView showToastWithText:@"无法安装此描述文件"];
+            }
+        }];
+        [alertController addThemeAction:cancelAction];
+        [alertController addThemeAction:confirmAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return NO;
+    }
+    if([urlStr hasPrefix:@"itms-services://"] || [urlStr containsString:@"itemService="]){
         urlStr = [urlStr getPlistPathUrlStr];
         NSMutableURLRequest *newPlistReq;
         newPlistReq = [request mutableCopy];
@@ -171,8 +188,9 @@
                 
             }
         }];
-        
-        return NO;
+        if(![urlStr containsString:@"itemService="]){
+            return NO;
+        }
     }
     
     return YES;
@@ -211,12 +229,14 @@
         urlStr = [@"http://" stringByAppendingString:urlStr];
     }
     urlStr = [urlStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
     NSURL *url = [NSURL URLWithString:urlStr];
     if(!url){
         self.title = @"URL无效";
         self.progressView.alpha = 0;
         return;
     }
+    self.urlStr = urlStr;
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:req];
     [[NSUserDefaults standardUserDefaults]setObject:urlStr forKey:@"cacheUrlStr"];

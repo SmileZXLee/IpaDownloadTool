@@ -18,12 +18,22 @@
     [window makeKeyAndVisible];
     self.window = window;
     [self setAppearance];
+    [self setUserAgent];
     [self creatIpaDownloadedPath];
     return YES;
 }
 #pragma mark 设置全局外观
 -(void)setAppearance{
     [[UIBarButtonItem appearance] setTintColor:MainColor];
+}
+#pragma mark 设置全局UserAgent
+-(void)setUserAgent{
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    NSString *userAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    NSString *executableFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleExecutableKey];
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+    NSString *oldUa = [NSString stringWithFormat:@"%@ %@/%@", userAgent, executableFile,version];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":ZXFullUA, @"User-Agent":oldUa}];
 }
 #pragma mark 创建ipa下载文件夹
 -(void)creatIpaDownloadedPath{

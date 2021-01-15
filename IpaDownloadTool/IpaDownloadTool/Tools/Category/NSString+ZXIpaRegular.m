@@ -11,9 +11,17 @@
 @implementation NSString (ZXIpaRegular)
 -(NSString *)getPlistPathUrlStr{
     NSString *resStr;
+    NSString *prefix;
     resStr = [self stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSRange urlRange = [resStr rangeOfString:@"url=.*?" options:NSRegularExpressionSearch];
-    resStr = [resStr substringWithRange:NSMakeRange(urlRange.location + 4, resStr.length - (urlRange.location + 4))];
+    
+    if([resStr containsString:@"itemService="]){
+        prefix = @"itemService=";
+    }else{
+        prefix = @"url";
+    }
+    NSRange urlRange = [resStr rangeOfString:[NSString stringWithFormat:@"%@.*?",prefix] options:NSRegularExpressionSearch];
+    resStr = [resStr substringWithRange:NSMakeRange(urlRange.location + prefix.length, resStr.length - (urlRange.location + prefix.length))];
+   
     return resStr;
 }
 
