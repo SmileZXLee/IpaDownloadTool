@@ -17,7 +17,7 @@
     if([resStr containsString:@"itemService="]){
         prefix = @"itemService=";
     }else{
-        prefix = @"url";
+        prefix = @"url=";
     }
     NSRange urlRange = [resStr rangeOfString:[NSString stringWithFormat:@"%@.*?",prefix] options:NSRegularExpressionSearch];
     resStr = [resStr substringWithRange:NSMakeRange(urlRange.location + prefix.length, resStr.length - (urlRange.location + prefix.length))];

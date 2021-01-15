@@ -56,6 +56,8 @@
         [self initWebViewProgressView];
     });
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(pasteboardStrLoadUrl:) name:ZXPasteboardStrLoadUrlNotification object:nil];
+    
 }
 
 - (void)initWebViewProgressView{
@@ -149,10 +151,10 @@
     self.progressView.alpha = 1;
     NSString *urlStr = request.URL.absoluteString;
     if([urlStr hasSuffix:@".mobileprovision"]){
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件，IpaDownloadTool无法处理这个描述文件，请使用Safari打开并安装此描述文件，安装后Safari会自动加载一个新的链接，请在安装描述文件后复制Safari中的链接并粘贴到IpaDownloadTool中即可获取IPA安装信息。" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件，IpaDownloadTool无法处理这个描述文件，请使用Safari打开并重新点击下载/安装按钮安装此描述文件，安装后Safari会自动加载一个新的链接，请在安装描述文件后复制Safari中的链接并粘贴到IpaDownloadTool中即可获取IPA安装信息。" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"跳转到Safari打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSURL *url = [NSURL URLWithString:urlStr];
+            NSURL *url = [NSURL URLWithString:self.urlStr];
             if([[UIApplication sharedApplication]canOpenURL:url]){
                 [[UIApplication sharedApplication] openURL:url];
             }else{
@@ -225,18 +227,29 @@
 #pragma mark - private
 #pragma mark 处理url
 -(void)handelWithUrlStr:(NSString *)urlStr{
+    self.urlStr = urlStr;
+}
+
+- (void)pasteboardStrLoadUrl:(NSNotification *)nf{
+    NSString *urlStr = nf.object;
+    self.urlStr = urlStr;
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+#pragma mark setter
+
+- (void)setUrlStr:(NSString *)urlStr{
     if(![urlStr hasPrefix:@"http://"] && ![urlStr hasPrefix:@"https://"]){
         urlStr = [@"http://" stringByAppendingString:urlStr];
     }
     urlStr = [urlStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
+    _urlStr = urlStr;
     NSURL *url = [NSURL URLWithString:urlStr];
     if(!url){
         self.title = @"URL无效";
         self.progressView.alpha = 0;
         return;
     }
-    self.urlStr = urlStr;
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:req];
     [[NSUserDefaults standardUserDefaults]setObject:urlStr forKey:@"cacheUrlStr"];
