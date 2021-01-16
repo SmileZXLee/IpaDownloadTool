@@ -100,6 +100,27 @@
         }
         return;
     }
+    if([model.title hasPrefix:@"应用名称"]){
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"修改应用名称" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UITextField *inputTf = alertController.textFields[0];
+            [inputTf becomeFirstResponder];
+            NSString *title = inputTf.text;
+            self.ipaModel.title = title;
+            [self.ipaModel zx_dbUpdateWhere:[NSString stringWithFormat:@"sign='%@'",self.ipaModel.sign]];
+            self.tableView.zxDatas = [self getTbData];
+        }];
+        [alertController addThemeAction:cancelAction];
+        [alertController addThemeAction:confirmAction];
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"请输入新的应用名称";
+            textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+            textField.text = model.detail;
+        }];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return;
+    }
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = model.detail;
     if([model.title isEqualToString:@"下载地址"] && [model.detail containsString:@"pgyer.com"]){

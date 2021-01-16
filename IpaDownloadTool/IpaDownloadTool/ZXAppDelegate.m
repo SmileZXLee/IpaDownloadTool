@@ -20,6 +20,7 @@
     [self setAppearance];
     [self setUserAgent];
     [self creatIpaDownloadedPath];
+    [self handlePasteboardStr];
     return YES;
 }
 #pragma mark 设置全局外观
@@ -33,7 +34,7 @@
     NSString *executableFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleExecutableKey];
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
     NSString *oldUa = [NSString stringWithFormat:@"%@ %@/%@", userAgent, executableFile,version];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":ZXFullUA, @"User-Agent":oldUa}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":ZXWebUA, @"User-Agent":oldUa}];
 }
 #pragma mark 创建ipa下载文件夹
 -(void)creatIpaDownloadedPath{
@@ -53,11 +54,16 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [self handlePasteboardStr];
+}
+
+#pragma mark 获取剪切板内容并判断是否弹出”粘贴并前往“
+- (void)handlePasteboardStr{
     NSString *pasteboardStr = [UIPasteboard generalPasteboard].string;
     if([pasteboardStr hasPrefix:@"http"] || [pasteboardStr hasPrefix:@"https"]){
         NSString *oldPasteboardStr = [ZXDataStoreCache readObjForKey:ZXPasteboardStrKey];
         NSString *cacheUrlStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"cacheUrlStr"];
-        if(!(oldPasteboardStr && [oldPasteboardStr isEqualToString:pasteboardStr]) && !(cacheUrlStr && [cacheUrlStr isEqualToString:pasteboardStr])){
+        if(!(oldPasteboardStr && [oldPasteboardStr isEqualToString:pasteboardStr]) && !(cacheUrlStr && [cacheUrlStr isEqualToString:pasteboardStr]) && ![pasteboardStr hasSuffix:@".ipa"]){
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"检测到剪切板中的链接【%@】，是否粘贴并前往？",pasteboardStr] preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
             UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"粘贴并前往" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -70,6 +76,5 @@
         }
     }
 }
-
 
 @end

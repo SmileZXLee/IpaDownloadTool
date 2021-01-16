@@ -27,7 +27,7 @@
 -(void)setIpaModel:(ZXIpaModel *)ipaModel{
     _ipaModel = ipaModel;
     [self.iconImgV sd_setImageWithURL:[NSURL URLWithString:ipaModel.iconUrl] placeholderImage:[UIImage imageNamed:@"icon"]];
-    self.titleLabel.text = ipaModel.title;
+    self.titleLabel.text = [NSString stringWithFormat:@"%@(%@)",ipaModel.title,ipaModel.version];
     self.timeLabel.text = ipaModel.time;
 }
 

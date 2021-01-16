@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04C9937925B2A0910041B15E /* ZXIpaUrlHisVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9937725B2A0910041B15E /* ZXIpaUrlHisVC.m */; };
+		04C9937A25B2A0910041B15E /* ZXIpaUrlHisVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */; };
+		04C9938425B2A0D80041B15E /* ZXIpaUrlHisCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9938225B2A0D80041B15E /* ZXIpaUrlHisCell.m */; };
+		04C9938525B2A0D80041B15E /* ZXIpaUrlHisCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C9938325B2A0D80041B15E /* ZXIpaUrlHisCell.xib */; };
 		741B92A22275943700F24EED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741B92A12275943700F24EED /* Assets.xcassets */; };
 		741B92A52275943700F24EED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 741B92A32275943700F24EED /* LaunchScreen.storyboard */; };
 		741B92A82275943700F24EED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 741B92A72275943700F24EED /* main.m */; };
@@ -77,6 +81,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04C9937625B2A0910041B15E /* ZXIpaUrlHisVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXIpaUrlHisVC.h; sourceTree = "<group>"; };
+		04C9937725B2A0910041B15E /* ZXIpaUrlHisVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXIpaUrlHisVC.m; sourceTree = "<group>"; };
+		04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZXIpaUrlHisVC.xib; sourceTree = "<group>"; };
+		04C9938125B2A0D80041B15E /* ZXIpaUrlHisCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXIpaUrlHisCell.h; sourceTree = "<group>"; };
+		04C9938225B2A0D80041B15E /* ZXIpaUrlHisCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXIpaUrlHisCell.m; sourceTree = "<group>"; };
+		04C9938325B2A0D80041B15E /* ZXIpaUrlHisCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZXIpaUrlHisCell.xib; sourceTree = "<group>"; };
 		741B92952275943100F24EED /* IpaDownloadTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IpaDownloadTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		741B92A12275943700F24EED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		741B92A42275943700F24EED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -201,6 +211,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04C9937325B2A06B0041B15E /* ZXIpaUrlHis(网页加载历史) */ = {
+			isa = PBXGroup;
+			children = (
+				04C9937425B2A06B0041B15E /* Model */,
+				04C9937525B2A06B0041B15E /* View */,
+				04C9937625B2A0910041B15E /* ZXIpaUrlHisVC.h */,
+				04C9937725B2A0910041B15E /* ZXIpaUrlHisVC.m */,
+				04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */,
+			);
+			path = "ZXIpaUrlHis(网页加载历史)";
+			sourceTree = "<group>";
+		};
+		04C9937425B2A06B0041B15E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		04C9937525B2A06B0041B15E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04C9938125B2A0D80041B15E /* ZXIpaUrlHisCell.h */,
+				04C9938225B2A0D80041B15E /* ZXIpaUrlHisCell.m */,
+				04C9938325B2A0D80041B15E /* ZXIpaUrlHisCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		550D3E516404376ED562A39E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +282,7 @@
 		741B92972275943100F24EED /* IpaDownloadTool */ = {
 			isa = PBXGroup;
 			children = (
+				04C9937325B2A06B0041B15E /* ZXIpaUrlHis(网页加载历史) */,
 				741B92F22275F8FF00F24EED /* ZXIpaGet(获取应用信息) */,
 				741B92EF2275F8D600F24EED /* ZXIpaHis(历史记录) */,
 				741B92FD2276094000F24EED /* ZXIpaDetail(应用详情) */,
@@ -382,21 +422,21 @@
 		7436DA7F22768B15007AA858 /* SGQRCode */ = {
 			isa = PBXGroup;
 			children = (
-				7436DA8022768B15007AA858 /* SGQRCode.h */,
-				7436DA8122768B15007AA858 /* SGQRCode.bundle */,
-				7436DA8222768B15007AA858 /* JHFeilterManager.h */,
 				7436DA8322768B15007AA858 /* Category */,
-				7436DA8622768B15007AA858 /* YSLContainerViewController */,
-				7436DA9122768B15007AA858 /* SGQRCodeScanningView.m */,
-				7436DA9222768B15007AA858 /* SGQRCodeScanManager.m */,
-				7436DA9322768B15007AA858 /* SGQRCodeGenerateManager.m */,
-				7436DA9422768B15007AA858 /* SGQRCodeAlbumManager.h */,
+				7436DA8222768B15007AA858 /* JHFeilterManager.h */,
 				7436DA9522768B15007AA858 /* JHFeilterManager.m */,
-				7436DA9622768B15007AA858 /* SYFavoriteButton */,
-				7436DA9922768B15007AA858 /* SGQRCodeScanningView.h */,
-				7436DA9A22768B15007AA858 /* SGQRCodeScanManager.h */,
+				7436DA8122768B15007AA858 /* SGQRCode.bundle */,
+				7436DA8022768B15007AA858 /* SGQRCode.h */,
+				7436DA9422768B15007AA858 /* SGQRCodeAlbumManager.h */,
 				7436DA9B22768B15007AA858 /* SGQRCodeAlbumManager.m */,
 				7436DA9C22768B15007AA858 /* SGQRCodeGenerateManager.h */,
+				7436DA9322768B15007AA858 /* SGQRCodeGenerateManager.m */,
+				7436DA9A22768B15007AA858 /* SGQRCodeScanManager.h */,
+				7436DA9222768B15007AA858 /* SGQRCodeScanManager.m */,
+				7436DA9922768B15007AA858 /* SGQRCodeScanningView.h */,
+				7436DA9122768B15007AA858 /* SGQRCodeScanningView.m */,
+				7436DA9622768B15007AA858 /* SYFavoriteButton */,
+				7436DA8622768B15007AA858 /* YSLContainerViewController */,
 			);
 			path = SGQRCode;
 			sourceTree = "<group>";
@@ -651,8 +691,10 @@
 				7436DAC72276CCB3007AA858 /* ZXLocalIpaVC.xib in Resources */,
 				741B92A52275943700F24EED /* LaunchScreen.storyboard in Resources */,
 				741B930922760A8D00F24EED /* ZXIpaDetailCell.xib in Resources */,
+				04C9938525B2A0D80041B15E /* ZXIpaUrlHisCell.xib in Resources */,
 				741B93042276095E00F24EED /* ZXIpaDetailVC.xib in Resources */,
 				741B92A22275943700F24EED /* Assets.xcassets in Resources */,
+				04C9937A25B2A0910041B15E /* ZXIpaUrlHisVC.xib in Resources */,
 				7436DA9D22768B15007AA858 /* SGQRCode.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -710,6 +752,7 @@
 				7436DAE4227759BB007AA858 /* ZXAppDelegate.m in Sources */,
 				741B930822760A8D00F24EED /* ZXIpaDetailCell.m in Sources */,
 				7436DAA222768B15007AA858 /* YSLScrollMenuView.m in Sources */,
+				04C9938425B2A0D80041B15E /* ZXIpaUrlHisCell.m in Sources */,
 				741B930C22760BC800F24EED /* ZXIpaDetailModel.m in Sources */,
 				741B92A82275943700F24EED /* main.m in Sources */,
 				7436DAA622768B15007AA858 /* SGQRCodeGenerateManager.m in Sources */,
@@ -733,6 +776,7 @@
 				741B92DD2275D1B800F24EED /* ZXIpaGetVC.m in Sources */,
 				741B93032276095E00F24EED /* ZXIpaDetailVC.m in Sources */,
 				7436DAB522769A65007AA858 /* UIImage+ZXTheme.m in Sources */,
+				04C9937925B2A0910041B15E /* ZXIpaUrlHisVC.m in Sources */,
 				7436DAD92276D19E007AA858 /* ZXLocalIpaDownloadModel.m in Sources */,
 				7436DAB2227699E7007AA858 /* UIImage+Rendering.m in Sources */,
 				7436DABF2276CAE4007AA858 /* NSString+ZXMD5.m in Sources */,

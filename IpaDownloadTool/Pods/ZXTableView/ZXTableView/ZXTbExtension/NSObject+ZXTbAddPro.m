@@ -9,12 +9,29 @@
 #import "NSObject+ZXTbAddPro.h"
 #import "objc/runtime.h"
 @implementation NSObject (ZXTbAddPro)
--(void)setCellHRunTime:(NSNumber *)cellHRunTime{
-    objc_setAssociatedObject(self, @"cellHRunTime",cellHRunTime, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setZx_cellHRunTime:(NSNumber *)cellHRunTime{
+    objc_setAssociatedObject(self, @"zx_cellHRunTime",cellHRunTime, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSNumber *)cellHRunTime
-{
-    return objc_getAssociatedObject(self, @"cellHRunTime");
+- (NSNumber *)zx_cellHRunTime{
+    return objc_getAssociatedObject(self, @"zx_cellHRunTime");
 }
+
+- (void)setZx_indexPathInTableView:(NSIndexPath *)zx_indexPathInTableView{
+    objc_setAssociatedObject(self, @"zx_indexPathInTableView", zx_indexPathInTableView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSIndexPath *)zx_indexPathInTableView{
+    return objc_getAssociatedObject(self, @"zx_indexPathInTableView");
+}
+
+- (void)setZx_sectionInTableView:(NSUInteger)zx_sectionInTableView{
+    objc_setAssociatedObject(self, @"zx_sectionInTableView", [NSNumber numberWithInteger:zx_sectionInTableView], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSUInteger)zx_sectionInTableView{
+    return [objc_getAssociatedObject(self, @"zx_sectionInTableView") unsignedIntegerValue];
+}
+
+
 @end
