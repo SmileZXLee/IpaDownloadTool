@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSDictionary (ZXDataConvert)
 ///字典转json字符串
 -(NSString *)zx_dicToJsonStr;
+///字典转jsonData
+-(NSData *)zx_dicToJSONData;
 @end
 
 NS_ASSUME_NONNULL_END

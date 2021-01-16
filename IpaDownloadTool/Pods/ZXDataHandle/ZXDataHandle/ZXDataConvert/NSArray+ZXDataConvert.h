@@ -14,6 +14,8 @@
 @interface NSArray (ZXDataConvert)
 ///字典数组转json字符串
 -(NSString *)zx_arrToJsonStr;
+///字典数组转jsonData
+-(NSData *)zx_arrToJSONData;
 @end
 
 

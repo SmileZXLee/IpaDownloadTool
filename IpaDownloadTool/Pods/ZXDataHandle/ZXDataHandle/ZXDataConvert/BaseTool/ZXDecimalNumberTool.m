@@ -25,4 +25,8 @@
     NSString *numString = [NSString stringWithFormat:@"%lf", num];
     return [NSDecimalNumber decimalNumberWithString:numString];
 }
+
++ (NSDecimalNumber *)zx_decimalNumberWithStr:(NSString *)str {
+    return [NSDecimalNumber decimalNumberWithString:str];
+}
 @end

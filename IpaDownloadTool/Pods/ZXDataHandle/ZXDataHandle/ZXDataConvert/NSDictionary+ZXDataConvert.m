@@ -10,13 +10,13 @@
 #import "ZXDataHandleLog.h"
 @implementation NSDictionary (ZXDataConvert)
 -(NSString *)zx_dicToJsonStr{
-    NSData *jsonData = [self zx_dicToJSONData:self];
+    NSData *jsonData = [self zx_dicToJSONData];
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
--(NSData *)zx_dicToJSONData:(id)theData{
+-(NSData *)zx_dicToJSONData{
     NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:theData
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:&error];
     if ([jsonData length] > 0 && error == nil){

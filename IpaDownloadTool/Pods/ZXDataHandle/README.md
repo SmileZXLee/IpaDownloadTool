@@ -1,5 +1,8 @@
 #  ZXDataHandle使用方法
-GitHub:https://github.com/SmileZXLee/ZXDataHandle
+[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/skx926/KSPhotoBrowser/master/LICENSE)&nbsp;
+[![CocoaPods](http://img.shields.io/cocoapods/v/ZXDataHandle.svg?style=flat)](http://cocoapods.org/?q=ZXDataHandle)&nbsp;
+[![CocoaPods](http://img.shields.io/cocoapods/p/ZXDataHandle.svg?style=flat)](http://cocoapods.org/?q=ZXDataHandle)&nbsp;
+[![Support](https://img.shields.io/badge/support-iOS%208.0%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
 ## 安装
 ### 通过CocoaPods安装
 ```ruby
@@ -13,41 +16,41 @@ pod 'ZXDataHandle'
 #import "ZXDataHandle.h"
 ```
 ## 数据转换-ZXDataConvert
-注：浮点数精度问题内部已自动处理
+### 注：浮点数精度问题内部已自动处理(建议Model中使用NSString接收)
 
-概要：使用方法三句话就可以概括：  
+### 概要：使用方法三句话就可以概括：  
 a.有东西要转模型，调用模型类的+zx_modelWithObj:方法，并把这个东西传给它即可。    
 b.有东西要转字典，调用它的-zx_toDic方法即可。  
 c.有东西要转Json字符串，调用它的-zx_toJsonStr方法即可。  
 
 下面是详细的例子：  
 
-1. 字典、字典数组、Json字符串或NSData -> 模型：  
+### 1. 字典、字典数组、Json字符串或NSData -> 模型：  
 ```objective-c
 [Class zx_modelWithObj:obj];
 ```
 例：[Bird zx_modelWithObj:dic];  
 注：Class为目标模型类，obj可以是单一字典、字典数组、Json字符串或NSData。  
 
-2. 模型、模型数组、Json字符串或NSData -> 字典
+### 2. 模型、模型数组、Json字符串或NSData -> 字典
 ```objective-c
 [obj zx_toDic];
 ```
 例：[bird zx_toDic];
 注：obj可以是单一模型、模型数组、Json字符串或NSData
 
-3. 字典、字典数组、模型、模型数组或NSData -> Json 字符串
+### 3. 字典、字典数组、模型、模型数组或NSData -> Json 字符串
 ```objective-c
 [obj zx_toJsonStr];
 ```
 例：[bird zx_toJsonStr];
 注：obj可以是字典，字典数组，模型、模型数组或NSData
 
-4. 数据转换特殊情况  
+### 4. 数据转换特殊情况  
 * 属性替换1（指定属性修改）
 ```objective-c
 +(NSDictionary *)zx_replaceProName{
-return @{@"uid" : @"id"};
+    return @{@"uid" : @"id"};
 }
 ```
 注：模型中的uid属性将会被字典中key：id对应的value赋值
@@ -55,7 +58,7 @@ return @{@"uid" : @"id"};
 * 属性替换2（全部属性修改）
 ```objective-c
 +(NSString *)zx_replaceProName121:(NSString *)proName{
-return [proName strToUnderLine];
+    return [proName strToUnderLine];
 }
 ```
 注1：模型中处理前的属性为proName，若返回的字符串长度大于0，则使用返回的字符串，示例代码中的操作会将当前对象中所有属性名由驼峰形式转为下划线的形式。
@@ -66,11 +69,38 @@ return [proName strToUnderLine];
 * 模型中包含数组，需要声明数组中存储的Class  
 ```objective-c
 +(NSDictionary *)zx_inArrModelName{
-return @{@"boysArray" : @"Boy"};
+    return @{@"boysArray" : @"Boy"};
 }
 ```
 
+* 排除一些属性不进行任何转换处理
+```objective-c
++(NSArray *)zx_ignorePros{
+    return @[@"ignorePros"];
+}
+```
+
+### 5. 在字典转模型model赋值前对其进行修改，可以在AppDelegate的didFinishLaunchingWithOptions直接书写以下代码
+```objective-c
+[ZXDataConvert shareInstance].zx_dataConvertSetterBlock = ^id _Nonnull(NSString * _Nonnull key, id  _Nonnull orgValue, id owner) {
+    //key:属性名
+    //orgValue:属性名对应的即将被赋值的Value
+    //owner:属性所属的对象
+    //如果给模型赋值的是NSNumer类型，则一律转为NSString类型
+    if([orgValue isKindOfClass:[NSNumber class]]){
+            return [NSString stringWithFormat:@"%@",orgValue];
+    }
+    return orgValue;
+};
+```
+### 6. 自动类型转换
+#### 若Model中对应属性接收类型与json中属性类型不一致，ZXDataHandle会自动进行类型转换，规则如下
+* `{"test":7.11}` => `@property (copy, nonatomic) NSString *test` test值将自动被转换为NSString类型: test = @"7.11"
+* `{"test":"7.11"}` => `@property (assign, nonatomic) int test` test值将自动被转换为int类型: test = 7
+* `{"test":"7.11"}` => `@property (assign, nonatomic) float test` test值将自动被转换为float类型: test = 7.11
+
 ## 数据存储-ZXDataStore
+
 1. 文件，数据直接存储
 * 用户偏好存储与读取（无法直接对自定义类进行操作）
 
@@ -86,23 +116,43 @@ id data = [ZXDataStoreCache readObjForKey:@"123"];
 ```
 * 数据归档与读档（可以直接对自定义类进行操作）
 注:归档读档的类需要继承ZXClassArchived，即可直接进行归档读档操作
+```objective-c
 @interface Apple : ZXClassArchived
+```
+或在model的.m中写上ZXClassArchivedImplementation 
+```objective-c
+#import "Apple.h"
+@implementation Apple
+ZXClassArchivedImplementation
+@end
+
+```
 
 ```objective-c
-//数据归档，将数据存储至当前沙盒document/apple目录下
+//数据归档，将数据存储至当前沙盒document目录下，文件名为apple
 Apple *apple = [[Apple alloc]init];
 apple.name = @"嘻哈苹果";
-apple.dec = @"很好吃吧234";
-apple.soldMoney = 1001;
+//将apple对象存储到document文件夹中，名为apple
 [ZXDataStoreCache arcObj:apple pathComponent:@"apple"];
+//支持多级存储,以下写法将自动创建文件夹并存储,下方代码会自动创建test1文件夹，并在test1文件夹中创建test2文件夹，并将apple对象存储到test2中
+//[ZXDataStoreCache arcObj:apple pathComponent:@"test1/test2/apple"];
 ```
 ```objective-c
 //数据读档，将数据从当前沙盒document/apple目录下读取出来
 Apple *apple = [[Apple alloc]init];
 apple.name = @"嘻哈苹果";
-apple.dec = @"很好吃吧234";
-apple.soldMoney = 1001;
 id data = [ZXDataStoreCache unArcObjPathComponent:@"apple"];
+```
+```objective-c
+//arcObj传nil即为删除，若pathComponent路径对应是一个文件，则删除此文件，若为文件夹，则删除此文件夹以及其中所有内容，包括子文件夹与子文件
+[ZXDataStoreCache arcObj:nil pathComponent:@"test1/test2/apple"];
+```
+* 用户数据归档和读档（可以直接对自定义类进行操作）
+```objective-c
+//需要先存储用户id（在用户登录成功后或账号切换成功后存储）
+[ZXDataStoreCache saveUserAccount:@"88888888"];
+//apple将被存储在/88888888文件夹中，名称为userModel
+[ZXDataStoreCache saveUserObj:apple pathComponent:@"userModel"];
 ```
 ***
 2. Sqlite3数据库操作  
@@ -129,11 +179,11 @@ NSLog("操作结果-%i",res);
 //创建一个对象数组
 NSMutableArray *appleArr = [NSMutableArray array];
 for (NSUInteger i = 0; i < 10; i++) {
-Apple *apple = [[Apple alloc]init];
-apple.name = @"嘻哈苹果";
-apple.dec = @"很好吃哦";
-apple.soldMoney = 100 + i;
-[appleArr addObject:apple];
+    Apple *apple = [[Apple alloc]init];
+    apple.name = @"嘻哈苹果";
+    apple.dec = @"很好吃哦";
+    apple.soldMoney = 100 + i;
+    [appleArr addObject:apple];
 }
 
 //保存
@@ -241,18 +291,3 @@ Sqlite3操作仅允许对表进行更改表名，增加列的操作，我们可�
 ZXSQliteHandle默认为您当前项目创建一个您当前项目的BundleId.sqlite的数据库，数据库中的表名与对应对象一一对应，主键名为id且自增，您无需关心数据库如何创建，表如何设计，SQL语句如何写，但是如此也必然有弊端，ZXSQliteHandle可以满足绝大部分需求，但诸如外键，多表关联等等不常用的功能需要您额外处理。考虑到易用性等方面，ZXSQliteHandle仅提供核心的数据库处理，还望谅解。
 
 ### 任何问题欢迎随时issue我
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

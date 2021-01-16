@@ -24,4 +24,5 @@ typedef enum {
 +(DataType)zx_dataType:(id)data;
 +(BOOL)isNumberType:(NSString *)str;
 +(BOOL)isFoudationClass:(id)obj;
++ (NSString *)getPropertyDecWithType:(NSString *)typeStr;
 @end

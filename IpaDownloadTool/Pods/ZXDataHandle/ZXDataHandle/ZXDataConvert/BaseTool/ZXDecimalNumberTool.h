@@ -17,4 +17,6 @@
 + (NSString *)zx_toStringWithNumber:(double)num;
 ///利用DecimalNumber将double转为NSDecimalNumber
 + (NSDecimalNumber *)zx_decimalNumber:(double)num;
+///利用DecimalNumber将str转为NSDecimalNumber
++ (NSDecimalNumber *)zx_decimalNumberWithStr:(NSString *)str;
 @end

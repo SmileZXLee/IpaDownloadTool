@@ -12,9 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol DeclarationProtocol <NSObject>
 #pragma mark ZXDataConvert相关
-+ (void)zx_inArrModelName;
-+ (void)zx_replaceProName;
-+ (NSString *)zx_replaceProName121:(NSString *)proName;
++(void)zx_inArrModelName;
++(void)zx_ignorePros;
++(void)zx_replaceProName;
++(NSString *)zx_replaceProName121:(NSString *)proName;
++(BOOL)isinIgnorePros:(NSString *)proStr;
 #pragma mark ZXDataStore相关
 + (NSDictionary *)zx_tbConfig;
 @end

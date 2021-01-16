@@ -28,7 +28,6 @@
     if(replaceProNameDic){
         NSString *repKey = [replaceProNameDic zx_dicSafetyReadForKey:proName];
         if(repKey.length){
-            
             return repKey;
         }
     }
@@ -39,5 +38,21 @@
         }
     }
     return proName;
+}
+
++(NSArray *)getIgnorePros{
+    if([self respondsToSelector:@selector(zx_ignorePros)]){
+        NSArray *ignorePros = [self performSelector:@selector(zx_ignorePros)];
+        return ignorePros;
+    }
+    return nil;
+}
+
++(BOOL)isinIgnorePros:(NSString *)proStr{
+    NSArray *ignoreProsArr = [self getIgnorePros];
+    if(!ignoreProsArr.count){
+        return NO;
+    }
+    return [ignoreProsArr containsObject:proStr];
 }
 @end

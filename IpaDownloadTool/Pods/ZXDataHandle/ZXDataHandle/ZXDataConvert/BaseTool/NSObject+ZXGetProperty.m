@@ -25,8 +25,20 @@
     return propertyNamesArr;
 }
 +(void)getEnumPropertyNamesCallBack:(kEnumEventHandler)_result{
+    Class supCls = [self class];
+    while (true) {
+        if(([NSBundle bundleForClass:supCls] == [NSBundle mainBundle])){
+            [self getSubEnumPropertyNamesCallBack:_result cls:supCls];
+        }else{
+            break;
+        }
+        supCls = [supCls superclass];
+    }
+}
+
++(void)getSubEnumPropertyNamesCallBack:(kEnumEventHandler)_result cls:(Class)cls{
     u_int count;
-    objc_property_t *properties  = class_copyPropertyList([self class],&count);
+    objc_property_t *properties  = class_copyPropertyList(cls,&count);
     for(NSUInteger i = 0;i < count;i++){
         const char *propertyNameChar = property_getName(properties[i]);
         const char *propertyTypeChar = property_getAttributes(properties[i]);
@@ -36,5 +48,4 @@
     }
     free(properties);
 }
-
 @end

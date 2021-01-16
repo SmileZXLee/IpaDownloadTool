@@ -13,4 +13,8 @@
 +(instancetype)zx_modelWithDic:(NSMutableDictionary *)dic;
 ///任意类型转模型
 +(id)zx_modelWithObj:(id)obj;
+
++(NSDictionary *)zx_inArrModelName;
++(NSDictionary *)zx_replaceProName;
++(NSString *)zx_replaceProName121:(NSString *)proName;
 @end

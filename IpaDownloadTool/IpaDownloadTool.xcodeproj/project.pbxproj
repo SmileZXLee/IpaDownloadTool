@@ -11,6 +11,7 @@
 		04C9937A25B2A0910041B15E /* ZXIpaUrlHisVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */; };
 		04C9938425B2A0D80041B15E /* ZXIpaUrlHisCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9938225B2A0D80041B15E /* ZXIpaUrlHisCell.m */; };
 		04C9938525B2A0D80041B15E /* ZXIpaUrlHisCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C9938325B2A0D80041B15E /* ZXIpaUrlHisCell.xib */; };
+		04C9939E25B2A4D10041B15E /* ZXIpaUrlHisModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9939D25B2A4D10041B15E /* ZXIpaUrlHisModel.m */; };
 		741B92A22275943700F24EED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741B92A12275943700F24EED /* Assets.xcassets */; };
 		741B92A52275943700F24EED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 741B92A32275943700F24EED /* LaunchScreen.storyboard */; };
 		741B92A82275943700F24EED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 741B92A72275943700F24EED /* main.m */; };
@@ -87,6 +88,8 @@
 		04C9938125B2A0D80041B15E /* ZXIpaUrlHisCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXIpaUrlHisCell.h; sourceTree = "<group>"; };
 		04C9938225B2A0D80041B15E /* ZXIpaUrlHisCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXIpaUrlHisCell.m; sourceTree = "<group>"; };
 		04C9938325B2A0D80041B15E /* ZXIpaUrlHisCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZXIpaUrlHisCell.xib; sourceTree = "<group>"; };
+		04C9939C25B2A4D10041B15E /* ZXIpaUrlHisModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXIpaUrlHisModel.h; sourceTree = "<group>"; };
+		04C9939D25B2A4D10041B15E /* ZXIpaUrlHisModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXIpaUrlHisModel.m; sourceTree = "<group>"; };
 		741B92952275943100F24EED /* IpaDownloadTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IpaDownloadTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		741B92A12275943700F24EED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		741B92A42275943700F24EED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -226,6 +229,8 @@
 		04C9937425B2A06B0041B15E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04C9939C25B2A4D10041B15E /* ZXIpaUrlHisModel.h */,
+				04C9939D25B2A4D10041B15E /* ZXIpaUrlHisModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -762,6 +767,7 @@
 				7436DAA422768B15007AA858 /* SGQRCodeScanningView.m in Sources */,
 				7436DAA322768B15007AA858 /* ScanSuccessJumpVC.m in Sources */,
 				7436DAA822768B15007AA858 /* SYFavoriteButton.m in Sources */,
+				04C9939E25B2A4D10041B15E /* ZXIpaUrlHisModel.m in Sources */,
 				7436DAA722768B15007AA858 /* JHFeilterManager.m in Sources */,
 				7436DABC2276B92D007AA858 /* ZXFileDownload.m in Sources */,
 				741B92F82275F93A00F24EED /* ZXIpaHisCell.m in Sources */,

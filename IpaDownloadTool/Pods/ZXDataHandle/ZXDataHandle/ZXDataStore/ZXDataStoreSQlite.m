@@ -187,7 +187,9 @@ static sqlite3 *db;
             }
         }
     }
-    
+    if(subT.length == 1){
+        subT = [subT lowercaseString];
+    }
     NSDictionary *sqlValueMapper = [self sqlValueMapper];
     NSString *sqlValueType = [sqlValueMapper zx_dicSafetyReadForKey:subT];
     

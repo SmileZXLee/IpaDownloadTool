@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSString *)zx_toJsonStr;
 ///任意类型转keyValue的形式：name=123&dec=test
 -(NSString*)zx_kvStr;
+///任意类型转JsonData
+-(NSData *)zx_toJsonData;
 @end
 
 NS_ASSUME_NONNULL_END

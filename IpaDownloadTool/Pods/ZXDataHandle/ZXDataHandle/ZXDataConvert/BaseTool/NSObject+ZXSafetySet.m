@@ -9,6 +9,7 @@
 #import "NSObject+ZXSafetySet.h"
 #import "NSObject+ZXGetProperty.h"
 #import "ZXDataHandleLog.h"
+#import "ZXDataConvert.h"
 @implementation NSObject (ZXSafetySet)
 -(id)zx_objSafetyReadForKey:(NSString *)key{
     ///因为模型取值此时不存在找不到key的情况，因此直接返回
@@ -23,22 +24,12 @@
     return returnObj;
 }
 -(void)zx_objSaftySetValue:(id)value forKey:(NSString *)key{
-    if(![value isKindOfClass:[NSNull class]] && value){
-        if([value isKindOfClass:[NSArray class]]){
-            if([value count]){
-                [self setValue:value forKey:key];
-            }
-        }else{
-            [self setValue:value forKey:key];
-        }
+    if([ZXDataConvert shareInstance].zx_dataConvertSetterBlock){
+        id resValue = [ZXDataConvert shareInstance].zx_dataConvertSetterBlock(key,value,self);
+        value = resValue;
     }
-    return;
-    ///因为模型赋值此时不存在找不到key的情况，因此直接返回
-    NSArray *proNamesArr = [[self class] getAllPropertyNames];
-    if([proNamesArr containsObject:key]){
+    if(value && ![value isKindOfClass:[NSNull class]]){
         [self setValue:value forKey:key];
-    }else{
-        ZXDataHandleLog(@"对象Value赋值失败，对象中不包含属性:%@",key);
     }
 }
 

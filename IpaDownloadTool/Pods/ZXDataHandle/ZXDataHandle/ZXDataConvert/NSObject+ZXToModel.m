@@ -8,6 +8,7 @@
 
 #import "NSObject+ZXToModel.h"
 #import "ZXDataType.h"
+#import "ZXDataConvert.h"
 #import "NSObject+ZXGetProperty.h"
 #import "ZXDecimalNumberTool.h"
 #import "NSString+ZXDataConvert.h"
@@ -27,7 +28,8 @@
     [self getEnumPropertyNamesCallBack:^(NSString *proName,NSString *proType) {
         NSString *dicKeyProName = [self getReplacedProName:proName];
         id value = [dic zx_dicSafetyReadForKey:dicKeyProName];
-        if(value != NULL){
+        BOOL isinIgnorePros = [[self class] isinIgnorePros:proName];
+        if(value != NULL && !isinIgnorePros){
             DataType dataType = [ZXDataType zx_dataType:value];
             if(dataType == DataTypeDic){
                 NSArray *proTypeArr = [proType componentsSeparatedByString:@","];
@@ -42,6 +44,22 @@
                         }else{
                             [modelObj zx_objSaftySetValue:value forKey:proName];
                         }
+                    }else{
+                        id subModel = nil;
+                        NSDictionary *inArrModelNameDic = [self getInArrModelNameDic];
+                        if(inArrModelNameDic){
+                            NSString *subClassStr = [inArrModelNameDic zx_dicSafetyReadForKey:proName];
+                            if(subClassStr.length){
+                                if(subClassStr){
+                                    Class subClass = NSClassFromString(subClassStr);
+                                    if(subClass){
+                                        subModel = [[subClass class] zx_modelWithDic:value];
+                                        
+                                    }
+                                }
+                            }
+                        }
+                        [modelObj zx_objSaftySetValue:subModel ? subModel :value forKey:proName];
                     }
                 }
             }else if(dataType == DataTypeArr){
@@ -68,11 +86,13 @@
                             [subMuArr addObject:subObj];
                         }
                         
-                    }
-                    if(subDataType == DataTypeArr){
+                    }else if(subDataType == DataTypeArr){
                         id subModel = [[subObj class] zx_modelWithArr:subObj];
                         [subMuArr addObject:subModel];
+                    }else{
+                        [subMuArr addObject:subObj];
                     }
+                    
                 }
                 [modelObj zx_objSaftySetValue:subMuArr forKey:proName];
             }else{
@@ -85,21 +105,20 @@
                         }else{
                             [modelObj zx_objSaftySetValue:value forKey:proName];
                         }
+                        
                     }else if([proType hasPrefix:@"T@"]){
+                        value = [ZXDataConvert handleValueToMatchModelPropertyTypeWithValue:value type:proType];
                         [modelObj zx_objSaftySetValue:value forKey:proName];
                     }else{
                         value = [ZXDecimalNumberTool zx_decimalNumber:[value doubleValue]];
                         [modelObj zx_objSaftySetValue:value forKey:proName];
                     }
                 }else{
-                    if(dataType == DataTypeFloat || dataType == DataTypeDouble){
+                    if(dataType == DataTypeFloat || dataType == DataTypeDouble || dataType == DataTypeInt || dataType == DataTypeBool || dataType == DataTypeLong){
                         value = [ZXDecimalNumberTool zx_decimalNumber:[value doubleValue]];
                     }
-                    if([proType hasPrefix:@"T@\"NSNumber\""]){
-                        [modelObj zx_objSaftySetValue:value forKey:proName];
-                    }else{
-                        [modelObj zx_objSaftySetValue:[value stringValue] forKey:proName];
-                    }
+                    value = [ZXDataConvert handleValueToMatchModelPropertyTypeWithValue:value type:proType];
+                    [modelObj zx_objSaftySetValue:value forKey:proName];
                 }
             }
         }
@@ -149,6 +168,19 @@
         }
     }
     return resObj;
+}
+
+
++(NSDictionary *)zx_inArrModelName{
+    return nil;
+}
+
++(NSDictionary *)zx_replaceProName{
+    return nil;
+}
+
++(NSString *)zx_replaceProName121:(NSString *)proName{
+    return nil;
 }
 
 @end
