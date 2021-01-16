@@ -88,9 +88,10 @@
     [self.view addSubview:self.scanningView];
 }
 - (void)QRCodeAlbumManager:(SGQRCodeAlbumManager *)albumManager didFinishPickingMediaWithResult:(NSString *)result {
+    __weak __typeof(self) weakSelf = self;
     if(self.resultBlock){
-        self.resultBlock(result);
-        [self.navigationController popViewControllerAnimated:YES];
+        weakSelf.resultBlock(result);
+        [weakSelf.navigationController popViewControllerAnimated:YES];
         return;
     }
     

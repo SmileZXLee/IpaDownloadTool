@@ -7,12 +7,27 @@
 //
 
 #import "ZXIpaUrlHisCell.h"
-
+#import "ZXIpaUrlHisModel.h"
+#import "UIImageView+WebCache.h"
+@interface ZXIpaUrlHisCell()
+@property (weak, nonatomic) IBOutlet UIImageView *iconImgV;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *urlLabel;
+@property (strong, nonatomic)ZXIpaUrlHisModel *hisModel;
+@end
 @implementation ZXIpaUrlHisCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.iconImgV.clipsToBounds = YES;
+    self.iconImgV.layer.cornerRadius = 8;
+}
+
+- (void)setHisModel:(ZXIpaUrlHisModel *)hisModel{
+    _hisModel = hisModel;
+    [self.iconImgV sd_setImageWithURL:[NSURL URLWithString:hisModel.favicon] placeholderImage:[UIImage imageNamed:@"icon"]];
+    self.titleLabel.text = hisModel.title;
+    self.urlLabel.text = hisModel.urlStr;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -7,12 +7,14 @@ PODS:
   - SDWebImage (5.0.1):
     - SDWebImage/Core (= 5.0.1)
   - SDWebImage/Core (5.0.1)
+  - YBPopupMenu (1.1.7)
   - ZXDataHandle (1.1.3)
   - ZXTableView (1.1.4)
 
 DEPENDENCIES:
   - NJKWebViewProgress
   - SDWebImage
+  - YBPopupMenu
   - ZXDataHandle
   - ZXTableView
 
@@ -20,15 +22,17 @@ SPEC REPOS:
   trunk:
     - NJKWebViewProgress
     - SDWebImage
+    - YBPopupMenu
     - ZXDataHandle
     - ZXTableView
 
 SPEC CHECKSUMS:
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   SDWebImage: 27dd2c9ea07a2252f94557c9fbb6105ee94b74c9
+  YBPopupMenu: cee0568a0c5de8565b0cda1bf97f0520d71d122d
   ZXDataHandle: b0312d123d80c7faf95ff87c7e900f831912e99c
   ZXTableView: 4c3c35acbb0628bc814a895e5e39f5c7b7925798
 
-PODFILE CHECKSUM: 28a297d9111c19dc393c559a8029bcec5911bbef
+PODFILE CHECKSUM: 1d2fc91c614b72e5e59f6675adcc002bc3f3c3cf
 
 COCOAPODS: 1.10.0

@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -28,9 +28,9 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>IPA下载需要访问您的相机以正常扫描二维码</string>
+	<string>IPA提取器需要访问您的相机以正常扫描二维码</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>IPA下载需要访问您的相册以正常从相册获取二维码</string>
+	<string>IPA提取器需要访问您的相册以正常从相册获取二维码</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

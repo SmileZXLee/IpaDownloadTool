@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZXIpaUrlHisModel : NSObject
+///host链接
+@property (copy, nonatomic) NSString *hostStr;
 ///网站链接
 @property (copy, nonatomic) NSString *urlStr;
 ///网站标题

@@ -7,6 +7,7 @@
 //  https://github.com/SmileZXLee/IpaDownloadTool
 
 #import "ZXIpaGetVC.h"
+#import "ZXIpaUrlHisModel.h"
 #import "ZXIpaHttpRequest.h"
 #import "ZXIpaModel.h"
 #import "SGQRCodeScanningVC.h"
@@ -15,6 +16,7 @@
 
 #import "ZXIpaHisVC.h"
 #import "ZXLocalIpaVC.h"
+#import "ZXIpaUrlHisVC.h"
 @interface ZXIpaGetVC ()<UIWebViewDelegate,NJKWebViewProgressDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIButton *githubBtn;
@@ -35,18 +37,25 @@
     self.navigationController.navigationBar.translucent = NO;
     self.title = MainTitle;
     UIBarButtonItem *hisItem = [[UIBarButtonItem alloc]initWithTitle:@"历史" style:UIBarButtonItemStyleDone target:self action:@selector(historyAction)];
-    UIBarButtonItem *downloadedItem =  [[UIBarButtonItem alloc]initWithTitle:@"已下载" style:UIBarButtonItemStyleDone target:self action:@selector(downloadedItemAction)];
+    UIBarButtonItem *downloadedItem = [[UIBarButtonItem alloc]initWithTitle:@"已下载" style:UIBarButtonItemStyleDone target:self action:@selector(downloadedItemAction)];
     self.navigationItem.leftBarButtonItems = @[hisItem,downloadedItem];
     
-    UIBarButtonItem *inputItem =  [[UIBarButtonItem alloc]initWithTitle:@"网址" style:UIBarButtonItemStyleDone target:self action:@selector(inputAction)];
-    UIBarButtonItem *qrcodeItem =  [[UIBarButtonItem alloc]initWithTitle:@"二维码" style:UIBarButtonItemStyleDone target:self action:@selector(qrcodeItemAction)];
+    UIButton *inputBtn = [[UIButton alloc]init];
+    [inputBtn addTarget:self action:@selector(inputAction) forControlEvents:UIControlEventTouchUpInside];
+    [inputBtn setTitleColor:MainColor forState:UIControlStateNormal];
+    inputBtn.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    [inputBtn setTitle:@"网址" forState:UIControlStateNormal];
+    UILongPressGestureRecognizer *inputLongPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(inputLongPress:)];
+    [inputBtn addGestureRecognizer:inputLongPressGestureRecognizer];
+    UIBarButtonItem *inputItem = [[UIBarButtonItem alloc]initWithCustomView:inputBtn];
+    UIBarButtonItem *qrcodeItem = [[UIBarButtonItem alloc]initWithTitle:@"二维码" style:UIBarButtonItemStyleDone target:self action:@selector(qrcodeItemAction)];
     self.navigationItem.rightBarButtonItems = @[inputItem,qrcodeItem];
     self.webView.delegate = self;
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.opaque = NO;
     self.webView.scalesPageToFit = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self showPlaceViewWithText:@"点击右上角开始"];
+        [self showPlaceViewWithText:@"轻点【网址】开始，长按显示网址历史"];
     });
     [self.githubBtn setTitleColor:MainColor forState:UIControlStateNormal];
     UIScreenEdgePanGestureRecognizer *panGes = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(goBackAction:)];
@@ -130,8 +139,17 @@
         }
         
     }];
-    
     [self presentViewController:alertController animated:YES completion:nil];
+}
+-(void)inputLongPress:(UILongPressGestureRecognizer *)gesture{
+    if(gesture.state != UIGestureRecognizerStateBegan){
+        return;
+    }
+    ZXIpaUrlHisVC *VC = [[ZXIpaUrlHisVC alloc]init];
+    VC.urlSelectedBlock = ^(NSString * _Nonnull urlStr) {
+        self.urlStr = urlStr;
+    };
+    [self.navigationController pushViewController:VC animated:YES];
 }
 
 #pragma mark 网页返回上一级
@@ -177,12 +195,11 @@
                 ZXIpaModel *ipaModel = [[ZXIpaModel alloc]initWithDic:plistDic];
                 ipaModel.fromPageUrl = [[NSUserDefaults standardUserDefaults]objectForKey:@"cacheUrlStr"];
                 NSArray *sameArr = [ZXIpaModel zx_dbQuaryWhere:[NSString stringWithFormat:@"sign='%@'",ipaModel.sign]];
+                ipaModel.localPath = [sameArr.firstObject valueForKey:@"localPath"];
                 if(sameArr.count){
-                    ipaModel.localPath = [sameArr.firstObject valueForKey:@"localPath"];
-                    [ipaModel zx_dbUpdateWhere:[NSString stringWithFormat:@"sign='%@'",ipaModel.sign]];
-                }else{
-                    [ipaModel zx_dbSave];
+                    [ZXIpaModel zx_dbDropWhere:[NSString stringWithFormat:@"sign='%@'",ipaModel.sign]];
                 }
+                [ipaModel zx_dbSave];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [ALToastView showToastWithText:[NSString stringWithFormat:@"[%@]IPA信息已保存，点击左上角查看",ipaModel.title]];
                     self.title = MainTitle;
@@ -206,6 +223,32 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     self.title = MainTitle;
     self.githubBtn.hidden = YES;
+    
+    NSString *jsGetFavicon = @"var getFavicon=function(){var favicon=undefined;var nodeList=document.getElementsByTagName('link');for(var i=0;i<nodeList.length;i++){if((nodeList[i].getAttribute('rel')=='icon')||(nodeList[i].getAttribute('rel')=='shortcut icon')){favicon=nodeList[i].getAttribute('href')}}return favicon};getFavicon();";
+    NSString *title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    NSString *url = [webView stringByEvaluatingJavaScriptFromString:@"document.URL"];
+    if([url isEqualToString:self.urlStr]){
+        NSString *host = [webView stringByEvaluatingJavaScriptFromString:@"location.hostname"];
+        NSString *favicon = [webView stringByEvaluatingJavaScriptFromString:jsGetFavicon];
+        if(favicon.length > 0 && ![favicon hasPrefix:@"http"]){
+            favicon = [host stringByAppendingString:favicon];
+        }
+        if(!favicon.length){
+            favicon = [NSString stringWithFormat:@"%@/favicon.ico",host];
+        }
+        ZXIpaUrlHisModel *urlHisModel = [[ZXIpaUrlHisModel alloc]init];
+        urlHisModel.hostStr = host;
+        urlHisModel.urlStr = url;
+        urlHisModel.title = title;
+        urlHisModel.favicon = favicon;
+        NSArray *sameArr = [ZXIpaUrlHisModel zx_dbQuaryWhere:[NSString stringWithFormat:@"urlStr='%@'",urlHisModel.urlStr]];
+        if(sameArr.count){
+            [ZXIpaUrlHisModel zx_dbDropWhere:[NSString stringWithFormat:@"urlStr='%@'",urlHisModel.urlStr]];
+        }
+        [urlHisModel zx_dbSave];
+    }
+    
+   
 }
 #pragma mark 网页加载失败
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{

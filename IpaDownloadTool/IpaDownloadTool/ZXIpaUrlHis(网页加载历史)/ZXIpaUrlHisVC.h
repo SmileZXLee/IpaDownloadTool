@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZXIpaUrlHisVC : UIViewController
-
+@property(nonatomic,copy)void(^urlSelectedBlock)(NSString *urlStr);
 @end
 
 NS_ASSUME_NONNULL_END

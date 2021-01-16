@@ -25,4 +25,9 @@
     return resStr;
 }
 
+-(NSString *)getWebFaviconStrWithHostUrl:(NSString *)hostUrl{
+    
+    return @"";
+}
+
 @end

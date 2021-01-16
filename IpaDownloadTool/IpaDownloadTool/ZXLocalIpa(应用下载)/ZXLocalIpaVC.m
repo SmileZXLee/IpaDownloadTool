@@ -33,7 +33,7 @@ typedef enum {
 }
 #pragma mark - 初始化视图
 -(void)initUI{
-    self.title = @"IPA下载";
+    self.title = MainTitle;
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
@@ -112,7 +112,7 @@ typedef enum {
     for (int i = (int)(resArr.count - 1);i >= 0;i--) {
         ZXIpaModel *ipaModel = resArr[i];
         ZXLocalIpaDownloadModel *downloadedModel = [[ZXLocalIpaDownloadModel alloc]init];
-        downloadedModel.title = ipaModel.title;
+        downloadedModel.title = [NSString stringWithFormat:@"%@(%@)",ipaModel.title,ipaModel.version];
         downloadedModel.downloadUrl = ipaModel.downloadUrl;
         downloadedModel.sign = ipaModel.sign;
         downloadedModel.finish = YES;
@@ -126,9 +126,7 @@ typedef enum {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self showPlaceViewWithText:@"暂无已下载的文件"];
         });
-        
     }
-    
 }
 
 #pragma mark 控制器pop时显示提示信息
@@ -162,7 +160,7 @@ typedef enum {
 -(ZXLocalIpaDownloadModel *)downloadingModel{
     if(!_downloadingModel){
         _downloadingModel = [[ZXLocalIpaDownloadModel alloc]init];
-        _downloadingModel.title = self.ipaModel.title;
+        _downloadingModel.title = [NSString stringWithFormat:@"%@(%@)",self.ipaModel.title,self.ipaModel.version];
         _downloadingModel.downloadUrl = self.ipaModel.downloadUrl;
         _downloadingModel.sign = self.ipaModel.sign;
     }

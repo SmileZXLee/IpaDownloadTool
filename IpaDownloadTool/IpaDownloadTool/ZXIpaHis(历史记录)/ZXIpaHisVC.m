@@ -23,7 +23,7 @@
 }
 #pragma mark - 初始化视图
 -(void)initUI{
-    self.title = @"历史记录";
+    self.title = @"IPA提取历史记录";
     __weak __typeof(self) weakSelf = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"清空" style:UIBarButtonItemStyleDone target:self action:@selector(cleanAction)];
     
@@ -48,7 +48,7 @@
 #pragma mark - Actions
 #pragma mark 点击清除历史记录
 -(void)cleanAction{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定清空历史记录吗？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定清空IPA提取历史记录吗？" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [ZXIpaModel zx_dbDropTable];

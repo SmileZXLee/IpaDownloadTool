@@ -24,7 +24,7 @@
 #import "ALToastView.h"
 
 #define MainColor [UIColor colorWithRed:250/255.0 green:103/255.0 blue:123/255.0 alpha:1]
-#define MainTitle @"IPA下载"
+#define MainTitle @"IPA提取器"
 #define ZXIpaDownloadedPath @"ZXIpaDownloadedArr"
 #define ZXPlistCachePath @"ZXPlistCache.plist"
 #define ZXPasteboardStrKey @"ZXPasteboardStrKey"
