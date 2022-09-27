@@ -23,6 +23,7 @@
 @property (strong, nonatomic)NJKWebViewProgressView *progressView;
 @property (strong, nonatomic)NJKWebViewProgress *progressProxy;
 @property (copy, nonatomic)NSString *urlStr;
+@property (assign, nonatomic)BOOL urlStartHandel;
 @end
 
 @implementation ZXIpaGetVC
@@ -67,6 +68,12 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(pasteboardStrLoadUrl:) name:ZXPasteboardStrLoadUrlNotification object:nil];
     
+    if (@available(iOS 15.0, *)) {
+       UINavigationBarAppearance *appperance = [[UINavigationBarAppearance alloc]init];
+       appperance.backgroundColor = [UIColor whiteColor];
+       self.navigationController.navigationBar.standardAppearance = appperance;
+       self.navigationController.navigationBar.scrollEdgeAppearance = appperance;
+    }
 }
 
 - (void)initWebViewProgressView{
@@ -148,6 +155,7 @@
     ZXIpaUrlHisVC *VC = [[ZXIpaUrlHisVC alloc]init];
     VC.urlSelectedBlock = ^(NSString * _Nonnull urlStr) {
         self.urlStr = urlStr;
+        self.urlStartHandel = YES;
     };
     [self.navigationController pushViewController:VC animated:YES];
 }
@@ -227,7 +235,7 @@
     NSString *jsGetFavicon = @"var getFavicon=function(){var favicon=undefined;var nodeList=document.getElementsByTagName('link');for(var i=0;i<nodeList.length;i++){if((nodeList[i].getAttribute('rel')=='icon')||(nodeList[i].getAttribute('rel')=='shortcut icon')){favicon=nodeList[i].getAttribute('href')}}return favicon};getFavicon();";
     NSString *title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     NSString *url = [webView stringByEvaluatingJavaScriptFromString:@"document.URL"];
-    if([url isEqualToString:self.urlStr]){
+    if(self.urlStartHandel){
         NSString *host = [webView stringByEvaluatingJavaScriptFromString:@"location.hostname"];
         NSString *favicon = [webView stringByEvaluatingJavaScriptFromString:jsGetFavicon];
         if(favicon.length > 0 && ![favicon hasPrefix:@"http"]){
@@ -247,7 +255,7 @@
         }
         [urlHisModel zx_dbSave];
     }
-    
+    self.urlStartHandel = NO;
    
 }
 #pragma mark 网页加载失败
@@ -271,6 +279,7 @@
 #pragma mark 处理url
 -(void)handelWithUrlStr:(NSString *)urlStr{
     self.urlStr = urlStr;
+    self.urlStartHandel = YES;
 }
 
 - (void)pasteboardStrLoadUrl:(NSNotification *)nf{

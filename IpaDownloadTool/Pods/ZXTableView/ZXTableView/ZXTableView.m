@@ -723,6 +723,10 @@
     self.zx_keepStaticFooterView = KeepStaticFooterView;
     self.zx_fixCellBlockAfterAutoSetModel = FixCellBlockAfterAutoSetModel;
     self.zx_autoDeselectWhenSelected = AutoDeselectWhenSelected;
+    
+    if (@available(iOS 15.0, *)) {
+        self.sectionHeaderTopPadding = 0;
+    }
 }
 #pragma mark - 生命周期
 -(instancetype)init{

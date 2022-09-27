@@ -56,6 +56,16 @@ typedef enum {
             [[ZXFileManage shareInstance] shareFileWithPath:model.localPath];
         }
     };
+    self.tableView.zx_editActionsForRowAtIndexPath = ^NSArray<UITableViewRowAction *> *(NSIndexPath *indexPath) {
+        UITableViewRowAction *delAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+            ZXLocalIpaDownloadModel *model = weakSelf.tableView.zxDatas[indexPath.row];
+            [ZXFileManage delFileWithPath:model.localPath];
+            if(self.downloadType == DownloadTypeDownloaded){
+                [weakSelf setDownloadedData];
+            }
+        }];
+        return self.downloadType == DownloadTypeDownloaded ? @[delAction] : @[];
+    };
     self.navigationItem.titleView = self.segView;
 }
 #pragma mark - Actions
