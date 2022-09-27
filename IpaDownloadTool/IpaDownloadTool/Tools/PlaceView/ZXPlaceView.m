@@ -36,16 +36,15 @@
 }
 
 +(instancetype)showWithNotice:(NSString *)notice superV:(UIView *)superView{
-    ZXPlaceView *placeView = [[ZXPlaceView alloc]initWithFrame:CGRectMake(0, (superView.frame.size.height - 160 ) / 2, superView.frame.size.width, 200) notice:notice];
+    ZXPlaceView *placeView = [[ZXPlaceView alloc]initWithFrame:CGRectZero notice:notice];
     [superView addSubview:placeView];
     return placeView;
 }
 
 -(void)layoutSubviews{
     [super layoutSubviews];
-    self.frame = CGRectMake(0, (self.superview.frame.size.height - 160 ) / 2, self.superview.frame.size.width, 200);
+    self.frame = CGRectMake(0, (self.superview.frame.size.height - 160) / 2 - 40, self.superview.frame.size.width, 200);
     [self refSubViews];
-    
 }
 
 -(void)refSubViews{
