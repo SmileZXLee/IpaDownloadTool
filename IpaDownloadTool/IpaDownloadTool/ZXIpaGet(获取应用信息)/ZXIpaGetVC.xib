@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZXIpaGetVC">
             <connections>
                 <outlet property="githubBtn" destination="43e-VL-V8a" id="ewx-Yf-tlT"/>
+                <outlet property="versionBtn" destination="ZxB-Lg-ZYs" id="DVD-iG-Krp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="vxn-7K-wp1" id="Hkr-7v-8R0"/>
             </connections>
@@ -26,7 +25,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </webView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="43e-VL-V8a">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="43e-VL-V8a">
                     <rect key="frame" x="10" y="832" width="394" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="enw-Io-hKR"/>
@@ -37,10 +36,19 @@
                         <action selector="githubAction:" destination="-1" eventType="touchUpInside" id="cZe-XW-OTs"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZxB-Lg-ZYs">
+                    <rect key="frame" x="188" y="800" width="38" height="27"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Button"/>
+                </button>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="IUG-zQ-Wdc"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="vxn-7K-wp1" secondAttribute="bottom" id="8kV-vO-lNe"/>
+                <constraint firstItem="ZxB-Lg-ZYs" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Esh-QX-8d1"/>
+                <constraint firstItem="43e-VL-V8a" firstAttribute="top" secondItem="ZxB-Lg-ZYs" secondAttribute="bottom" constant="5" id="H0X-J4-ucf"/>
                 <constraint firstAttribute="trailing" secondItem="vxn-7K-wp1" secondAttribute="trailing" id="NgL-IX-S9I"/>
                 <constraint firstItem="43e-VL-V8a" firstAttribute="leading" secondItem="IUG-zQ-Wdc" secondAttribute="leading" constant="10" id="TmN-0d-w7Y"/>
                 <constraint firstItem="IUG-zQ-Wdc" firstAttribute="trailing" secondItem="43e-VL-V8a" secondAttribute="trailing" constant="10" id="WeN-0Z-GgA"/>
@@ -48,7 +56,7 @@
                 <constraint firstItem="vxn-7K-wp1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="sIb-go-3Re"/>
                 <constraint firstItem="vxn-7K-wp1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zEt-qi-cTx"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="IUG-zQ-Wdc"/>
+            <point key="canvasLocation" x="48" y="21"/>
         </view>
     </objects>
 </document>

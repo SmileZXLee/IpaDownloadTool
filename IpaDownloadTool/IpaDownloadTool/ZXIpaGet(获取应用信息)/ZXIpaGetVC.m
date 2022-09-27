@@ -20,6 +20,8 @@
 @interface ZXIpaGetVC ()<UIWebViewDelegate,NJKWebViewProgressDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIButton *githubBtn;
+@property (weak, nonatomic) IBOutlet UIButton *versionBtn;
+
 @property (strong, nonatomic)NJKWebViewProgressView *progressView;
 @property (strong, nonatomic)NJKWebViewProgress *progressProxy;
 @property (copy, nonatomic)NSString *urlStr;
@@ -35,6 +37,7 @@
 
 #pragma mark - 初始化视图
 -(void)initUI{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     self.navigationController.navigationBar.translucent = NO;
     self.title = MainTitle;
     UIBarButtonItem *hisItem = [[UIBarButtonItem alloc]initWithTitle:@"历史" style:UIBarButtonItemStyleDone target:self action:@selector(historyAction)];
@@ -58,7 +61,12 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self showPlaceViewWithText:@"轻点【网址】开始，长按显示网址历史"];
     });
+    NSString *appName = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+    NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *appBuild = [infoDictionary objectForKey:@"CFBundleVersion"];
     [self.githubBtn setTitleColor:MainColor forState:UIControlStateNormal];
+    [self.versionBtn setTitleColor:MainColor forState:UIControlStateDisabled];
+    [self.versionBtn setTitle:[NSString stringWithFormat:@"%@ v%@(%@)",appName,appVersion,appBuild] forState:UIControlStateDisabled];
     UIScreenEdgePanGestureRecognizer *panGes = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(goBackAction:)];
     panGes.edges = UIRectEdgeLeft;
     [self.view addGestureRecognizer:panGes];
