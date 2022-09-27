@@ -26,10 +26,7 @@
                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </webView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="43e-VL-V8a">
-                    <rect key="frame" x="10" y="832" width="394" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="enw-Io-hKR"/>
-                    </constraints>
+                    <rect key="frame" x="10" y="825" width="394" height="27"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <state key="normal" title="https://github.com/SmileZXLee/IpaDownloadTool"/>
                     <connections>
@@ -37,7 +34,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZxB-Lg-ZYs">
-                    <rect key="frame" x="188" y="800" width="38" height="27"/>
+                    <rect key="frame" x="188" y="798" width="38" height="27"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="Button"/>
@@ -48,7 +45,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="vxn-7K-wp1" secondAttribute="bottom" id="8kV-vO-lNe"/>
                 <constraint firstItem="ZxB-Lg-ZYs" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Esh-QX-8d1"/>
-                <constraint firstItem="43e-VL-V8a" firstAttribute="top" secondItem="ZxB-Lg-ZYs" secondAttribute="bottom" constant="5" id="H0X-J4-ucf"/>
+                <constraint firstItem="43e-VL-V8a" firstAttribute="top" secondItem="ZxB-Lg-ZYs" secondAttribute="bottom" id="H0X-J4-ucf"/>
                 <constraint firstAttribute="trailing" secondItem="vxn-7K-wp1" secondAttribute="trailing" id="NgL-IX-S9I"/>
                 <constraint firstItem="43e-VL-V8a" firstAttribute="leading" secondItem="IUG-zQ-Wdc" secondAttribute="leading" constant="10" id="TmN-0d-w7Y"/>
                 <constraint firstItem="IUG-zQ-Wdc" firstAttribute="trailing" secondItem="43e-VL-V8a" secondAttribute="trailing" constant="10" id="WeN-0Z-GgA"/>

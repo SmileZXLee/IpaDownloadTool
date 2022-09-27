@@ -239,6 +239,7 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     self.title = MainTitle;
     self.githubBtn.hidden = YES;
+    self.versionBtn.hidden = YES;
     
     NSString *jsGetFavicon = @"var getFavicon=function(){var favicon=undefined;var nodeList=document.getElementsByTagName('link');for(var i=0;i<nodeList.length;i++){if((nodeList[i].getAttribute('rel')=='icon')||(nodeList[i].getAttribute('rel')=='shortcut icon')){favicon=nodeList[i].getAttribute('href')}}return favicon};getFavicon();";
     NSString *title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
