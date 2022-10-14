@@ -24,7 +24,7 @@
 -(void)setDetailModel:(ZXIpaDetailModel *)detailModel{
     _detailModel = detailModel;
     self.titleLabel.text = detailModel.title;
-    self.detailLabel.text = detailModel.detail;
+    self.detailLabel.text = detailModel.detail ? detailModel.detail : @"无";
 }
 
 @end

@@ -122,7 +122,11 @@ typedef enum {
     for (int i = (int)(resArr.count - 1);i >= 0;i--) {
         ZXIpaModel *ipaModel = resArr[i];
         ZXLocalIpaDownloadModel *downloadedModel = [[ZXLocalIpaDownloadModel alloc]init];
-        downloadedModel.title = [NSString stringWithFormat:@"%@(%@)",ipaModel.title,ipaModel.version];
+        if(ipaModel.version){
+            downloadedModel.title = [NSString stringWithFormat:@"%@(v%@).ipa",ipaModel.title,ipaModel.version];
+        }else{
+            downloadedModel.title = [NSString stringWithFormat:@"%@.ipa",ipaModel.title];
+        }
         downloadedModel.downloadUrl = ipaModel.downloadUrl;
         downloadedModel.sign = ipaModel.sign;
         downloadedModel.finish = YES;
@@ -170,8 +174,12 @@ typedef enum {
 -(ZXLocalIpaDownloadModel *)downloadingModel{
     if(!_downloadingModel){
         _downloadingModel = [[ZXLocalIpaDownloadModel alloc]init];
-        _downloadingModel.title = [NSString stringWithFormat:@"%@(%@)",self.ipaModel.title,self.ipaModel.version];
         _downloadingModel.downloadUrl = self.ipaModel.downloadUrl;
+        if(self.ipaModel.version){
+            _downloadingModel.title = [NSString stringWithFormat:@"%@(v%@).ipa",self.ipaModel.title,self.ipaModel.version];
+        }else{
+            _downloadingModel.title = [NSString stringWithFormat:@"%@.ipa",self.ipaModel.title];
+        }
         _downloadingModel.sign = self.ipaModel.sign;
     }
     return _downloadingModel;

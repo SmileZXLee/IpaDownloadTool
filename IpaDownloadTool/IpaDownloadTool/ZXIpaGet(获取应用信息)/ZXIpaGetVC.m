@@ -13,6 +13,7 @@
 #import "SGQRCodeScanningVC.h"
 #import "NJKWebViewProgress.h"
 #import "NJKWebViewProgressView.h"
+#import "NSString+ZXMD5.h"
 
 #import "ZXIpaHisVC.h"
 #import "ZXLocalIpaVC.h"
@@ -213,11 +214,19 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此链接为ipa文件下载链接，无需提取，是否直接下载？" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"直接下载" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+            ZXIpaModel *ipaModel = [[ZXIpaModel alloc]init];
+            ipaModel.title = [[[urlStr lastPathComponent] stringByDeletingPathExtension] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            ipaModel.downloadUrl = urlStr;
+            ipaModel.sign = [ipaModel.downloadUrl md5Str];
+            [self saveIpaModel:ipaModel];
+            ZXLocalIpaVC *VC = [[ZXLocalIpaVC alloc]init];
+            VC.ipaModel = ipaModel;
+            [self.navigationController pushViewController:VC animated:YES];
         }];
         [alertController addThemeAction:cancelAction];
         [alertController addThemeAction:confirmAction];
         [self presentViewController:alertController animated:YES completion:nil];
+        self.title = MainTitle;
         return NO;
     }
     if([urlStr hasPrefix:@"itms-services://"] || [urlStr containsString:@"itemService="]){
@@ -229,13 +238,7 @@
             if(result){
                 NSDictionary *plistDic = [[NSDictionary alloc]initWithContentsOfFile:data];
                 ZXIpaModel *ipaModel = [[ZXIpaModel alloc]initWithDic:plistDic];
-                ipaModel.fromPageUrl = [[NSUserDefaults standardUserDefaults]objectForKey:@"cacheUrlStr"];
-                NSArray *sameArr = [ZXIpaModel zx_dbQuaryWhere:[NSString stringWithFormat:@"sign='%@'",ipaModel.sign]];
-                ipaModel.localPath = [sameArr.firstObject valueForKey:@"localPath"];
-                if(sameArr.count){
-                    [ZXIpaModel zx_dbDropWhere:[NSString stringWithFormat:@"sign='%@'",ipaModel.sign]];
-                }
-                [ipaModel zx_dbSave];
+                [self saveIpaModel:ipaModel];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [ALToastView showToastWithText:[NSString stringWithFormat:@"[%@]IPA信息已保存，点击左上角查看",ipaModel.title]];
                     self.title = MainTitle;
@@ -313,10 +316,24 @@
     self.urlStartHandel = YES;
 }
 
-- (void)pasteboardStrLoadUrl:(NSNotification *)nf{
+-(void)pasteboardStrLoadUrl:(NSNotification *)nf{
     NSString *urlStr = nf.object;
     self.urlStr = urlStr;
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+-(void)saveIpaModel:(ZXIpaModel *)ipaModel{
+    NSArray *sameArr = [ZXIpaModel zx_dbQuaryWhere:[NSString stringWithFormat:@"sign='%@'",ipaModel.sign]];
+    ipaModel.localPath = [sameArr.firstObject valueForKey:@"localPath"];
+    if(sameArr.count){
+        [ZXIpaModel zx_dbDropWhere:[NSString stringWithFormat:@"sign='%@'",ipaModel.sign]];
+    }
+    ipaModel.fromPageUrl = [[NSUserDefaults standardUserDefaults]objectForKey:@"cacheUrlStr"];
+    NSDate *date = [NSDate date];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    ipaModel.time = [format stringFromDate:date];
+    [ipaModel zx_dbSave];
 }
 
 #pragma mark setter

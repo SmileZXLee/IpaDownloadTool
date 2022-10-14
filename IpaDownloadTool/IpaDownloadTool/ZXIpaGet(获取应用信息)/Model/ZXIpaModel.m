@@ -27,12 +27,6 @@
         self.version = metadata[@"bundle-version"];
         self.title = metadata[@"title"];
         
-        NSDate *date = [NSDate date];
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString *dateStr = [format stringFromDate:date];
-        self.time = dateStr;
-        
         NSString *orgSign = [NSString stringWithFormat:@"%@%@%@",self.bundleId,self.version,self.fromPageUrl];
         NSString *sign = [orgSign md5Str];
         self.sign = sign;

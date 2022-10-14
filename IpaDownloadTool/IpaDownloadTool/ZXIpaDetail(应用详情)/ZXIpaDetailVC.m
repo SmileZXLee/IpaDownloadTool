@@ -121,12 +121,14 @@
         [self presentViewController:alertController animated:YES completion:nil];
         return;
     }
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = model.detail;
-    if([model.title isEqualToString:@"下载地址"] && [model.detail containsString:@"pgyer.com"]){
-        [ALToastView showToastWithText:@"已复制至剪切板，若无法下载请使用Chrome再次尝试"];
-    }else{
-        [ALToastView showToastWithText:@"已复制至剪切板"];
+    if(model.detail){
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        pasteboard.string = model.detail;
+        if([model.title isEqualToString:@"下载地址"] && [model.detail containsString:@"pgyer.com"]){
+            [ALToastView showToastWithText:@"已复制至剪切板，若无法下载请使用Chrome再次尝试"];
+        }else{
+            [ALToastView showToastWithText:@"已复制至剪切板"];
+        }
     }
 }
 #pragma mark - 生命周期
