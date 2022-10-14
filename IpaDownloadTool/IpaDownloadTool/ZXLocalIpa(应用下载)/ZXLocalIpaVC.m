@@ -152,6 +152,9 @@ typedef enum {
             [self.navigationController popViewControllerAnimated:YES];
             //[self.downloadSession invalidateAndCancel];
             [self.downloadConnection cancel];
+            if(self.downloadingModel.localPath){
+                [ZXFileManage delFileWithPath:self.downloadingModel.localPath];
+            }
         }];
         [alertController addThemeAction:cancelAction];
         [alertController addThemeAction:confirmAction];

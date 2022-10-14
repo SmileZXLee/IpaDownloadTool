@@ -16,6 +16,7 @@
 #import "NSString+ZXMD5.h"
 
 #import "ZXIpaHisVC.h"
+#import "ZXIpaDetailVC.h"
 #import "ZXLocalIpaVC.h"
 #import "ZXIpaUrlHisVC.h"
 @interface ZXIpaGetVC ()<UIWebViewDelegate,NJKWebViewProgressDelegate>
@@ -141,7 +142,7 @@
 #pragma mark 点击了网址
 -(void)inputAction{
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"输入下载页URL" message:@"等待网页加载完毕点击下载即可自动拦截ipa下载链接" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         UITextField *inputTf = alertController.textFields[0];
         [inputTf becomeFirstResponder];
@@ -240,7 +241,16 @@
                 ZXIpaModel *ipaModel = [[ZXIpaModel alloc]initWithDic:plistDic];
                 [self saveIpaModel:ipaModel];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [ALToastView showToastWithText:[NSString stringWithFormat:@"[%@]IPA信息已保存，点击左上角查看",ipaModel.title]];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"已成功提取“%@”的IPA信息！",ipaModel.title] preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"查看详情" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        ZXIpaDetailVC *VC = [[ZXIpaDetailVC alloc]init];
+                        VC.ipaModel = ipaModel;
+                        [self.navigationController pushViewController:VC animated:YES];
+                    }];
+                    [alertController addThemeAction:cancelAction];
+                    [alertController addThemeAction:confirmAction];
+                    [self presentViewController:alertController animated:YES completion:nil];
                     self.title = MainTitle;
                 });
                 
