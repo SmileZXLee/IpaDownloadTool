@@ -35,6 +35,15 @@
     [self initUI];
 }
 
+-(void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+    if(self.progressView){
+        CGRect barFrame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 2);
+        self.progressView.frame = barFrame;
+        self.progressView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
+    }
+}
+
 #pragma mark - 初始化视图
 -(void)initUI{
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
@@ -185,7 +194,7 @@
     self.progressView.alpha = 1;
     NSString *urlStr = request.URL.absoluteString;
     if([urlStr hasSuffix:@".mobileprovision"]){
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件，IpaDownloadTool无法处理这个描述文件，请使用Safari打开并重新点击下载/安装按钮安装此描述文件，安装后Safari会自动加载一个新的链接，请在安装描述文件后复制Safari中的链接并粘贴到IpaDownloadTool中即可获取IPA安装信息。" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件，IPA提取器无法处理这个描述文件，请使用Safari打开并重新点击下载/安装按钮安装此描述文件，安装后Safari会自动加载一个新的链接，请在安装描述文件后复制Safari中的链接并粘贴到IPA提取器中即可获取IPA安装信息。" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"跳转到Safari打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             NSURL *url = [NSURL URLWithString:self.urlStr];
@@ -194,6 +203,17 @@
             }else{
                 [ALToastView showToastWithText:@"无法安装此描述文件"];
             }
+        }];
+        [alertController addThemeAction:cancelAction];
+        [alertController addThemeAction:confirmAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return NO;
+    }
+    if([urlStr hasSuffix:@".ipa"]){
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此链接为ipa文件下载链接，无需提取，是否直接下载？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"直接下载" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
         }];
         [alertController addThemeAction:cancelAction];
         [alertController addThemeAction:confirmAction];
@@ -245,7 +265,9 @@
     NSString *title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     NSString *url = [webView stringByEvaluatingJavaScriptFromString:@"document.URL"];
     if(self.urlStartHandel){
-        NSString *host = [webView stringByEvaluatingJavaScriptFromString:@"location.hostname"];
+        
+        NSString *protocol = [webView stringByEvaluatingJavaScriptFromString:@"location.protocol"];
+        NSString *host = [NSString stringWithFormat:@"%@//%@",protocol,[webView stringByEvaluatingJavaScriptFromString:@"location.host"]];
         NSString *favicon = [webView stringByEvaluatingJavaScriptFromString:jsGetFavicon];
         if(favicon.length > 0 && ![favicon hasPrefix:@"http"]){
             favicon = [host stringByAppendingString:favicon];
@@ -305,7 +327,7 @@
     }
     urlStr = [urlStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     _urlStr = urlStr;
-    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
     if(!url){
         self.title = @"URL无效";
         self.progressView.alpha = 0;
