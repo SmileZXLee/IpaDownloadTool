@@ -23,10 +23,15 @@
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIButton *githubBtn;
 @property (weak, nonatomic) IBOutlet UIButton *versionBtn;
+@property (weak, nonatomic) IBOutlet UIButton *webBackBtn;
+@property (weak, nonatomic) IBOutlet UIButton *webNextBtn;
+@property (weak, nonatomic) IBOutlet UIButton *webReloadBtn;
+
 
 @property (strong, nonatomic)NJKWebViewProgressView *progressView;
 @property (strong, nonatomic)NJKWebViewProgress *progressProxy;
 @property (copy, nonatomic)NSString *urlStr;
+@property (copy, nonatomic)NSString *currentUrlStr;
 @property (assign, nonatomic)BOOL urlStartHandled;
 @property (copy, nonatomic)NSString *ignoredIpaDownloadUrl;
 @end
@@ -50,6 +55,9 @@
 #pragma mark - 初始化视图
 -(void)initUI{
     self.view.backgroundColor = [UIColor whiteColor];
+    self.webReloadBtn.enabled = NO;
+    self.webBackBtn.enabled = NO;
+    self.webNextBtn.enabled = NO;
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     self.navigationController.navigationBar.translucent = NO;
     self.title = MainTitle;
@@ -119,7 +127,22 @@
         [[UIApplication sharedApplication] openURL:url];
     }
 }
+
+
 - (IBAction)webReloadAction:(id)sender {
+    [self handleUrlLoad:self.currentUrlStr shouldCache:NO];
+}
+
+- (IBAction)webBackAction:(id)sender {
+    if(self.webView.canGoBack){
+        [self.webView goBack];
+    }
+}
+
+- (IBAction)webNextAction:(id)sender {
+    if(self.webView.canGoForward){
+        [self.webView goForward];
+    }
 }
 
 #pragma mark 点击了历史
@@ -286,7 +309,6 @@
             return NO;
         }
     }
-    
     return YES;
 }
 #pragma mark 网页已经开始加载
@@ -300,9 +322,14 @@
     self.githubBtn.hidden = YES;
     self.versionBtn.hidden = YES;
     
+    self.webBackBtn.enabled = self.webView.canGoBack;
+    self.webNextBtn.enabled = self.webView.canGoForward;
+    
     NSString *jsGetFavicon = @"var getFavicon=function(){var favicon=undefined;var nodeList=document.getElementsByTagName('link');for(var i=0;i<nodeList.length;i++){if((nodeList[i].getAttribute('rel')=='icon')||(nodeList[i].getAttribute('rel')=='shortcut icon')){favicon=nodeList[i].getAttribute('href')}}return favicon};getFavicon();";
     NSString *title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     NSString *url = [webView stringByEvaluatingJavaScriptFromString:@"document.URL"];
+    self.currentUrlStr = url;
+    self.webReloadBtn.enabled = YES;
     if(self.urlStartHandled){
         NSString *protocol = [webView stringByEvaluatingJavaScriptFromString:@"location.protocol"];
         NSString *host = [NSString stringWithFormat:@"%@//%@",protocol,[webView stringByEvaluatingJavaScriptFromString:@"location.host"]];
