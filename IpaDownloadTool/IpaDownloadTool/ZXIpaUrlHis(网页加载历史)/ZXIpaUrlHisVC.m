@@ -28,9 +28,9 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"清空" style:UIBarButtonItemStyleDone target:self action:@selector(cleanAction)];
     
     self.tableView.zx_didSelectedAtIndexPath = ^(NSIndexPath *indexPath, ZXIpaUrlHisModel *model, id cell) {
-        if(self.urlSelectedBlock){
-            self.urlSelectedBlock(model.urlStr);
-            [self.navigationController popViewControllerAnimated:YES];
+        if(weakSelf.urlSelectedBlock){
+            weakSelf.urlSelectedBlock(model.urlStr);
+            [weakSelf.navigationController popViewControllerAnimated:YES];
         }
     };
     self.tableView.zx_editActionsForRowAtIndexPath = ^NSArray<UITableViewRowAction *> *(NSIndexPath *indexPath) {
@@ -39,7 +39,28 @@
             [ZXIpaUrlHisModel zx_dbDropWhere:[NSString stringWithFormat:@"urlStr='%@'",delModel.urlStr]];
             [weakSelf setTbData];
         }];
-        return @[delAction];
+        UITableViewRowAction *editAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"编辑标题" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+            ZXIpaUrlHisModel *editModel = weakSelf.tableView.zxDatas[indexPath.row];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"修改网站标题" message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+            UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                UITextField *inputTf = alertController.textFields[0];
+                [inputTf becomeFirstResponder];
+                NSString *title = inputTf.text;
+                editModel.title = title;
+                [editModel zx_dbUpdateWhere:[NSString stringWithFormat:@"urlStr='%@'",editModel.urlStr]];
+                [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            }];
+            [alertController addThemeAction:cancelAction];
+            [alertController addThemeAction:confirmAction];
+            [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                textField.placeholder = @"请输入新的网站标题";
+                textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+                textField.text = editModel.title;
+            }];
+            [weakSelf presentViewController:alertController animated:YES completion:nil];
+        }];
+        return @[delAction,editAction];
     };
 }
 #pragma mark - Actions

@@ -27,7 +27,8 @@
 @property (strong, nonatomic)NJKWebViewProgressView *progressView;
 @property (strong, nonatomic)NJKWebViewProgress *progressProxy;
 @property (copy, nonatomic)NSString *urlStr;
-@property (assign, nonatomic)BOOL urlStartHandel;
+@property (assign, nonatomic)BOOL urlStartHandled;
+@property (copy, nonatomic)NSString *ignoredIpaDownloadUrl;
 @end
 
 @implementation ZXIpaGetVC
@@ -48,6 +49,7 @@
 
 #pragma mark - 初始化视图
 -(void)initUI{
+    self.view.backgroundColor = [UIColor whiteColor];
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     self.navigationController.navigationBar.translucent = NO;
     self.title = MainTitle;
@@ -117,6 +119,9 @@
         [[UIApplication sharedApplication] openURL:url];
     }
 }
+- (IBAction)webReloadAction:(id)sender {
+}
+
 #pragma mark 点击了历史
 -(void)historyAction{
     ZXIpaHisVC *VC = [[ZXIpaHisVC alloc]init];
@@ -174,7 +179,7 @@
     ZXIpaUrlHisVC *VC = [[ZXIpaUrlHisVC alloc]init];
     VC.urlSelectedBlock = ^(NSString * _Nonnull urlStr) {
         self.urlStr = urlStr;
-        self.urlStartHandel = YES;
+        self.urlStartHandled = YES;
     };
     [self.navigationController pushViewController:VC animated:YES];
 }
@@ -211,24 +216,38 @@
         [self presentViewController:alertController animated:YES completion:nil];
         return NO;
     }
-    if([urlStr hasSuffix:@".ipa"]){
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此链接为ipa文件下载链接，无需提取，是否直接下载？" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"直接下载" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            ZXIpaModel *ipaModel = [[ZXIpaModel alloc]init];
-            ipaModel.title = [[[urlStr lastPathComponent] stringByDeletingPathExtension] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            ipaModel.downloadUrl = urlStr;
-            ipaModel.sign = [ipaModel.downloadUrl md5Str];
-            [self saveIpaModel:ipaModel];
-            ZXLocalIpaVC *VC = [[ZXLocalIpaVC alloc]init];
-            VC.ipaModel = ipaModel;
-            [self.navigationController pushViewController:VC animated:YES];
-        }];
-        [alertController addThemeAction:cancelAction];
-        [alertController addThemeAction:confirmAction];
-        [self presentViewController:alertController animated:YES completion:nil];
-        self.title = MainTitle;
-        return NO;
+    if([[urlStr pathExtension] isEqualToString:@"ipa"] || [urlStr containsString:@".ipa&"]){
+        if (!(self.self.ignoredIpaDownloadUrl && [self.ignoredIpaDownloadUrl isEqualToString:urlStr])){
+            __block NSString *urlStrWithoutQuery = [urlStr regularWithPattern:@"^.*?\\.ipa"];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"当前访问的地址可能是ipa文件下载地址，也可能是一个网页，请确认操作以继续！" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+            UIAlertAction *downloadAction = [UIAlertAction actionWithTitle:@"当作ipa文件下载" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                ZXIpaModel *ipaModel = [[ZXIpaModel alloc]init];
+                if(!urlStrWithoutQuery || !urlStrWithoutQuery.length){
+                    urlStrWithoutQuery = urlStr;
+                }
+                ipaModel.title = [[[urlStrWithoutQuery lastPathComponent] stringByDeletingPathExtension] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                ipaModel.downloadUrl = urlStr;
+                ipaModel.sign = [ipaModel.downloadUrl md5Str];
+                [self saveIpaModel:ipaModel];
+                ZXLocalIpaVC *VC = [[ZXLocalIpaVC alloc]init];
+                VC.ipaModel = ipaModel;
+                [self.navigationController pushViewController:VC animated:YES];
+            }];
+            UIAlertAction *loadAction = [UIAlertAction actionWithTitle:@"当作网页访问" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                self.ignoredIpaDownloadUrl = urlStr;
+                [self handleUrlLoad:urlStr shouldCache:NO];
+            }];
+            [alertController addThemeAction:cancelAction];
+            [alertController addThemeAction:downloadAction];
+            [alertController addThemeAction:loadAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+            self.title = MainTitle;
+            return NO;
+        }else{
+            self.ignoredIpaDownloadUrl = NULL;
+        }
+        
     }
     if([urlStr hasPrefix:@"itms-services://"] || [urlStr containsString:@"itemService="]){
         urlStr = [urlStr getPlistPathUrlStr];
@@ -241,8 +260,8 @@
                 ZXIpaModel *ipaModel = [[ZXIpaModel alloc]initWithDic:plistDic];
                 [self saveIpaModel:ipaModel];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"已成功提取“%@”的IPA信息！",ipaModel.title] preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"已成功提取“%@”的ipa信息，可在【历史】中查看！",ipaModel.title] preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleCancel handler:nil];
                     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"查看详情" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         ZXIpaDetailVC *VC = [[ZXIpaDetailVC alloc]init];
                         VC.ipaModel = ipaModel;
@@ -253,7 +272,14 @@
                     [self presentViewController:alertController animated:YES completion:nil];
                     self.title = MainTitle;
                 });
-                
+            }else{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"错误" message:[NSString stringWithFormat:@"plist文件下载失败，失败原因为:%@",((NSError *)data).localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:nil];
+                    
+                    [alertController addThemeAction:okAction];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                });
             }
         }];
         if(![urlStr containsString:@"itemService="]){
@@ -277,8 +303,7 @@
     NSString *jsGetFavicon = @"var getFavicon=function(){var favicon=undefined;var nodeList=document.getElementsByTagName('link');for(var i=0;i<nodeList.length;i++){if((nodeList[i].getAttribute('rel')=='icon')||(nodeList[i].getAttribute('rel')=='shortcut icon')){favicon=nodeList[i].getAttribute('href')}}return favicon};getFavicon();";
     NSString *title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     NSString *url = [webView stringByEvaluatingJavaScriptFromString:@"document.URL"];
-    if(self.urlStartHandel){
-        
+    if(self.urlStartHandled){
         NSString *protocol = [webView stringByEvaluatingJavaScriptFromString:@"location.protocol"];
         NSString *host = [NSString stringWithFormat:@"%@//%@",protocol,[webView stringByEvaluatingJavaScriptFromString:@"location.host"]];
         NSString *favicon = [webView stringByEvaluatingJavaScriptFromString:jsGetFavicon];
@@ -296,10 +321,14 @@
         NSArray *sameArr = [ZXIpaUrlHisModel zx_dbQuaryWhere:[NSString stringWithFormat:@"urlStr='%@'",urlHisModel.urlStr]];
         if(sameArr.count){
             [ZXIpaUrlHisModel zx_dbDropWhere:[NSString stringWithFormat:@"urlStr='%@'",urlHisModel.urlStr]];
+            NSString *oldUrlStr = ((ZXIpaUrlHisModel *)sameArr[0]).urlStr;
+            if(oldUrlStr && oldUrlStr.length){
+                urlHisModel.title = ((ZXIpaUrlHisModel *)sameArr[0]).title;
+            }
         }
         [urlHisModel zx_dbSave];
     }
-    self.urlStartHandel = NO;
+    self.urlStartHandled = NO;
    
 }
 #pragma mark 网页加载失败
@@ -323,7 +352,7 @@
 #pragma mark 处理url
 -(void)handelWithUrlStr:(NSString *)urlStr{
     self.urlStr = urlStr;
-    self.urlStartHandel = YES;
+    self.urlStartHandled = YES;
 }
 
 -(void)pasteboardStrLoadUrl:(NSNotification *)nf{
@@ -346,15 +375,12 @@
     [ipaModel zx_dbSave];
 }
 
-#pragma mark setter
-
-- (void)setUrlStr:(NSString *)urlStr{
+- (void)handleUrlLoad:(NSString *)urlStr shouldCache:(BOOL)shouldCache{
     if(![urlStr hasPrefix:@"http://"] && ![urlStr hasPrefix:@"https://"]){
         urlStr = [@"http://" stringByAppendingString:urlStr];
     }
-    urlStr = [urlStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     _urlStr = urlStr;
-    NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    NSURL *url = [NSURL URLWithString:(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)urlStr, (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]", NULL,kCFStringEncodingUTF8))];
     if(!url){
         self.title = @"URL无效";
         self.progressView.alpha = 0;
@@ -362,9 +388,17 @@
     }
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:req];
-    [[NSUserDefaults standardUserDefaults]setObject:urlStr forKey:@"cacheUrlStr"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
+    if(shouldCache){
+        [[NSUserDefaults standardUserDefaults]setObject:urlStr forKey:@"cacheUrlStr"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
     [self removePlaceView];
     self.title = @"加载中...";
+}
+
+#pragma mark setter
+
+- (void)setUrlStr:(NSString *)urlStr{
+    [self handleUrlLoad:urlStr shouldCache:YES];
 }
 @end

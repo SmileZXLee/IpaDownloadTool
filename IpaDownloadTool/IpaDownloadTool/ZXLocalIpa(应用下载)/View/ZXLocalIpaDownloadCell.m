@@ -22,6 +22,7 @@
     [super awakeFromNib];
     self.progressView.tintColor = MainColor;
     self.progressView.backgroundColor = [UIColor clearColor];
+    self.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
     self.statusLabel.adjustsFontSizeToFitWidth = YES;
 }
 

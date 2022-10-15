@@ -11,8 +11,15 @@
 #import "ZXIpaModel.h"
 
 #import "ZXIpaDetailVC.h"
+typedef enum {
+    SortTimeDesc = 0x00,    // 按照时间降序排列
+    SortFileNameAsc = 0x01,    // 按照文件名升序排列
+}SortType;
+
 @interface ZXIpaHisVC ()
 @property (weak, nonatomic) IBOutlet ZXTableView *tableView;
+@property (assign, nonatomic) SortType sort;
+@property (copy, nonatomic) NSString *sortKey;
 @end
 
 @implementation ZXIpaHisVC
@@ -23,10 +30,11 @@
 }
 #pragma mark - 初始化视图
 -(void)initUI{
-    self.title = @"IPA提取历史记录";
+    self.title = @"IPA提取历史";
     __weak __typeof(self) weakSelf = self;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"清空" style:UIBarButtonItemStyleDone target:self action:@selector(cleanAction)];
-    
+    UIBarButtonItem *cleanItem = [[UIBarButtonItem alloc]initWithTitle:@"清空" style:UIBarButtonItemStyleDone target:self action:@selector(cleanAction)];
+    UIBarButtonItem *sortItem = [[UIBarButtonItem alloc]initWithImage:[self resizeImage:[UIImage imageNamed:self.sortKey] toSize:CGSizeMake(28, 28)] style:UIBarButtonItemStyleDone target:self action:@selector(sortAction)];
+    self.navigationItem.rightBarButtonItems = @[cleanItem,sortItem];
     self.tableView.zx_setCellClassAtIndexPath = ^Class(NSIndexPath *indexPath) {
         return [ZXIpaHisCell class];
     };
@@ -60,26 +68,57 @@
     [alertController addThemeAction:cancelAction];
     [alertController addThemeAction:confirmAction];
     [self presentViewController:alertController animated:YES completion:nil];
-    
+}
+#pragma mark 切换排序方式
+-(void)sortAction{
+    NSString *currentSort = self.sort == SortFileNameAsc ? @"time_desc" : @"file_name_asc";
+    [[NSUserDefaults standardUserDefaults]setObject:currentSort forKey:@"historySort"];
+    ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[1]).image = [self resizeImage:[UIImage imageNamed:self.sortKey] toSize:CGSizeMake(28, 28)];
+    [self setTbData];
 }
 #pragma mark - Private
 #pragma mark 设置tableView数据
 -(void)setTbData{
     if(!self.tableView)return;
-    NSMutableArray *allData = [[ZXIpaModel zx_dbQuaryAll] mutableCopy];
-    self.tableView.zxDatas = (NSMutableArray *)[[allData reverseObjectEnumerator] allObjects];
+    
+    NSMutableArray *allData = [[ZXIpaModel zx_dbQuaryWhere:self.sort == SortFileNameAsc ? @"1 = 1 order by title asc" : @"1 = 1 order by time desc"] mutableCopy];
+    self.tableView.zxDatas = allData;
     
     if(!self.tableView.zxDatas.count){
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self showPlaceViewWithText:@"暂无数据"];
         });
-        self.navigationItem.rightBarButtonItem.enabled = NO;
+        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[0]).enabled = NO;
        
     }else{
         [self removePlaceView];
-        self.navigationItem.rightBarButtonItem.enabled = YES;
+        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[0]).enabled = YES;
     }
     [self.tableView reloadData];
+}
+
+
+-(UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)size{
+    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
+
+#pragma mark getter
+-(SortType)sort{
+    NSString *historySort = [[NSUserDefaults standardUserDefaults]objectForKey:@"historySort"];
+    if(historySort && [historySort isEqualToString:@"file_name_asc"]){
+        _sort = SortFileNameAsc;
+    }else{
+        _sort = SortTimeDesc;
+    }
+    return _sort;
+}
+-(NSString *)sortKey{
+    _sortKey = self.sort == SortFileNameAsc ? @"file_name_asc" : @"time_desc";
+    return _sortKey;
 }
 
 #pragma mark - 生命周期

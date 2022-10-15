@@ -21,6 +21,7 @@
     [super awakeFromNib];
     self.iconImgV.clipsToBounds = YES;
     self.iconImgV.layer.cornerRadius = 8;
+    self.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
 }
 
 - (void)setHisModel:(ZXIpaUrlHisModel *)hisModel{

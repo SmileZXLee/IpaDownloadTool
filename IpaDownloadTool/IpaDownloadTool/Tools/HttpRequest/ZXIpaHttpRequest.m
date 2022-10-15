@@ -44,12 +44,15 @@
     config.HTTPAdditionalHeaders = @{@"User-Agent":ZXUA};
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
     NSURLSessionDownloadTask *task = [session downloadTaskWithURL:url completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSString *path = location.absoluteString;
-        path = [path stringByReplacingOccurrencesOfString:@"file://" withString:@""];
-        NSString *filePath = [NSString stringWithFormat:@"%@/%@",ZXDocPath,ZXPlistCachePath];
-        [ZXFileManage delFileWithPathComponent:ZXPlistCachePath];
         NSError *fileErr;
-        [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:filePath] error:&fileErr];
+        NSString *filePath = @"";
+        if(location){
+            NSString *path = location.absoluteString;
+            path = [path stringByReplacingOccurrencesOfString:@"file://" withString:@""];
+            filePath = [NSString stringWithFormat:@"%@/%@",ZXDocPath,ZXPlistCachePath];
+            [ZXFileManage delFileWithPathComponent:ZXPlistCachePath];
+            [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:filePath] error:&fileErr];
+        }
         if(!error && !fileErr){
             _result(YES,filePath);
         }else{

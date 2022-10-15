@@ -102,7 +102,7 @@
     }
     if([model.title hasPrefix:@"应用名称"]){
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"修改应用名称" message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             UITextField *inputTf = alertController.textFields[0];
             [inputTf becomeFirstResponder];
