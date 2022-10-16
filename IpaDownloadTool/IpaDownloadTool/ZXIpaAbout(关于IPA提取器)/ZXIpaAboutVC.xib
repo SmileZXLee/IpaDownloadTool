@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZXIpaAboutVC">
             <connections>
+                <outlet property="copyrightBtn" destination="8lW-r7-iVI" id="Dqn-bl-TBf"/>
                 <outlet property="tableView" destination="ePN-tL-Mfx" id="xbx-4V-d7A"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,12 +25,20 @@
                     <rect key="frame" x="0.0" y="47" width="375" height="620"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8lW-r7-iVI">
+                    <rect key="frame" x="10" y="632" width="355" height="30"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Copyright © 2022 李兆祥. All rights reserved."/>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="ePN-tL-Mfx" secondAttribute="bottom" id="6ff-Qx-II8"/>
+                <constraint firstItem="8lW-r7-iVI" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="10" id="CTM-4M-T4G"/>
                 <constraint firstItem="ePN-tL-Mfx" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="cpe-Db-tgn"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="8lW-r7-iVI" secondAttribute="bottom" constant="5" id="dDL-Yj-ZS1"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="8lW-r7-iVI" secondAttribute="trailing" constant="10" id="eay-Qy-Gid"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="ePN-tL-Mfx" secondAttribute="trailing" id="vc7-HC-OSu"/>
                 <constraint firstItem="ePN-tL-Mfx" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="vfC-WP-1Je"/>
             </constraints>

@@ -97,9 +97,6 @@ typedef enum {
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.opaque = NO;
     self.webView.scalesPageToFit = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self showPlaceViewWithText:@"轻点【网址】开始，长按显示网址历史"];
-    });
     UIScreenEdgePanGestureRecognizer *panGes = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(goBackAction:)];
     panGes.edges = UIRectEdgeLeft;
     [self.view addGestureRecognizer:panGes];
@@ -115,6 +112,15 @@ typedef enum {
        self.navigationController.navigationBar.standardAppearance = appperance;
        self.navigationController.navigationBar.scrollEdgeAppearance = appperance;
     }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSString *cacheUrlStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"cacheUrlStr"];
+        if(cacheUrlStr && cacheUrlStr.length){
+            self.urlStr = cacheUrlStr;
+        }else{
+            [self showPlaceViewWithText:@"轻点【网址】开始，长按显示网址历史"];
+        }
+    });
 }
 
 - (void)initWebViewProgressView{
@@ -215,6 +221,9 @@ typedef enum {
 #pragma mark 网页将要开始加载
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     self.title = @"加载中...";
+    if(!self.webTitleTf.text.length){
+        self.webTitleTf.placeholder = @"loading...";
+    }
     self.progressView.alpha = 1;
     NSString *urlStr = request.URL.absoluteString;
     if([urlStr hasSuffix:@".mobileprovision"]){

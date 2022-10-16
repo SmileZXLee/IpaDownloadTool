@@ -1014,7 +1014,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20221015;
+				CURRENT_PROJECT_VERSION = 20221016;
 				DEVELOPMENT_TEAM = X3UA5897T2;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/IpaDownloadTool/PrefixHeader.pch";
 				INFOPLIST_FILE = IpaDownloadTool/Info.plist;
@@ -1023,7 +1023,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.zxlee.IpaDownloadTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1036,7 +1036,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20221015;
+				CURRENT_PROJECT_VERSION = 20221016;
 				DEVELOPMENT_TEAM = X3UA5897T2;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/IpaDownloadTool/PrefixHeader.pch";
 				INFOPLIST_FILE = IpaDownloadTool/Info.plist;
@@ -1045,7 +1045,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.zxlee.IpaDownloadTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

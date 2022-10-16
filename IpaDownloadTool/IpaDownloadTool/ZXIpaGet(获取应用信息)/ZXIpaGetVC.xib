@@ -31,41 +31,38 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4V2-ei-UyB">
                     <rect key="frame" x="0.0" y="812" width="414" height="50"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZsM-7B-zcu">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZsM-7B-zcu">
                             <rect key="frame" x="15" y="5" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="ptW-Wb-U9m"/>
                                 <constraint firstAttribute="height" constant="40" id="tzP-Nj-UfM"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="arrowshape.turn.up.left" catalog="system"/>
-                            <buttonConfiguration key="configuration" style="plain" image="arrow.backward" catalog="system"/>
+                            <state key="normal" image="web_back"/>
                             <connections>
                                 <action selector="webBackAction:" destination="-1" eventType="touchUpInside" id="p7W-l0-f2e"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vte-F8-aWq">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vte-F8-aWq">
                             <rect key="frame" x="60" y="5" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="R9V-Z9-R4E"/>
                                 <constraint firstAttribute="height" constant="40" id="RcS-Mg-key"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="arrowshape.turn.up.left" catalog="system"/>
-                            <buttonConfiguration key="configuration" style="plain" image="arrow.right" catalog="system"/>
+                            <state key="normal" image="web_next"/>
                             <connections>
                                 <action selector="webNextAction:" destination="-1" eventType="touchUpInside" id="4JM-OA-ysk"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DSz-u9-30w">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DSz-u9-30w">
                             <rect key="frame" x="314" y="5" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="U1m-Es-8JR"/>
                                 <constraint firstAttribute="height" constant="40" id="mNC-rw-WKL"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="arrowshape.turn.up.left" catalog="system"/>
-                            <buttonConfiguration key="configuration" style="plain" image="arrow.clockwise" catalog="system"/>
+                            <state key="normal" image="web_reload"/>
                             <connections>
                                 <action selector="webReloadAction:" destination="-1" eventType="touchUpInside" id="xpN-eE-EWW"/>
                             </connections>
@@ -78,19 +75,18 @@
                             </constraints>
                         </view>
                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入网址以继续" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8o8-bO-A6w">
-                            <rect key="frame" x="110" y="14.5" width="194" height="21"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                            <rect key="frame" x="110" y="14" width="194" height="22"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugv-Pm-dB5">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugv-Pm-dB5">
                             <rect key="frame" x="359" y="5" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="CLu-ya-j6R"/>
                                 <constraint firstAttribute="height" constant="40" id="yh1-6F-oyg"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="arrowshape.turn.up.left" catalog="system"/>
-                            <buttonConfiguration key="configuration" style="plain" image="info.circle" catalog="system"/>
+                            <state key="normal" image="about"/>
                             <connections>
                                 <action selector="aboutAction:" destination="-1" eventType="touchUpInside" id="8DG-9m-02X"/>
                             </connections>
@@ -131,10 +127,9 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.backward" catalog="system" width="128" height="95"/>
-        <image name="arrow.clockwise" catalog="system" width="113" height="128"/>
-        <image name="arrow.right" catalog="system" width="128" height="95"/>
-        <image name="arrowshape.turn.up.left" catalog="system" width="128" height="104"/>
-        <image name="info.circle" catalog="system" width="128" height="123"/>
+        <image name="about" width="200" height="200"/>
+        <image name="web_back" width="200" height="200"/>
+        <image name="web_next" width="200" height="200"/>
+        <image name="web_reload" width="200" height="200"/>
     </resources>
 </document>
