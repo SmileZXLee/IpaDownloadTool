@@ -83,7 +83,7 @@
 
 #pragma mark 处理点击数据导出或导入
 -(void)handleDataExportAndImportClick{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"数据导出或导入" message:@"此功能用于导出/导入“IPA提取历史”和“网页浏览历史”中的数据，已下载中的文件无法导入或导出。导出后将保存在剪贴板中，请及时转存！" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"数据导出或导入" message:@"此功能用于导出/导入“IPA提取历史”和“网址历史”中的数据，已下载中的文件无法导入或导出。导出后将保存在剪贴板中，请及时转存！" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *exportAction = [UIAlertAction actionWithTitle:@"数据导出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSArray *allIpaHistoryDicArr = [[ZXIpaModel zx_dbQuaryAll] zx_toDic];
@@ -103,7 +103,7 @@
             [ALToastView showToastWithText:@"无可导出的数据"];
             return;
         }
-        UIAlertController *exportResultController = [UIAlertController alertControllerWithTitle:@"导出成功" message:[NSString stringWithFormat:@"成功导出%ld条IPA提取历史和%ld条网页浏览历史，是否复制至剪贴板？",finalAllIpaHistoryDicArr.count,finalAllWebHistoryDicArr.count] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *exportResultController = [UIAlertController alertControllerWithTitle:@"导出成功" message:[NSString stringWithFormat:@"成功导出%ld条IPA提取历史和%ld条网址历史，是否复制至剪贴板？",finalAllIpaHistoryDicArr.count,finalAllWebHistoryDicArr.count] preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction *exportAction = [UIAlertAction actionWithTitle:@"复制到剪贴板" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
@@ -139,7 +139,7 @@
             }
             [finalAllIpaHistoryDicArr zx_dbSave];
             [finalAllWebHistoryDicArr zx_dbSave];
-            [ALToastView showToastWithText:[NSString stringWithFormat:@"成功导入%ld条IPA提取历史和%ld条网页浏览历史",finalAllIpaHistoryDicArr.count,finalAllWebHistoryDicArr.count]];
+            [ALToastView showToastWithText:[NSString stringWithFormat:@"成功导入%ld条IPA提取历史和%ld条网址历史",finalAllIpaHistoryDicArr.count,finalAllWebHistoryDicArr.count]];
         }];
         [importResultController addThemeAction:cancelAction];
         [importResultController addThemeAction:exportAction];
