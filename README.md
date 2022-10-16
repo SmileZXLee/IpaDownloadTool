@@ -12,7 +12,7 @@
 * [SGQRCode](https://github.com/kingsic/SGQRCode)
 * [BackButtonHandler](https://github.com/onegray/UIViewController-BackButtonHandler)
 * [NJKWebViewProgress](https://github.com/ninjinkun/NJKWebViewProgress)
-### Release版本
+### Release版本(当前版本v2.0.1)
 * [点击此处直接下载最新IPA提取器安装包](https://static.ifafu.cn/IpaDownloadTool.ipa)
 ### 功能
 * 此工具用来快捷下载/储存第三方来源的ipa
@@ -28,6 +28,19 @@
 ![](http://www.zxlee.cn/IpaDownloadToolDemo.gif) | ![](https://upload-images.jianshu.io/upload_images/17729343-ab4b953d0a0696a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240) |
 
 ### 更新日志
+#### 2022.10.17(v2.0.1)
+1.【新增】支持直接下载网页中的ipa文件。  
+2.【新增】IPA提取器主页添加网页前进、后退、重新加载操作。  
+3.【新增】IPA提取历史支持根据时间或文件名排序。  
+4.【新增】网页浏览历史页面支持编辑网页标题。  
+5.【新增】支持数据导入导出。  
+6.【修复】当网址中包含中文时，网页加载失败的问题。  
+7.【修复】plist文件下载失败时，应用闪退的问题。  
+8.【修复】网页历史记录中网站logo不展示的问题。  
+9.【修复】横屏时网页加载进度条错位的问题。  
+10.【优化】提取ipa信息成功后可直接跳转到详情。  
+11.【优化】删除下载中断的文件。  
+12.【优化】ipa提取规则&细节。
 #### 2022.09.27(v1.0.3)
 1.修复在iOS15+系统中，导航栏变黑的问题；  
 2.修复在iOS15+系统中，tableView顶部有一段间隙的问题；  
