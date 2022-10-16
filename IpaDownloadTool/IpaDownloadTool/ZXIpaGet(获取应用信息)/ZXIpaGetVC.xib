@@ -10,12 +10,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZXIpaGetVC">
             <connections>
-                <outlet property="githubBtn" destination="43e-VL-V8a" id="ewx-Yf-tlT"/>
-                <outlet property="versionBtn" destination="ZxB-Lg-ZYs" id="DVD-iG-Krp"/>
+                <outlet property="aboutBtn" destination="Ugv-Pm-dB5" id="Muc-Gb-SGo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webBackBtn" destination="ZsM-7B-zcu" id="s5b-Mo-hTS"/>
                 <outlet property="webNextBtn" destination="vte-F8-aWq" id="s7c-p3-Epl"/>
                 <outlet property="webReloadBtn" destination="DSz-u9-30w" id="4Xm-Rv-1qx"/>
+                <outlet property="webTitleTf" destination="8o8-bO-A6w" id="hrh-zL-i32"/>
                 <outlet property="webView" destination="vxn-7K-wp1" id="Hkr-7v-8R0"/>
             </connections>
         </placeholder>
@@ -25,28 +25,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vxn-7K-wp1">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="798"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </webView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="43e-VL-V8a">
-                    <rect key="frame" x="10" y="825" width="394" height="27"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <state key="normal" title="https://github.com/SmileZXLee/IpaDownloadTool"/>
-                    <connections>
-                        <action selector="githubAction:" destination="-1" eventType="touchUpInside" id="cZe-XW-OTs"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZxB-Lg-ZYs">
-                    <rect key="frame" x="188" y="798" width="38" height="27"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" title="Button"/>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4V2-ei-UyB">
                     <rect key="frame" x="0.0" y="812" width="414" height="50"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZsM-7B-zcu">
-                            <rect key="frame" x="20" y="5" width="40" height="40"/>
+                            <rect key="frame" x="15" y="5" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="ptW-Wb-U9m"/>
                                 <constraint firstAttribute="height" constant="40" id="tzP-Nj-UfM"/>
@@ -59,7 +45,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vte-F8-aWq">
-                            <rect key="frame" x="70" y="5" width="40" height="40"/>
+                            <rect key="frame" x="60" y="5" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="R9V-Z9-R4E"/>
                                 <constraint firstAttribute="height" constant="40" id="RcS-Mg-key"/>
@@ -72,7 +58,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DSz-u9-30w">
-                            <rect key="frame" x="354" y="5" width="40" height="40"/>
+                            <rect key="frame" x="314" y="5" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="U1m-Es-8JR"/>
                                 <constraint firstAttribute="height" constant="40" id="mNC-rw-WKL"/>
@@ -84,12 +70,6 @@
                                 <action selector="webReloadAction:" destination="-1" eventType="touchUpInside" id="xpN-eE-EWW"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="关于IPA提取器" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Hd-Se-SDP">
-                            <rect key="frame" x="120" y="16.5" width="184" height="17"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Qx-qP-p27">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
                             <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
@@ -97,22 +77,42 @@
                                 <constraint firstAttribute="height" constant="1" id="etL-dg-1Pe"/>
                             </constraints>
                         </view>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入网址以继续" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8o8-bO-A6w">
+                            <rect key="frame" x="110" y="14.5" width="194" height="21"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugv-Pm-dB5">
+                            <rect key="frame" x="359" y="5" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="CLu-ya-j6R"/>
+                                <constraint firstAttribute="height" constant="40" id="yh1-6F-oyg"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="arrowshape.turn.up.left" catalog="system"/>
+                            <buttonConfiguration key="configuration" style="plain" image="info.circle" catalog="system"/>
+                            <connections>
+                                <action selector="aboutAction:" destination="-1" eventType="touchUpInside" id="8DG-9m-02X"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="5Hd-Se-SDP" firstAttribute="centerY" secondItem="4V2-ei-UyB" secondAttribute="centerY" id="288-nV-Fiv"/>
                         <constraint firstItem="6Qx-qP-p27" firstAttribute="leading" secondItem="4V2-ei-UyB" secondAttribute="leading" id="Eq5-bJ-6KB"/>
                         <constraint firstItem="ZsM-7B-zcu" firstAttribute="centerY" secondItem="4V2-ei-UyB" secondAttribute="centerY" id="Fgm-lt-fze"/>
+                        <constraint firstItem="DSz-u9-30w" firstAttribute="leading" secondItem="8o8-bO-A6w" secondAttribute="trailing" constant="10" id="Gg3-Ni-Hwe"/>
                         <constraint firstItem="vte-F8-aWq" firstAttribute="centerY" secondItem="4V2-ei-UyB" secondAttribute="centerY" id="I3e-sK-OFk"/>
-                        <constraint firstItem="DSz-u9-30w" firstAttribute="leading" secondItem="5Hd-Se-SDP" secondAttribute="trailing" constant="50" id="Ltf-jq-hC9"/>
+                        <constraint firstItem="Ugv-Pm-dB5" firstAttribute="leading" secondItem="DSz-u9-30w" secondAttribute="trailing" constant="5" id="Noc-5U-LVQ"/>
+                        <constraint firstItem="Ugv-Pm-dB5" firstAttribute="centerY" secondItem="4V2-ei-UyB" secondAttribute="centerY" id="TCS-aR-BtY"/>
+                        <constraint firstItem="8o8-bO-A6w" firstAttribute="centerY" secondItem="4V2-ei-UyB" secondAttribute="centerY" id="WYx-Rr-eDw"/>
                         <constraint firstItem="DSz-u9-30w" firstAttribute="centerY" secondItem="4V2-ei-UyB" secondAttribute="centerY" id="amO-L1-RYj"/>
                         <constraint firstAttribute="height" constant="50" id="bfo-uJ-Ekc"/>
-                        <constraint firstItem="vte-F8-aWq" firstAttribute="leading" secondItem="ZsM-7B-zcu" secondAttribute="trailing" constant="10" id="kXm-jM-9Rd"/>
-                        <constraint firstItem="5Hd-Se-SDP" firstAttribute="leading" secondItem="vte-F8-aWq" secondAttribute="trailing" constant="10" id="lz3-Rw-d7P"/>
-                        <constraint firstItem="ZsM-7B-zcu" firstAttribute="leading" secondItem="4V2-ei-UyB" secondAttribute="leading" constant="20" id="nxa-Mc-h0P"/>
+                        <constraint firstItem="vte-F8-aWq" firstAttribute="leading" secondItem="ZsM-7B-zcu" secondAttribute="trailing" constant="5" id="kXm-jM-9Rd"/>
+                        <constraint firstItem="ZsM-7B-zcu" firstAttribute="leading" secondItem="4V2-ei-UyB" secondAttribute="leading" constant="15" id="nxa-Mc-h0P"/>
                         <constraint firstItem="6Qx-qP-p27" firstAttribute="top" secondItem="4V2-ei-UyB" secondAttribute="top" id="r7a-BI-t3X"/>
+                        <constraint firstAttribute="trailing" secondItem="Ugv-Pm-dB5" secondAttribute="trailing" constant="15" id="t1W-28-8EX"/>
                         <constraint firstAttribute="trailing" secondItem="6Qx-qP-p27" secondAttribute="trailing" id="xJq-4A-UIY"/>
-                        <constraint firstAttribute="trailing" secondItem="DSz-u9-30w" secondAttribute="trailing" constant="20" id="zRZ-fF-htm"/>
+                        <constraint firstItem="8o8-bO-A6w" firstAttribute="leading" secondItem="vte-F8-aWq" secondAttribute="trailing" constant="10" id="xmq-d4-x8h"/>
                     </constraints>
                 </view>
             </subviews>
@@ -121,13 +121,8 @@
             <constraints>
                 <constraint firstItem="4V2-ei-UyB" firstAttribute="leading" secondItem="IUG-zQ-Wdc" secondAttribute="leading" id="0Er-Mr-zsc"/>
                 <constraint firstItem="IUG-zQ-Wdc" firstAttribute="bottom" secondItem="4V2-ei-UyB" secondAttribute="bottom" id="8Vk-6g-pfy"/>
-                <constraint firstItem="ZxB-Lg-ZYs" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Esh-QX-8d1"/>
-                <constraint firstItem="43e-VL-V8a" firstAttribute="top" secondItem="ZxB-Lg-ZYs" secondAttribute="bottom" id="H0X-J4-ucf"/>
                 <constraint firstAttribute="trailing" secondItem="vxn-7K-wp1" secondAttribute="trailing" id="NgL-IX-S9I"/>
-                <constraint firstItem="43e-VL-V8a" firstAttribute="leading" secondItem="IUG-zQ-Wdc" secondAttribute="leading" constant="10" id="TmN-0d-w7Y"/>
-                <constraint firstItem="ZxB-Lg-ZYs" firstAttribute="top" secondItem="vxn-7K-wp1" secondAttribute="bottom" id="Uce-NA-667"/>
-                <constraint firstItem="IUG-zQ-Wdc" firstAttribute="trailing" secondItem="43e-VL-V8a" secondAttribute="trailing" constant="10" id="WeN-0Z-GgA"/>
-                <constraint firstItem="IUG-zQ-Wdc" firstAttribute="bottom" secondItem="43e-VL-V8a" secondAttribute="bottom" constant="10" id="m03-QJ-z0R"/>
+                <constraint firstItem="4V2-ei-UyB" firstAttribute="top" secondItem="vxn-7K-wp1" secondAttribute="bottom" id="UVv-c6-5kM"/>
                 <constraint firstItem="4V2-ei-UyB" firstAttribute="trailing" secondItem="IUG-zQ-Wdc" secondAttribute="trailing" id="n1W-KQ-Cho"/>
                 <constraint firstItem="vxn-7K-wp1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="sIb-go-3Re"/>
                 <constraint firstItem="vxn-7K-wp1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zEt-qi-cTx"/>
@@ -140,5 +135,6 @@
         <image name="arrow.clockwise" catalog="system" width="113" height="128"/>
         <image name="arrow.right" catalog="system" width="128" height="95"/>
         <image name="arrowshape.turn.up.left" catalog="system" width="128" height="104"/>
+        <image name="info.circle" catalog="system" width="128" height="123"/>
     </resources>
 </document>

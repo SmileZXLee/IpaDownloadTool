@@ -19,13 +19,23 @@
 #import "ZXIpaDetailVC.h"
 #import "ZXLocalIpaVC.h"
 #import "ZXIpaUrlHisVC.h"
-@interface ZXIpaGetVC ()<UIWebViewDelegate,NJKWebViewProgressDelegate>
+#import "ZXIpaAboutVC.h"
+
+// 处理url键入来源
+typedef enum {
+    InputUrlFromInput = 0x00,    // url键入来源于用户输入
+    InputUrlFromEdit = 0x01,    // url键入来源于用户编辑
+}InputUrlFrom;
+
+@interface ZXIpaGetVC ()<UIWebViewDelegate,NJKWebViewProgressDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) IBOutlet UIButton *githubBtn;
-@property (weak, nonatomic) IBOutlet UIButton *versionBtn;
 @property (weak, nonatomic) IBOutlet UIButton *webBackBtn;
 @property (weak, nonatomic) IBOutlet UIButton *webNextBtn;
 @property (weak, nonatomic) IBOutlet UIButton *webReloadBtn;
+@property (weak, nonatomic) IBOutlet UIButton *aboutBtn;
+
+@property (weak, nonatomic) IBOutlet UITextField *webTitleTf;
+
 
 
 @property (strong, nonatomic)NJKWebViewProgressView *progressView;
@@ -58,7 +68,15 @@
     self.webReloadBtn.enabled = NO;
     self.webBackBtn.enabled = NO;
     self.webNextBtn.enabled = NO;
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    [self.webReloadBtn setTintColor:MainColor];
+    [self.webBackBtn setTintColor:MainColor];
+    [self.webNextBtn setTintColor:MainColor];
+    [self.aboutBtn setTintColor:MainColor];
+    [self.webTitleTf setTintColor:MainColor];
+    [self.webTitleTf setTextColor:MainColor];
+    self.webTitleTf.adjustsFontSizeToFitWidth = YES;
+    [self.webTitleTf addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(webTitleTap)]];
+    self.webTitleTf.delegate = self;
     self.navigationController.navigationBar.translucent = NO;
     self.title = MainTitle;
     UIBarButtonItem *hisItem = [[UIBarButtonItem alloc]initWithTitle:@"历史" style:UIBarButtonItemStyleDone target:self action:@selector(historyAction)];
@@ -82,12 +100,6 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self showPlaceViewWithText:@"轻点【网址】开始，长按显示网址历史"];
     });
-    NSString *appName = [infoDictionary objectForKey:@"CFBundleDisplayName"];
-    NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    NSString *appBuild = [infoDictionary objectForKey:@"CFBundleVersion"];
-    [self.githubBtn setTitleColor:MainColor forState:UIControlStateNormal];
-    [self.versionBtn setTitleColor:MainColor forState:UIControlStateDisabled];
-    [self.versionBtn setTitle:[NSString stringWithFormat:@"%@ v%@(%@)",appName,appVersion,appBuild] forState:UIControlStateDisabled];
     UIScreenEdgePanGestureRecognizer *panGes = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(goBackAction:)];
     panGes.edges = UIRectEdgeLeft;
     [self.view addGestureRecognizer:panGes];
@@ -119,30 +131,29 @@
 }
 
 #pragma mark - Actions
-#pragma mark 点击了github地址
-- (IBAction)githubAction:(UIButton *)sender {
-    NSString *urlStr = sender.currentTitle;
-    NSURL *url = [NSURL URLWithString:urlStr];
-    if([[UIApplication sharedApplication]canOpenURL:url]){
-        [[UIApplication sharedApplication] openURL:url];
-    }
-}
-
-
+#pragma mark 点击了重新加载网页
 - (IBAction)webReloadAction:(id)sender {
     [self handleUrlLoad:self.currentUrlStr shouldCache:NO];
 }
 
+#pragma mark 点击了网页后退
 - (IBAction)webBackAction:(id)sender {
     if(self.webView.canGoBack){
         [self.webView goBack];
     }
 }
 
+#pragma mark 点击了网页前进
 - (IBAction)webNextAction:(id)sender {
     if(self.webView.canGoForward){
         [self.webView goForward];
     }
+}
+
+#pragma mark 点击了关于
+- (IBAction)aboutAction:(id)sender {
+    ZXIpaAboutVC *VC = [[ZXIpaAboutVC alloc]init];
+    [self.navigationController pushViewController:VC animated:YES];
 }
 
 #pragma mark 点击了历史
@@ -169,32 +180,10 @@
 }
 #pragma mark 点击了网址
 -(void)inputAction{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"输入下载页URL" message:@"等待网页加载完毕点击下载即可自动拦截ipa下载链接" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        UITextField *inputTf = alertController.textFields[0];
-        [inputTf becomeFirstResponder];
-        NSString *urlStr = inputTf.text;
-        if(!urlStr.length){
-            self.title = @"URL不得为空";
-            return;
-        }
-        [self handelWithUrlStr:urlStr];
-        
-    }];
-    [alertController addThemeAction:cancelAction];
-    [alertController addThemeAction:confirmAction];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"请输入URL";
-        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        NSString *cacheUrlStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"cacheUrlStr"];
-        if(cacheUrlStr){
-            textField.text = cacheUrlStr;
-        }
-        
-    }];
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self handleInputUrlFrom:InputUrlFromInput];
 }
+
+#pragma mark 长按了网址
 -(void)inputLongPress:(UILongPressGestureRecognizer *)gesture{
     if(gesture.state != UIGestureRecognizerStateBegan){
         return;
@@ -205,6 +194,11 @@
         self.urlStartHandled = YES;
     };
     [self.navigationController pushViewController:VC animated:YES];
+}
+
+#pragma mark 点击了底部网站标题
+-(void)webTitleTap{
+    [self handleInputUrlFrom:self.currentUrlStr && self.currentUrlStr.length ? InputUrlFromEdit : InputUrlFromInput];
 }
 
 #pragma mark 网页返回上一级
@@ -312,23 +306,22 @@
     return YES;
 }
 #pragma mark 网页已经开始加载
-- (void)webViewDidStartLoad:(UIWebView *)webView{
+-(void)webViewDidStartLoad:(UIWebView *)webView{
     
     
 }
 #pragma mark 网页加载完成
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
     self.title = MainTitle;
-    self.githubBtn.hidden = YES;
-    self.versionBtn.hidden = YES;
-    
     self.webBackBtn.enabled = self.webView.canGoBack;
     self.webNextBtn.enabled = self.webView.canGoForward;
     
     NSString *jsGetFavicon = @"var getFavicon=function(){var favicon=undefined;var nodeList=document.getElementsByTagName('link');for(var i=0;i<nodeList.length;i++){if((nodeList[i].getAttribute('rel')=='icon')||(nodeList[i].getAttribute('rel')=='shortcut icon')){favicon=nodeList[i].getAttribute('href')}}return favicon};getFavicon();";
     NSString *title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    NSString *url = [webView stringByEvaluatingJavaScriptFromString:@"document.URL"];
-    self.currentUrlStr = url;
+    NSString *urlStr = [webView stringByEvaluatingJavaScriptFromString:@"document.URL"];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    self.currentUrlStr = urlStr;
+    self.webTitleTf.text = url ? url.host : @"未知域名";
     self.webReloadBtn.enabled = YES;
     if(self.urlStartHandled){
         NSString *protocol = [webView stringByEvaluatingJavaScriptFromString:@"location.protocol"];
@@ -342,7 +335,7 @@
         }
         ZXIpaUrlHisModel *urlHisModel = [[ZXIpaUrlHisModel alloc]init];
         urlHisModel.hostStr = host;
-        urlHisModel.urlStr = url;
+        urlHisModel.urlStr = urlStr;
         urlHisModel.title = title;
         urlHisModel.favicon = favicon;
         NSArray *sameArr = [ZXIpaUrlHisModel zx_dbQuaryWhere:[NSString stringWithFormat:@"urlStr='%@'",urlHisModel.urlStr]];
@@ -359,7 +352,7 @@
    
 }
 #pragma mark 网页加载失败
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     NSString *errInfo = error.localizedDescription;
     if(!errInfo)return;
     if(![errInfo isEqualToString:@"Frame load interrupted"]){
@@ -374,6 +367,10 @@
     [self.progressView setProgress:progress animated:YES];
 }
 
+#pragma mark - UITextFieldDelegate
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    return NO;
+}
 
 #pragma mark - private
 #pragma mark 处理url
@@ -382,12 +379,14 @@
     self.urlStartHandled = YES;
 }
 
+#pragma mark 处理从剪贴板中获取url并跳转
 -(void)pasteboardStrLoadUrl:(NSNotification *)nf{
     NSString *urlStr = nf.object;
     self.urlStr = urlStr;
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+#pragma mark 保存ipaModel
 -(void)saveIpaModel:(ZXIpaModel *)ipaModel{
     NSArray *sameArr = [ZXIpaModel zx_dbQuaryWhere:[NSString stringWithFormat:@"sign='%@'",ipaModel.sign]];
     ipaModel.localPath = [sameArr.firstObject valueForKey:@"localPath"];
@@ -421,6 +420,43 @@
     }
     [self removePlaceView];
     self.title = @"加载中...";
+}
+
+#pragma mark 处理url输入事件
+-(void)handleInputUrlFrom:(InputUrlFrom)from{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:from == InputUrlFromInput ? @"输入下载页URL" : @"编辑下载页URL" message:@"等待网页加载完毕点击下载即可自动拦截ipa下载链接" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *inputTf = alertController.textFields[0];
+        [inputTf becomeFirstResponder];
+        NSString *urlStr = inputTf.text;
+        if(!urlStr.length){
+            self.title = @"URL不得为空";
+            return;
+        }
+        if(from == InputUrlFromInput){
+            [self handelWithUrlStr:urlStr];
+        }else{
+            [self handleUrlLoad:urlStr shouldCache:NO];
+        }
+    }];
+    [alertController addThemeAction:cancelAction];
+    [alertController addThemeAction:confirmAction];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入URL";
+        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        if(from == InputUrlFromInput){
+            NSString *cacheUrlStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"cacheUrlStr"];
+            if(cacheUrlStr){
+                textField.text = cacheUrlStr;
+            }
+        }else{
+            textField.text = self.currentUrlStr;
+        }
+        
+        
+    }];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark setter
