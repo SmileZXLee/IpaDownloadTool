@@ -207,15 +207,9 @@ typedef enum {
     [self handleInputUrlFrom:self.currentUrlStr && self.currentUrlStr.length ? InputUrlFromEdit : InputUrlFromInput];
 }
 
-#pragma mark 网页返回上一级
+#pragma mark 从左往右侧滑操作
 - (void)goBackAction:(UIScreenEdgePanGestureRecognizer *)panGes{
-    if (panGes.state == UIGestureRecognizerStateEnded || panGes.state == UIGestureRecognizerStateCancelled) {
-        if([self.webView canGoBack]){
-            [self.webView goBack];
-        }else{
-            [self historyAction];
-        }
-    }
+    
 }
 #pragma mark - UIWebViewDelegate
 #pragma mark 网页将要开始加载
