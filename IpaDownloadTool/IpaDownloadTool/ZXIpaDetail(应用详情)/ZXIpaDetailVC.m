@@ -79,7 +79,7 @@
 -(void)handelSelActionWithModel:(ZXIpaDetailModel *)model{
     if([model.title hasPrefix:@"IPA"]){
         if([ZXFileManage isExistWithPath:self.ipaModel.localPath]){
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"操作选择" message:@"请选择您要进行的操作" preferredStyle:UIAlertControllerStyleActionSheet];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"操作选择" message:@"请选择您要进行的操作" preferredStyle:ZXISiPad ? UIAlertControllerStyleAlert : UIAlertControllerStyleActionSheet];
             UIAlertAction *shareAction = [UIAlertAction actionWithTitle:@"分享文件" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [[ZXFileManage shareInstance] shareFileWithPath:self.ipaModel.localPath];
             }];
