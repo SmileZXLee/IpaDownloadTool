@@ -59,20 +59,22 @@
 
 #pragma mark 获取剪贴板内容并判断是否弹出”粘贴并前往“
 - (void)handlePasteboardStr{
-    NSString *pasteboardStr = [UIPasteboard generalPasteboard].string;
-    if([pasteboardStr hasPrefix:@"http"] || [pasteboardStr hasPrefix:@"https"]){
-        NSString *oldPasteboardStr = [ZXDataStoreCache readObjForKey:ZXPasteboardStrKey];
-        NSString *cacheUrlStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"cacheUrlStr"];
-        if(!(oldPasteboardStr && [oldPasteboardStr isEqualToString:pasteboardStr]) && !(cacheUrlStr && [cacheUrlStr isEqualToString:pasteboardStr]) && ![pasteboardStr hasSuffix:@".ipa"]){
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"检测到剪贴板中的链接【%@】，是否粘贴并前往？",pasteboardStr] preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-            UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"粘贴并前往" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [[NSNotificationCenter defaultCenter]postNotificationName:ZXPasteboardStrLoadUrlNotification object:pasteboardStr];
-            }];
-            [alertController addThemeAction:cancelAction];
-            [alertController addThemeAction:confirmAction];
-            [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
-            [ZXDataStoreCache saveObj:pasteboardStr forKey:ZXPasteboardStrKey];
+    if([[NSUserDefaults standardUserDefaults]objectForKey:@"userAgreementAgreed"]){
+        NSString *pasteboardStr = [UIPasteboard generalPasteboard].string;
+        if([pasteboardStr hasPrefix:@"http"] || [pasteboardStr hasPrefix:@"https"]){
+            NSString *oldPasteboardStr = [ZXDataStoreCache readObjForKey:ZXPasteboardStrKey];
+            NSString *cacheUrlStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"cacheUrlStr"];
+            if(!(oldPasteboardStr && [oldPasteboardStr isEqualToString:pasteboardStr]) && !(cacheUrlStr && [cacheUrlStr isEqualToString:pasteboardStr]) && ![pasteboardStr hasSuffix:@".ipa"]){
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"检测到剪贴板中的链接【%@】，是否粘贴并前往？",pasteboardStr] preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"粘贴并前往" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [[NSNotificationCenter defaultCenter]postNotificationName:ZXPasteboardStrLoadUrlNotification object:pasteboardStr];
+                }];
+                [alertController addThemeAction:cancelAction];
+                [alertController addThemeAction:confirmAction];
+                [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+                [ZXDataStoreCache saveObj:pasteboardStr forKey:ZXPasteboardStrKey];
+            }
         }
     }
 }

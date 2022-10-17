@@ -49,7 +49,7 @@
         return 190;
     };
     self.tableView.zx_didSelectedAtIndexPath = ^(NSIndexPath *indexPath, NSString *title, id cell) {
-        if([title isEqualToString:@"使用说明"]){
+        if([title isEqualToString:@"用户协议&使用说明"]){
             [weakSelf handleInstructionsClick];
         }else if([title isEqualToString:@"开源地址"]){
             [weakSelf handleOpenSourceAddressClick];
@@ -57,12 +57,12 @@
             [weakSelf handleDataExportAndImportClick];
         }
     };
-    self.tableView.zxDatas = [@[@"数据导出或导入",@"使用说明",@"开源地址"] mutableCopy];
+    self.tableView.zxDatas = [@[@"数据导出或导入",@"用户协议&使用说明",@"开源地址"] mutableCopy];
 }
 
 #pragma mark 处理点击使用说明
 -(void)handleInstructionsClick{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"使用说明" message:@"1.“IPA提取器”仅限用于提取第三方网页中的ipa，不支持提取iPhone中已安装的ipa，也不支持提取AppStore中的ipa；\n2.长按主页“网址”按钮，可查看已加载的网页历史，点击主页“历史”按钮可查看已提取的ipa历史；\n3.点击已下载列表可分享对应ipa到其他应用；\n4.“IPA提取器”是开源的并遵循MIT协议，您可以随意使用它，包括二次修改和定制，但希望标明来源；\n5.不得将“IPA提取器”或其衍生版本用于任何违法违规的用途，不得用于提取任何违法违规的ipa！由于违规使用导致的任何后果开发者不承担任何责任！\n6.您的所有信息均为本地存储，不会传到云端，请妥善保管。" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"用户协议&使用说明" message:ZXUserAgreement preferredStyle:UIAlertControllerStyleAlert];
     UILabel *messageLabel = [alertController.view valueForKeyPath:@"_messageLabel"];
     if(messageLabel){
         messageLabel.textAlignment = NSTextAlignmentLeft;

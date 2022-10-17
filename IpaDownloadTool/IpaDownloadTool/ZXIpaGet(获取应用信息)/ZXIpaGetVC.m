@@ -50,7 +50,25 @@ typedef enum {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initUI];
+    if([[NSUserDefaults standardUserDefaults]objectForKey:@"userAgreementAgreed"]){
+        [self initUI];
+    }else{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"用户协议&使用说明" message:[NSString stringWithFormat:@"%@\n\n点击同意即代表您已阅读协议并同意协议中包含的条款",ZXUserAgreement] preferredStyle:UIAlertControllerStyleAlert];
+        UILabel *messageLabel = [alertController.view valueForKeyPath:@"_messageLabel"];
+        if(messageLabel){
+            messageLabel.textAlignment = NSTextAlignmentLeft;
+        }
+        UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"同意" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"userAgreementAgreed"];
+            [self initUI];
+        }];
+        UIAlertAction *rejectAction = [UIAlertAction actionWithTitle:@"不同意" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            exit(0);
+        }];
+        [alertController addThemeAction:agreeAction];
+        [alertController addThemeAction:rejectAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 -(void)viewWillLayoutSubviews{
