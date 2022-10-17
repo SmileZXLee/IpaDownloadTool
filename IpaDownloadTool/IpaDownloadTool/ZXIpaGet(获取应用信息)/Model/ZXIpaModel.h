@@ -27,9 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, nonatomic) NSString *fromPageUrl;
 ///唯一标识
 @property (copy, nonatomic) NSString *sign;
-///ipa保存地址
+///ipa保存本地地址
 @property (copy, nonatomic) NSString *localPath;
-
 -(instancetype)initWithDic:(NSDictionary *)dic;
 @end
 

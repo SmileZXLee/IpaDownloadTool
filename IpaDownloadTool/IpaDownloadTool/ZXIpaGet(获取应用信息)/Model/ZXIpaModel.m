@@ -8,7 +8,10 @@
 
 #import "ZXIpaModel.h"
 #import "NSString+ZXMD5.h"
-@implementation ZXIpaModel
+@implementation ZXIpaModel{
+    BOOL hasLoadLocalPath;
+}
+
 -(instancetype)initWithDic:(NSDictionary *)dic{
     if(self = [super init]){
         NSDictionary *item = dic[@"items"][0];
@@ -33,8 +36,25 @@
     }
     return self;
 }
+
+-(NSString *)title{
+    if(_title && _title.length > 50){
+        _title = [_title substringToIndex:50];
+    }
+    return _title;
+}
+
 -(NSString *)localPath{
-    _localPath = [NSString stringWithFormat:@"%@/%@/%@.ipa",ZXDocPath,ZXIpaDownloadedPath,self.sign];
+    if(!hasLoadLocalPath){
+        NSString *localPath = [NSString stringWithFormat:@"%@/%@/%@/%@.ipa",ZXDocPath,ZXIpaDownloadedPath,self.sign,self.title];
+        NSString *oldLocalPath = [NSString stringWithFormat:@"%@/%@/%@.ipa",ZXDocPath,ZXIpaDownloadedPath,self.sign];
+        if([ZXFileManage isExistWithPath:oldLocalPath]){
+            _localPath = oldLocalPath;
+        }else {
+            _localPath = localPath;
+        }
+        hasLoadLocalPath = YES;
+    }
     return _localPath;
 }
 @end

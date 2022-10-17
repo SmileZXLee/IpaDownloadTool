@@ -47,7 +47,10 @@
     NSHTTPURLResponse *httpRespone = (NSHTTPURLResponse *)response;
     self.totalLength = httpRespone.expectedContentLength;
     if(self.totalLength > 1024){
+        NSString *dirPath = [self.filePath stringByDeletingLastPathComponent];
+        [ZXFileManage creatDirWithPath:dirPath];
         [[NSFileManager defaultManager] createFileAtPath:self.filePath contents:nil attributes:nil];
+        
         self.handle = [NSFileHandle fileHandleForWritingAtPath:self.filePath];
     }
 }

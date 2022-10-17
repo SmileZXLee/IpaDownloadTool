@@ -9,8 +9,6 @@
 #import "ZXLocalIpaDownloadModel.h"
 
 @implementation ZXLocalIpaDownloadModel
--(NSString *)localPath{
-    _localPath = [NSString stringWithFormat:@"%@/%@/%@.ipa",ZXDocPath,ZXIpaDownloadedPath,self.sign];
-    return _localPath;
-}
+
+
 @end

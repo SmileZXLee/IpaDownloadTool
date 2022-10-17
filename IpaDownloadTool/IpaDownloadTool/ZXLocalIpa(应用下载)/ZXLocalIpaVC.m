@@ -130,6 +130,7 @@ typedef enum {
         downloadedModel.downloadUrl = ipaModel.downloadUrl;
         downloadedModel.sign = ipaModel.sign;
         downloadedModel.finish = YES;
+        downloadedModel.localPath = ipaModel.localPath;
         downloadedModel.totalBytesExpectedToWrite = [ZXFileManage getFileSizeWithPath:downloadedModel.localPath];
         if([ZXFileManage isExistWithPath:downloadedModel.localPath] && downloadedModel.totalBytesExpectedToWrite > 3000){
             [self.tableView.zxDatas addObject:downloadedModel];
@@ -184,6 +185,7 @@ typedef enum {
             _downloadingModel.title = [NSString stringWithFormat:@"%@.ipa",self.ipaModel.title];
         }
         _downloadingModel.sign = self.ipaModel.sign;
+        _downloadingModel.localPath = self.ipaModel.localPath;
     }
     return _downloadingModel;
 }
