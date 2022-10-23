@@ -6,9 +6,9 @@
 [![release](https://img.shields.io/github/v/release/SmileZXLee/IpaDownloadTool?style=flat)](https://github.com/SmileZXLee/IpaDownloadTool/releases)
 [![Support](https://img.shields.io/badge/support-iOS%209.0%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/skx926/KSPhotoBrowser/master/LICENSE)&nbsp;
-### 反馈&交流qq群：[790460711](https://jq.qq.com/?_wv=1027&k=vU2fKZZH)
 ### Release版本(当前版本v2.0.1)
 * [点击此处直接下载最新IPA提取器安装包](https://static.ifafu.cn/IpaDownloadTool.ipa)
+### 反馈&交流qq群：[790460711](https://jq.qq.com/?_wv=1027&k=vU2fKZZH)
 ### 功能
 * 此工具用来快捷下载/储存第三方来源的ipa
 * 支持蒲公英、fir下载页面拦截ipa地址、ipa下载
