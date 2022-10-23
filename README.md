@@ -7,11 +7,6 @@
 [![Support](https://img.shields.io/badge/support-iOS%209.0%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/skx926/KSPhotoBrowser/master/LICENSE)&nbsp;
 ### 反馈&交流qq群：[790460711](https://jq.qq.com/?_wv=1027&k=vU2fKZZH)
-### 项目中使用的第三方:
-* [ALToastView](https://github.com/alexleutgoeb/ALToastView)
-* [SGQRCode](https://github.com/kingsic/SGQRCode)
-* [BackButtonHandler](https://github.com/onegray/UIViewController-BackButtonHandler)
-* [NJKWebViewProgress](https://github.com/ninjinkun/NJKWebViewProgress)
 ### Release版本(当前版本v2.0.1)
 * [点击此处直接下载最新IPA提取器安装包](https://static.ifafu.cn/IpaDownloadTool.ipa)
 ### 功能
@@ -29,6 +24,13 @@
 -|-
 ![](http://www.zxlee.cn/IpaDownloadToolDemo.gif) | ![](https://upload-images.jianshu.io/upload_images/17729343-ab4b953d0a0696a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240) |
 
+### 项目中使用的第三方:
+* [ALToastView](https://github.com/alexleutgoeb/ALToastView)
+* [SGQRCode](https://github.com/kingsic/SGQRCode)
+* [BackButtonHandler](https://github.com/onegray/UIViewController-BackButtonHandler)
+* [NJKWebViewProgress](https://github.com/ninjinkun/NJKWebViewProgress)
+* [ZXTableView](https://github.com/SmileZXLee/ZXTableView)
+* [ZXDataHandle](https://github.com/SmileZXLee/ZXDataHandle)
 ### 更新日志
 #### 2022.10.17(v2.0.1)
 1.【新增】支持直接下载网页中的ipa文件。  
