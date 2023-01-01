@@ -1,11 +1,12 @@
 # IpaDownloadTool
-<h1 align="center">
+<div align="center">
   <img src="http://www.zxlee.cn/IpaDownloadToolLogo.png" width="150" height="150"/>
-</h1> 
+  <h2 align="center">IPA提取器</h2>
+</div> 
 
 [![release](https://img.shields.io/github/v/release/SmileZXLee/IpaDownloadTool?style=flat)](https://github.com/SmileZXLee/IpaDownloadTool/releases)
 [![Support](https://img.shields.io/badge/support-iOS%209.0%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
-[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/skx926/KSPhotoBrowser/master/LICENSE)&nbsp;
+[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/SmileZXLee/IpaDownloadTool/blob/master/LICENSE)&nbsp;
 ### Release版本(当前版本v2.0.1)
 * [点击此处直接下载最新IPA提取器安装包](https://static.ifafu.cn/IpaDownloadTool.ipa)
 ### 反馈qq群：[790460711](https://jq.qq.com/?_wv=1027&k=vU2fKZZH)
@@ -32,7 +33,7 @@
 * [ZXTableView](https://github.com/SmileZXLee/ZXTableView)
 * [ZXDataHandle](https://github.com/SmileZXLee/ZXDataHandle)
 ### 更新日志
-#### 2022.10.17(v2.0.1)
+#### 2022.10.18(v2.0.1)
 1.【新增】支持直接下载网页中的ipa文件。  
 2.【新增】IPA提取器主页添加网页前进、后退、重新加载操作。  
 3.【新增】ipa提取历史支持根据时间或文件名排序。  
