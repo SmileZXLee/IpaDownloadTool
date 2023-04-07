@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +24,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7l-86-kIa">
-                        <rect key="frame" x="15.000000000000004" y="12" width="37.333333333333343" height="20"/>
+                        <rect key="frame" x="15" y="12" width="263" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="Ou5-gG-vXm"/>
                         </constraints>
@@ -45,6 +45,7 @@
                     <constraint firstAttribute="bottom" secondItem="2io-MN-uXj" secondAttribute="bottom" id="fKB-kr-3Ml"/>
                     <constraint firstAttribute="trailing" secondItem="BuY-gP-FZ0" secondAttribute="trailing" constant="10" id="hwC-ug-ar7"/>
                     <constraint firstAttribute="trailing" secondItem="2io-MN-uXj" secondAttribute="trailing" id="m8l-vj-5Vb"/>
+                    <constraint firstItem="BuY-gP-FZ0" firstAttribute="leading" secondItem="a7l-86-kIa" secondAttribute="trailing" constant="20" id="qlw-fS-9Z3"/>
                     <constraint firstItem="BuY-gP-FZ0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="qye-pv-9dD"/>
                     <constraint firstItem="a7l-86-kIa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="vKO-MS-3xu"/>
                     <constraint firstItem="2io-MN-uXj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="vmY-iY-uhK"/>

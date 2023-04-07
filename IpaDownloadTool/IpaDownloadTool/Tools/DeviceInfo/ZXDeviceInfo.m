@@ -18,7 +18,7 @@
     uname(&systemInfo);
     NSString *deviceModel = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
     model.PRODUCT_RESULT = deviceModel;
-    model.UDID_RESULT = @"0000-0000-0000";
+    model.UDID_RESULT = [self getUUID];
     
     return model;
 }
@@ -39,6 +39,10 @@
 }
 
 + (NSString *)getUUID{
+    NSString *UDIDCacheKey = [ZXDataStoreCache readObjForKey:ZXUDIDCacheKey];
+    if (UDIDCacheKey && UDIDCacheKey.length) {
+        return UDIDCacheKey;
+    }
     NSUUID *uuid = [UIDevice currentDevice].identifierForVendor;
     return [uuid UUIDString];
 }

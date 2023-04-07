@@ -11,6 +11,9 @@
 		041C409D29DFD3CF00B611EE /* ZXDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C409C29DFD3CF00B611EE /* ZXDeviceInfo.m */; };
 		041C40A129DFD5C300B611EE /* ZXDeviceInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40A029DFD5C300B611EE /* ZXDeviceInfoModel.m */; };
 		041C40A529DFEA8100B611EE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40A329DFEA8100B611EE /* MBProgressHUD.m */; };
+		041C40B729E053A600B611EE /* ZXMPRegularVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40B529E053A600B611EE /* ZXMPRegularVC.m */; };
+		041C40B829E053A600B611EE /* ZXMPRegularVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041C40B629E053A600B611EE /* ZXMPRegularVC.xib */; };
+		047CDB9929E079BC0013AEAE /* ZXIpaAboutSpaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047CDB9829E079BC0013AEAE /* ZXIpaAboutSpaceView.m */; };
 		04C9937925B2A0910041B15E /* ZXIpaUrlHisVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9937725B2A0910041B15E /* ZXIpaUrlHisVC.m */; };
 		04C9937A25B2A0910041B15E /* ZXIpaUrlHisVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */; };
 		04C9938425B2A0D80041B15E /* ZXIpaUrlHisCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9938225B2A0D80041B15E /* ZXIpaUrlHisCell.m */; };
@@ -113,6 +116,11 @@
 		041C40A029DFD5C300B611EE /* ZXDeviceInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXDeviceInfoModel.m; sourceTree = "<group>"; };
 		041C40A329DFEA8100B611EE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		041C40A429DFEA8100B611EE /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		041C40B429E053A600B611EE /* ZXMPRegularVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXMPRegularVC.h; sourceTree = "<group>"; };
+		041C40B529E053A600B611EE /* ZXMPRegularVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXMPRegularVC.m; sourceTree = "<group>"; };
+		041C40B629E053A600B611EE /* ZXMPRegularVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZXMPRegularVC.xib; sourceTree = "<group>"; };
+		047CDB9729E079BC0013AEAE /* ZXIpaAboutSpaceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXIpaAboutSpaceView.h; sourceTree = "<group>"; };
+		047CDB9829E079BC0013AEAE /* ZXIpaAboutSpaceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXIpaAboutSpaceView.m; sourceTree = "<group>"; };
 		04C9937625B2A0910041B15E /* ZXIpaUrlHisVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXIpaUrlHisVC.h; sourceTree = "<group>"; };
 		04C9937725B2A0910041B15E /* ZXIpaUrlHisVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXIpaUrlHisVC.m; sourceTree = "<group>"; };
 		04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZXIpaUrlHisVC.xib; sourceTree = "<group>"; };
@@ -284,6 +292,16 @@
 			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
+		041C40B329E0533500B611EE /* ZXMPRegular */ = {
+			isa = PBXGroup;
+			children = (
+				041C40B429E053A600B611EE /* ZXMPRegularVC.h */,
+				041C40B529E053A600B611EE /* ZXMPRegularVC.m */,
+				041C40B629E053A600B611EE /* ZXMPRegularVC.xib */,
+			);
+			path = ZXMPRegular;
+			sourceTree = "<group>";
+		};
 		04C9937325B2A06B0041B15E /* ZXIpaUrlHis(网页加载历史) */ = {
 			isa = PBXGroup;
 			children = (
@@ -318,6 +336,7 @@
 		04DED2F028FBBE8F00E473C1 /* ZXIpaAbout(关于IPA提取器) */ = {
 			isa = PBXGroup;
 			children = (
+				041C40B329E0533500B611EE /* ZXMPRegular */,
 				04DED2F228FBBEC400E473C1 /* View */,
 				04DED2F128FBBEBC00E473C1 /* Model */,
 				04DED2F328FBBEED00E473C1 /* ZXIpaAboutVC.h */,
@@ -345,6 +364,8 @@
 				04E62ACC28FBD0370063BD5E /* ZXIpaAboutHeaderView.h */,
 				04E62ACD28FBD0370063BD5E /* ZXIpaAboutHeaderView.m */,
 				04E62ACF28FBD04D0063BD5E /* ZXIpaAboutHeaderView.xib */,
+				047CDB9729E079BC0013AEAE /* ZXIpaAboutSpaceView.h */,
+				047CDB9829E079BC0013AEAE /* ZXIpaAboutSpaceView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -812,6 +833,7 @@
 				04E62AD028FBD04D0063BD5E /* ZXIpaAboutHeaderView.xib in Resources */,
 				741B92A22275943700F24EED /* Assets.xcassets in Resources */,
 				04C9937A25B2A0910041B15E /* ZXIpaUrlHisVC.xib in Resources */,
+				041C40B829E053A600B611EE /* ZXMPRegularVC.xib in Resources */,
 				04E62AC828FBCD4E0063BD5E /* ZXIpaAboutCell.xib in Resources */,
 				7436DA9D22768B15007AA858 /* SGQRCode.bundle in Resources */,
 			);
@@ -883,8 +905,10 @@
 				04DED2F628FBBEED00E473C1 /* ZXIpaAboutVC.m in Sources */,
 				7436DAA322768B15007AA858 /* ScanSuccessJumpVC.m in Sources */,
 				7436DAA822768B15007AA858 /* SYFavoriteButton.m in Sources */,
+				041C40B729E053A600B611EE /* ZXMPRegularVC.m in Sources */,
 				04E62ACB28FBCF750063BD5E /* ZXIpaAboutModel.m in Sources */,
 				04C9939E25B2A4D10041B15E /* ZXIpaUrlHisModel.m in Sources */,
+				047CDB9929E079BC0013AEAE /* ZXIpaAboutSpaceView.m in Sources */,
 				7436DAA722768B15007AA858 /* JHFeilterManager.m in Sources */,
 				041C409D29DFD3CF00B611EE /* ZXDeviceInfo.m in Sources */,
 				7436DABC2276B92D007AA858 /* ZXFileDownload.m in Sources */,

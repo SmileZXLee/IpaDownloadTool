@@ -30,7 +30,11 @@
 #define ZXPlistCachePath @"ZXPlistCache.plist"
 #define ZXMobileprovisionCachePath @"ZXMobileprovisionCache.mobileprovision"
 #define ZXPasteboardStrKey @"ZXPasteboardStrKey"
+#define ZXMobileprovisionRegularCacheKey @"ZXMobileprovisionRegularCacheKey"
+#define ZXUDIDCacheKey @"ZXUDIDCacheKey"
+#define ZXMobileprovisionRegularDefault @[@"*.mobileconfig", @"*.mobileprovision", @"*/udid/get/"]
 #define ZXPasteboardStrLoadUrlNotification @"ZXPasteboardStrLoadUrlNotification"
+#define ZXMobileprovisionRegularUpdateNotification @"ZXMobileprovisionRegularUpdateNotification"
 #define ZXISiPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define ZXUA @"com.apple.appstored/1.0 iOS/14.3 model/iPhone10,2 hwp/t8015 build/18C66 (6; dt:158) AMS/1"
 #define ZXWebUA @"Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1"

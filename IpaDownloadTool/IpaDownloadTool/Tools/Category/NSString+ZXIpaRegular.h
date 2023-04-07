@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)parseToQuery;
 ///根据字典替换字符串中内容
 - (NSString *)replaceKeysWithValuesInDict:(NSDictionary *)dic;
+///判断字符串是否匹配任一规则
+- (BOOL)matchesAnyRegexInArr:(NSArray<NSString *> *)regexArr;
 @end
 
 NS_ASSUME_NONNULL_END

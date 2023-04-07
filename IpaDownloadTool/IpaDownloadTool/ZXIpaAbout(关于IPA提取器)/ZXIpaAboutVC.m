@@ -7,8 +7,11 @@
 //  https://github.com/SmileZXLee/IpaDownloadTool
 
 #import "ZXIpaAboutVC.h"
+#import "ZXMPRegularVC.h"
+#import "ZXDeviceInfo.h"
 #import "ZXTableView.h"
 #import "ZXIpaAboutHeaderView.h"
+#import "ZXIpaAboutSpaceView.h"
 #import "ZXIpaAboutCell.h"
 
 #import "ZXIpaModel.h"
@@ -16,6 +19,8 @@
 @interface ZXIpaAboutVC ()
 @property (weak, nonatomic) IBOutlet ZXTableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *copyrightBtn;
+
+@property (strong, nonatomic) ZXDeviceInfoModel *deviceInfoModel;
 @end
 
 @implementation ZXIpaAboutVC
@@ -27,17 +32,17 @@
 
 #pragma mark - 初始化视图
 -(void)initUI{
-    self.title = @"关于";
+    self.title = @"设置与关于";
     self.view.backgroundColor = BgColor;
     [self.copyrightBtn setTintColor:MainColor];
     self.copyrightBtn.userInteractionEnabled = NO;
     self.copyrightBtn.titleLabel.font = [UIFont systemFontOfSize: 11.0];
-    [self.copyrightBtn setTitle:@"Copyright © 2019-2022 IPA提取器. All rights reserved." forState:UIControlStateNormal];
+    [self.copyrightBtn setTitle:@"Copyright © 2019-2023 IPA提取器. All rights reserved." forState:UIControlStateNormal];
     
     self.tableView.backgroundColor = [UIColor clearColor];
     __weak __typeof(self) weakSelf = self;
     self.tableView.zx_setHeaderClassInSection = ^Class _Nonnull(NSInteger section) {
-        return [ZXIpaAboutHeaderView class];
+        return section == 0 ? [ZXIpaAboutHeaderView class] : [ZXIpaAboutSpaceView class];
     };
     self.tableView.zx_setCellClassAtIndexPath = ^Class(NSIndexPath *indexPath) {
         return [ZXIpaAboutCell class];
@@ -46,7 +51,7 @@
         return 50;
     };
     self.tableView.zx_setHeaderHInSection = ^CGFloat(NSInteger section) {
-        return 190;
+        return section == 0 ? 190 : 10;
     };
     self.tableView.zx_didSelectedAtIndexPath = ^(NSIndexPath *indexPath, NSString *title, id cell) {
         if([title isEqualToString:@"用户协议&使用说明"]){
@@ -55,9 +60,18 @@
             [weakSelf handleOpenSourceAddressClick];
         }else if([title isEqualToString:@"数据导出或导入"]){
             [weakSelf handleDataExportAndImportClick];
+        }else if([title isEqualToString:@"描述文件URL匹配规则"]){
+            [weakSelf handle2MPRegularClick];
+        }else if([title containsString:@"虚拟UDID"]){
+            [weakSelf handleChangeUDIDClick];
         }
     };
-    self.tableView.zxDatas = [@[@"数据导出或导入",@"用户协议&使用说明",@"开源地址"] mutableCopy];
+    [self initData];
+}
+
+- (void)initData{
+    self.deviceInfoModel =  [ZXDeviceInfo getDeviceInfo];
+    self.tableView.zxDatas = [@[@[@"数据导出或导入",@"描述文件URL匹配规则",[NSString stringWithFormat:@"虚拟UDID(%@)",self.deviceInfoModel.UDID_RESULT]], @[@"用户协议&使用说明",@"开源地址"]] mutableCopy];
 }
 
 #pragma mark 处理点击使用说明
@@ -148,6 +162,36 @@
     [alertController addThemeAction:cancelAction];
     [alertController addThemeAction:exportAction];
     [alertController addThemeAction:importAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+#pragma mark 处理点击描述文件下载URL规则
+-(void)handle2MPRegularClick{
+    ZXMPRegularVC *VC = [[ZXMPRegularVC alloc]init];
+    [self.navigationController pushViewController:VC animated:YES];
+}
+
+#pragma mark 处理点击更换UDID
+-(void)handleChangeUDIDClick{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"修改虚拟UDID" message:@"虚拟UDID初始值为随机生成的，安装获取设备UDID描述文件时将使用它" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *inputTf = alertController.textFields[0];
+        [inputTf becomeFirstResponder];
+        NSString *udid = inputTf.text;
+        if (udid && udid.length) {
+            [ZXDataStoreCache saveObj:udid forKey:ZXUDIDCacheKey];
+            [self initData];
+        }
+        
+    }];
+    [alertController addThemeAction:cancelAction];
+    [alertController addThemeAction:confirmAction];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入虚拟UDID";
+        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        textField.text = self.deviceInfoModel.UDID_RESULT;
+    }];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 

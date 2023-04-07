@@ -15,7 +15,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.aboutTitleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
 }
 
 -(void)setTitleModel:(NSString *)titleModel{

@@ -47,6 +47,7 @@ typedef enum {
 @property (copy, nonatomic)NSString *currentUrlStr;
 @property (assign, nonatomic)BOOL urlStartHandled;
 @property (copy, nonatomic)NSString *ignoredIpaDownloadUrl;
+@property (strong, nonatomic)NSArray *mobileprovisionRegulaArr;
 @end
 
 @implementation ZXIpaGetVC
@@ -126,6 +127,7 @@ typedef enum {
     });
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(pasteboardStrLoadUrl:) name:ZXPasteboardStrLoadUrlNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateMobileprovisionRegulaArr) name:ZXMobileprovisionRegularUpdateNotification object:nil];
     
     if (@available(iOS 15.0, *)) {
        UINavigationBarAppearance *appperance = [[UINavigationBarAppearance alloc]init];
@@ -142,6 +144,8 @@ typedef enum {
             [self showPlaceViewWithText:@"轻点【网址】开始，长按显示网址历史"];
         }
     });
+    
+    [self updateMobileprovisionRegulaArr];
 }
 
 - (void)initWebViewProgressView{
@@ -241,7 +245,7 @@ typedef enum {
     }
     self.progressView.alpha = 1;
     NSString *urlStr = request.URL.absoluteString;
-    if([urlStr hasSuffix:@"/udid/get/"]){
+    if([urlStr matchesAnyRegexInArr:self.mobileprovisionRegulaArr]){
         //@"此网页想要安装一个描述文件，IPA提取器无法处理这个描述文件，请使用Safari打开并重新点击下载/安装按钮安装此描述文件，安装后Safari会自动加载一个新的链接，请在安装描述文件后复制Safari中的链接并粘贴到IPA提取器中即可获取IPA安装信息。"
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件以获取UDID，IPA提取器将尝试解析并提交虚假UDID信息，是否继续？" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -494,6 +498,14 @@ typedef enum {
     [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     ipaModel.time = [format stringFromDate:date];
     [ipaModel zx_dbSave];
+}
+
+- (void)updateMobileprovisionRegulaArr{
+    self.mobileprovisionRegulaArr = [ZXDataStoreCache readObjForKey:ZXMobileprovisionRegularCacheKey];
+    if (self.mobileprovisionRegulaArr == nil) {
+        self.mobileprovisionRegulaArr = ZXMobileprovisionRegularDefault;
+        [ZXDataStoreCache saveObj:self.mobileprovisionRegulaArr forKey:ZXMobileprovisionRegularCacheKey];
+    }
 }
 
 - (void)handleUrlLoad:(NSString *)urlStr shouldCache:(BOOL)shouldCache{

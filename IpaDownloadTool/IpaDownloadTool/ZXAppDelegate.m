@@ -63,7 +63,6 @@
 
 #pragma mark 获取剪贴板内容并判断是否弹出”粘贴并前往“
 - (void)handlePasteboardStr{
-    return;
     if(!self.isHandlingUrlScheme && [[NSUserDefaults standardUserDefaults]objectForKey:@"userAgreementAgreed"]){
         self.isHandlingUrlScheme = NO;
         NSString *pasteboardStr = [UIPasteboard generalPasteboard].string;

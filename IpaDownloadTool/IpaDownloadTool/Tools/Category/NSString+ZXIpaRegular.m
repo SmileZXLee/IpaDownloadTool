@@ -51,4 +51,23 @@
     return [result copy];
 }
 
+
+- (BOOL)matchesAnyRegexInArr:(NSArray<NSString *> *)regexArr {
+    @try {
+        NSMutableArray *predicates = [NSMutableArray arrayWithCapacity:regexArr.count];
+        for (NSString *regex in regexArr) {
+            NSString *pattern = [regex stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
+            pattern = [pattern stringByReplacingOccurrencesOfString:@"*" withString:@".*"];
+            pattern = [NSString stringWithFormat:@"^%@$", pattern];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pattern];
+            [predicates addObject:predicate];
+        }
+        NSPredicate *orPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
+        return [orPredicate evaluateWithObject:self];
+    }
+    @catch (NSException *exception) {
+        return NO;
+    }
+    
+}
 @end
