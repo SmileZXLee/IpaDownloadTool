@@ -5,4 +5,5 @@ pod 'ZXTableView'
 pod 'SDWebImage'
 pod 'NJKWebViewProgress'
 pod 'YBPopupMenu'
+pod 'TCMobileProvision'
 end

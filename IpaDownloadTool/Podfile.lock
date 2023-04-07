@@ -1,4 +1,7 @@
 PODS:
+  - DTFoundation/Core (1.7.18)
+  - DTFoundation/DTASN1 (1.7.18):
+    - DTFoundation/Core
   - NJKWebViewProgress (0.2.3):
     - NJKWebViewProgress/Core (= 0.2.3)
     - NJKWebViewProgress/ProgressView (= 0.2.3)
@@ -7,6 +10,8 @@ PODS:
   - SDWebImage (5.0.1):
     - SDWebImage/Core (= 5.0.1)
   - SDWebImage/Core (5.0.1)
+  - TCMobileProvision (1.0.0):
+    - DTFoundation/DTASN1 (~> 1.6)
   - YBPopupMenu (1.1.7)
   - ZXDataHandle (1.1.3)
   - ZXTableView (1.1.4)
@@ -14,25 +19,30 @@ PODS:
 DEPENDENCIES:
   - NJKWebViewProgress
   - SDWebImage
+  - TCMobileProvision
   - YBPopupMenu
   - ZXDataHandle
   - ZXTableView
 
 SPEC REPOS:
   trunk:
+    - DTFoundation
     - NJKWebViewProgress
     - SDWebImage
+    - TCMobileProvision
     - YBPopupMenu
     - ZXDataHandle
     - ZXTableView
 
 SPEC CHECKSUMS:
+  DTFoundation: a53f8cda2489208cbc71c648be177f902ee17536
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   SDWebImage: 27dd2c9ea07a2252f94557c9fbb6105ee94b74c9
+  TCMobileProvision: 2a8962b38821a20fad53b9d7851bbc9ae8c52995
   YBPopupMenu: cee0568a0c5de8565b0cda1bf97f0520d71d122d
   ZXDataHandle: b0312d123d80c7faf95ff87c7e900f831912e99c
   ZXTableView: 4c3c35acbb0628bc814a895e5e39f5c7b7925798
 
-PODFILE CHECKSUM: 1d2fc91c614b72e5e59f6675adcc002bc3f3c3cf
+PODFILE CHECKSUM: 68a9efa0059d268004a1007302a38e1540766ca6
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.11.3

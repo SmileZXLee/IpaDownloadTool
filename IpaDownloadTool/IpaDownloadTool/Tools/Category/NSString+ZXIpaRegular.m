@@ -30,4 +30,25 @@
     return @"";
 }
 
+- (NSDictionary *)parseToQuery{
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:6];
+    NSArray *pairs = [self componentsSeparatedByString:@"&"];
+    for (NSString *pair in pairs) {
+        NSArray *elements = [pair componentsSeparatedByString:@"="];
+        NSString *key = [elements[0] stringByRemovingPercentEncoding];
+        NSString *val = [elements[1] stringByRemovingPercentEncoding];
+        
+        [dict setObject:val forKey:key];
+    }
+    return dict;
+}
+
+- (NSString *)replaceKeysWithValuesInDict:(NSDictionary *)dic {
+    NSMutableString *result = [self mutableCopy];
+    [dic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [result replaceOccurrencesOfString:key withString:obj options:NSLiteralSearch range:NSMakeRange(0, result.length)];
+    }];
+    return [result copy];
+}
+
 @end

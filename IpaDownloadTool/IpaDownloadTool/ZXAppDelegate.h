@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ZXAppDelegate : UIResponder <UIApplicationDelegate>
 @property (strong, nonatomic) UIWindow *window;
  @property (nonatomic, assign) UIBackgroundTaskIdentifier bgTask;
+@property (nonatomic, assign) BOOL isHandlingUrlScheme;
 @end
 
 NS_ASSUME_NONNULL_END

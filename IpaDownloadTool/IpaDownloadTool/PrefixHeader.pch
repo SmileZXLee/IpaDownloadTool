@@ -28,6 +28,7 @@
 #define MainTitle @"IPA提取器"
 #define ZXIpaDownloadedPath @"ZXIpaDownloadedArr"
 #define ZXPlistCachePath @"ZXPlistCache.plist"
+#define ZXMobileprovisionCachePath @"ZXMobileprovisionCache.mobileprovision"
 #define ZXPasteboardStrKey @"ZXPasteboardStrKey"
 #define ZXPasteboardStrLoadUrlNotification @"ZXPasteboardStrLoadUrlNotification"
 #define ZXISiPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)

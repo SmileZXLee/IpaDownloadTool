@@ -1,0 +1,15 @@
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>IMEI</key>
+    <string>IMEI_RESULT</string>
+    <key>PRODUCT</key>
+    <string>PRODUCT_RESULT</string>
+    <key>SERIAL</key>
+    <string>GG6422WLHF</string>
+    <key>UDID</key>
+    <string>UDID_RESULT</string>
+    <key>VERSION</key>
+    <string>20D47</string>
+  </dict>
+</plist>

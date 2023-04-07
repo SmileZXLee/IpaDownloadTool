@@ -36,7 +36,7 @@
         }
     }];
 }
-+(void)downLoadWithUrlStr:(NSString *)urlStr callBack:(kGetDataEventHandler)_result{
++(void)downLoadWithUrlStr:(NSString *)urlStr path:(NSString *)path callBack:(kGetDataEventHandler)_result{
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     config.timeoutIntervalForRequest = 10;
@@ -47,10 +47,10 @@
         NSError *fileErr;
         NSString *filePath = @"";
         if(location){
-            NSString *path = location.absoluteString;
-            path = [path stringByReplacingOccurrencesOfString:@"file://" withString:@""];
-            filePath = [NSString stringWithFormat:@"%@/%@",ZXDocPath,ZXPlistCachePath];
-            [ZXFileManage delFileWithPathComponent:ZXPlistCachePath];
+            NSString *locationPath = location.absoluteString;
+            locationPath = [locationPath stringByReplacingOccurrencesOfString:@"file://" withString:@""];
+            filePath = [NSString stringWithFormat:@"%@/%@",ZXDocPath,path];
+            [ZXFileManage delFileWithPathComponent:path];
             [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:filePath] error:&fileErr];
         }
         if(!error && !fileErr){

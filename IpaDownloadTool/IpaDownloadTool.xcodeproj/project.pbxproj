@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041C408F29DDD20C00B611EE /* SafariExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 041C407629DDD20C00B611EE /* SafariExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		041C409929DFD24700B611EE /* GetUdidXMLTemplate in Resources */ = {isa = PBXBuildFile; fileRef = 041C409829DFD24700B611EE /* GetUdidXMLTemplate */; };
+		041C409D29DFD3CF00B611EE /* ZXDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C409C29DFD3CF00B611EE /* ZXDeviceInfo.m */; };
+		041C40A129DFD5C300B611EE /* ZXDeviceInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40A029DFD5C300B611EE /* ZXDeviceInfoModel.m */; };
+		041C40A529DFEA8100B611EE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40A329DFEA8100B611EE /* MBProgressHUD.m */; };
+		041C40AF29DFF5F600B611EE /* NSURLSession+ZXHttpProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40A829DFF5F600B611EE /* NSURLSession+ZXHttpProxy.m */; };
+		041C40B029DFF5F600B611EE /* ZXURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40A929DFF5F600B611EE /* ZXURLProtocol.m */; };
+		041C40B129DFF5F600B611EE /* ZXRequestBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40AA29DFF5F600B611EE /* ZXRequestBlock.m */; };
+		041C40B229DFF5F600B611EE /* ZXHttpIPGet.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40AB29DFF5F600B611EE /* ZXHttpIPGet.m */; };
 		04C9937925B2A0910041B15E /* ZXIpaUrlHisVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9937725B2A0910041B15E /* ZXIpaUrlHisVC.m */; };
 		04C9937A25B2A0910041B15E /* ZXIpaUrlHisVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */; };
 		04C9938425B2A0D80041B15E /* ZXIpaUrlHisCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9938225B2A0D80041B15E /* ZXIpaUrlHisCell.m */; };
@@ -72,6 +81,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		041C408D29DDD20C00B611EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 741B928D2275943100F24EED /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 041C407529DDD20C00B611EE;
+			remoteInfo = SafariExtension;
+		};
 		741B92AE2275943700F24EED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 741B928D2275943100F24EED /* Project object */;
@@ -88,7 +104,37 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		041C409029DDD20D00B611EE /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				041C408F29DDD20C00B611EE /* SafariExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		041C407629DDD20C00B611EE /* SafariExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SafariExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		041C409829DFD24700B611EE /* GetUdidXMLTemplate */ = {isa = PBXFileReference; lastKnownFileType = text; path = GetUdidXMLTemplate; sourceTree = "<group>"; };
+		041C409B29DFD3CF00B611EE /* ZXDeviceInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXDeviceInfo.h; sourceTree = "<group>"; };
+		041C409C29DFD3CF00B611EE /* ZXDeviceInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXDeviceInfo.m; sourceTree = "<group>"; };
+		041C409F29DFD5C300B611EE /* ZXDeviceInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXDeviceInfoModel.h; sourceTree = "<group>"; };
+		041C40A029DFD5C300B611EE /* ZXDeviceInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXDeviceInfoModel.m; sourceTree = "<group>"; };
+		041C40A329DFEA8100B611EE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		041C40A429DFEA8100B611EE /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		041C40A729DFF5F600B611EE /* ZXHttpIPGet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXHttpIPGet.h; sourceTree = "<group>"; };
+		041C40A829DFF5F600B611EE /* NSURLSession+ZXHttpProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+ZXHttpProxy.m"; sourceTree = "<group>"; };
+		041C40A929DFF5F600B611EE /* ZXURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXURLProtocol.m; sourceTree = "<group>"; };
+		041C40AA29DFF5F600B611EE /* ZXRequestBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXRequestBlock.m; sourceTree = "<group>"; };
+		041C40AB29DFF5F600B611EE /* ZXHttpIPGet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXHttpIPGet.m; sourceTree = "<group>"; };
+		041C40AC29DFF5F600B611EE /* NSURLSession+ZXHttpProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+ZXHttpProxy.h"; sourceTree = "<group>"; };
+		041C40AD29DFF5F600B611EE /* ZXRequestBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXRequestBlock.h; sourceTree = "<group>"; };
+		041C40AE29DFF5F600B611EE /* ZXURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXURLProtocol.h; sourceTree = "<group>"; };
 		04C9937625B2A0910041B15E /* ZXIpaUrlHisVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXIpaUrlHisVC.h; sourceTree = "<group>"; };
 		04C9937725B2A0910041B15E /* ZXIpaUrlHisVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXIpaUrlHisVC.m; sourceTree = "<group>"; };
 		04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZXIpaUrlHisVC.xib; sourceTree = "<group>"; };
@@ -207,6 +253,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		041C407329DDD20C00B611EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		741B92922275943100F24EED /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,6 +285,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		041C409A29DFD3B100B611EE /* DeviceInfo */ = {
+			isa = PBXGroup;
+			children = (
+				041C409E29DFD5B100B611EE /* model */,
+				041C409B29DFD3CF00B611EE /* ZXDeviceInfo.h */,
+				041C409C29DFD3CF00B611EE /* ZXDeviceInfo.m */,
+			);
+			path = DeviceInfo;
+			sourceTree = "<group>";
+		};
+		041C409E29DFD5B100B611EE /* model */ = {
+			isa = PBXGroup;
+			children = (
+				041C409F29DFD5C300B611EE /* ZXDeviceInfoModel.h */,
+				041C40A029DFD5C300B611EE /* ZXDeviceInfoModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		041C40A229DFEA8100B611EE /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				041C40A329DFEA8100B611EE /* MBProgressHUD.m */,
+				041C40A429DFEA8100B611EE /* MBProgressHUD.h */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		041C40A629DFF5F600B611EE /* ZXRequestBlock */ = {
+			isa = PBXGroup;
+			children = (
+				041C40AD29DFF5F600B611EE /* ZXRequestBlock.h */,
+				041C40AA29DFF5F600B611EE /* ZXRequestBlock.m */,
+				041C40AE29DFF5F600B611EE /* ZXURLProtocol.h */,
+				041C40A929DFF5F600B611EE /* ZXURLProtocol.m */,
+				041C40A729DFF5F600B611EE /* ZXHttpIPGet.h */,
+				041C40AB29DFF5F600B611EE /* ZXHttpIPGet.m */,
+				041C40AC29DFF5F600B611EE /* NSURLSession+ZXHttpProxy.h */,
+				041C40A829DFF5F600B611EE /* NSURLSession+ZXHttpProxy.m */,
+			);
+			path = ZXRequestBlock;
+			sourceTree = "<group>";
+		};
 		04C9937325B2A06B0041B15E /* ZXIpaUrlHis(网页加载历史) */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,6 +428,7 @@
 				741B92952275943100F24EED /* IpaDownloadTool.app */,
 				741B92AD2275943700F24EED /* IpaDownloadToolTests.xctest */,
 				741B92B82275943700F24EED /* IpaDownloadToolUITests.xctest */,
+				041C407629DDD20C00B611EE /* SafariExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -353,6 +450,7 @@
 				741B92E62275DD3100F24EED /* PrefixHeader.pch */,
 				7436DAE2227759BB007AA858 /* ZXAppDelegate.h */,
 				7436DAE3227759BB007AA858 /* ZXAppDelegate.m */,
+				041C409829DFD24700B611EE /* GetUdidXMLTemplate */,
 			);
 			path = IpaDownloadTool;
 			sourceTree = "<group>";
@@ -378,10 +476,13 @@
 		741B92DF2275D33D00F24EED /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				041C40A629DFF5F600B611EE /* ZXRequestBlock */,
+				041C409A29DFD3B100B611EE /* DeviceInfo */,
 				7436DAE1227757A6007AA858 /* BackButtonHandler */,
 				7436DADA22771E0E007AA858 /* FileManage */,
 				7436DAB622769D52007AA858 /* PlaceView */,
 				7436DA7F22768B15007AA858 /* SGQRCode */,
+				041C40A229DFEA8100B611EE /* MBProgressHUD */,
 				7436DAAD2276989E007AA858 /* ALToastView */,
 				7436DAAE227698B9007AA858 /* HttpRequest */,
 				7436DAAF2276993C007AA858 /* Category */,
@@ -636,6 +737,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		041C407529DDD20C00B611EE /* SafariExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 041C409329DDD20D00B611EE /* Build configuration list for PBXNativeTarget "SafariExtension" */;
+			buildPhases = (
+				041C407229DDD20C00B611EE /* Sources */,
+				041C407329DDD20C00B611EE /* Frameworks */,
+				041C407429DDD20C00B611EE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SafariExtension;
+			productName = SafariExtension;
+			productReference = 041C407629DDD20C00B611EE /* SafariExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		741B92942275943100F24EED /* IpaDownloadTool */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 741B92C12275943700F24EED /* Build configuration list for PBXNativeTarget "IpaDownloadTool" */;
@@ -644,10 +762,12 @@
 				741B92912275943100F24EED /* Sources */,
 				741B92922275943100F24EED /* Frameworks */,
 				741B92932275943100F24EED /* Resources */,
+				041C409029DDD20D00B611EE /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				041C408E29DDD20C00B611EE /* PBXTargetDependency */,
 			);
 			name = IpaDownloadTool;
 			productName = IpaDownloadTool;
@@ -699,6 +819,9 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "李兆祥";
 				TargetAttributes = {
+					041C407529DDD20C00B611EE = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					741B92942275943100F24EED = {
 						CreatedOnToolsVersion = 10.2;
 						SystemCapabilities = {
@@ -733,11 +856,19 @@
 				741B92942275943100F24EED /* IpaDownloadTool */,
 				741B92AC2275943700F24EED /* IpaDownloadToolTests */,
 				741B92B72275943700F24EED /* IpaDownloadToolUITests */,
+				041C407529DDD20C00B611EE /* SafariExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		041C407429DDD20C00B611EE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		741B92932275943100F24EED /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -747,6 +878,7 @@
 				7436DAD62276CF53007AA858 /* ZXLocalIpaDownloadCell.xib in Resources */,
 				741B92F92275F93A00F24EED /* ZXIpaHisCell.xib in Resources */,
 				7436DAC72276CCB3007AA858 /* ZXLocalIpaVC.xib in Resources */,
+				041C409929DFD24700B611EE /* GetUdidXMLTemplate in Resources */,
 				741B92A52275943700F24EED /* LaunchScreen.storyboard in Resources */,
 				741B930922760A8D00F24EED /* ZXIpaDetailCell.xib in Resources */,
 				04DED2F728FBBEED00E473C1 /* ZXIpaAboutVC.xib in Resources */,
@@ -802,6 +934,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		041C407229DDD20C00B611EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		741B92912275943100F24EED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -813,6 +952,7 @@
 				7436DAD52276CF53007AA858 /* ZXLocalIpaDownloadCell.m in Sources */,
 				7436DAE4227759BB007AA858 /* ZXAppDelegate.m in Sources */,
 				741B930822760A8D00F24EED /* ZXIpaDetailCell.m in Sources */,
+				041C40A529DFEA8100B611EE /* MBProgressHUD.m in Sources */,
 				7436DAA222768B15007AA858 /* YSLScrollMenuView.m in Sources */,
 				04C9938425B2A0D80041B15E /* ZXIpaUrlHisCell.m in Sources */,
 				741B930C22760BC800F24EED /* ZXIpaDetailModel.m in Sources */,
@@ -820,14 +960,18 @@
 				7436DAA622768B15007AA858 /* SGQRCodeGenerateManager.m in Sources */,
 				7436DADD22771E20007AA858 /* ZXFileManage.m in Sources */,
 				7436DAB922769D81007AA858 /* ZXPlaceView.m in Sources */,
+				041C40B129DFF5F600B611EE /* ZXRequestBlock.m in Sources */,
 				741B92FC2276025A00F24EED /* ALToastView.m in Sources */,
 				7436DAA422768B15007AA858 /* SGQRCodeScanningView.m in Sources */,
+				041C40B029DFF5F600B611EE /* ZXURLProtocol.m in Sources */,
 				04DED2F628FBBEED00E473C1 /* ZXIpaAboutVC.m in Sources */,
 				7436DAA322768B15007AA858 /* ScanSuccessJumpVC.m in Sources */,
 				7436DAA822768B15007AA858 /* SYFavoriteButton.m in Sources */,
 				04E62ACB28FBCF750063BD5E /* ZXIpaAboutModel.m in Sources */,
 				04C9939E25B2A4D10041B15E /* ZXIpaUrlHisModel.m in Sources */,
 				7436DAA722768B15007AA858 /* JHFeilterManager.m in Sources */,
+				041C40B229DFF5F600B611EE /* ZXHttpIPGet.m in Sources */,
+				041C409D29DFD3CF00B611EE /* ZXDeviceInfo.m in Sources */,
 				7436DABC2276B92D007AA858 /* ZXFileDownload.m in Sources */,
 				741B92F82275F93A00F24EED /* ZXIpaHisCell.m in Sources */,
 				7436DAA022768B15007AA858 /* SGQRCodeScanningVC.m in Sources */,
@@ -842,11 +986,13 @@
 				741B92DD2275D1B800F24EED /* ZXIpaGetVC.m in Sources */,
 				741B93032276095E00F24EED /* ZXIpaDetailVC.m in Sources */,
 				7436DAB522769A65007AA858 /* UIImage+ZXTheme.m in Sources */,
+				041C40A129DFD5C300B611EE /* ZXDeviceInfoModel.m in Sources */,
 				04C9937925B2A0910041B15E /* ZXIpaUrlHisVC.m in Sources */,
 				7436DAD92276D19E007AA858 /* ZXLocalIpaDownloadModel.m in Sources */,
 				7436DAB2227699E7007AA858 /* UIImage+Rendering.m in Sources */,
 				7436DABF2276CAE4007AA858 /* NSString+ZXMD5.m in Sources */,
 				7436DAE722776218007AA858 /* NSObject+ZXKVO.m in Sources */,
+				041C40AF29DFF5F600B611EE /* NSURLSession+ZXHttpProxy.m in Sources */,
 				7436DAA922768B15007AA858 /* SGQRCodeAlbumManager.m in Sources */,
 				741B92E22275D37700F24EED /* ZXIpaHttpRequest.m in Sources */,
 				7436DA9E22768B15007AA858 /* UIImage+SGHelper.m in Sources */,
@@ -872,6 +1018,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		041C408E29DDD20C00B611EE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 041C407529DDD20C00B611EE /* SafariExtension */;
+			targetProxy = 041C408D29DDD20C00B611EE /* PBXContainerItemProxy */;
+		};
 		741B92AF2275943700F24EED /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 741B92942275943100F24EED /* IpaDownloadTool */;
@@ -896,6 +1047,68 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		041C409129DDD20D00B611EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3UA5897T2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SafariExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SafariExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 李兆祥. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cn.zxlee.IpaDownloadTool.SafariExtension2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		041C409229DDD20D00B611EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3UA5897T2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SafariExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SafariExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 李兆祥. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cn.zxlee.IpaDownloadTool.SafariExtension2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		741B92BF2275943700F24EED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1129,6 +1342,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		041C409329DDD20D00B611EE /* Build configuration list for PBXNativeTarget "SafariExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				041C409129DDD20D00B611EE /* Debug */,
+				041C409229DDD20D00B611EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		741B92902275943100F24EED /* Build configuration list for PBXProject "IpaDownloadTool" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

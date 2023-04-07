@@ -15,6 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSString *)getPlistPathUrlStr;
 ///获取网页的favicon路径
 -(NSString *)getWebFaviconStrWithHostUrl:(NSString *)hostUrl;
+///解析query数据
+- (NSDictionary *)parseToQuery;
+///根据字典替换字符串中内容
+- (NSString *)replaceKeysWithValuesInDict:(NSDictionary *)dic;
 @end
 
 NS_ASSUME_NONNULL_END

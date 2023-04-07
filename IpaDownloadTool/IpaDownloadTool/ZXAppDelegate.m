@@ -20,7 +20,9 @@
     [self setAppearance];
     [self setUserAgent];
     [self creatIpaDownloadedPath];
-    [self handlePasteboardStr];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self handlePasteboardStr];
+    });
     return YES;
 }
 #pragma mark 设置全局外观
@@ -54,12 +56,16 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [self handlePasteboardStr];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self handlePasteboardStr];
+    });
 }
 
 #pragma mark 获取剪贴板内容并判断是否弹出”粘贴并前往“
 - (void)handlePasteboardStr{
-    if([[NSUserDefaults standardUserDefaults]objectForKey:@"userAgreementAgreed"]){
+    return;
+    if(!self.isHandlingUrlScheme && [[NSUserDefaults standardUserDefaults]objectForKey:@"userAgreementAgreed"]){
+        self.isHandlingUrlScheme = NO;
         NSString *pasteboardStr = [UIPasteboard generalPasteboard].string;
         if([pasteboardStr hasPrefix:@"http"] || [pasteboardStr hasPrefix:@"https"]){
             NSString *oldPasteboardStr = [ZXDataStoreCache readObjForKey:ZXPasteboardStrKey];
@@ -77,6 +83,26 @@
             }
         }
     }
+}
+
+#pragma mark 处理urlScheme传过来的参数
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    if ([url.scheme isEqualToString:[@"ipaDownloadTool" lowercaseString]]) {
+        NSString *query = url.query;
+        if (query) {
+            NSDictionary *queryDict = [query parseToQuery];
+            NSString *targetUrl = queryDict[@"url"];
+            targetUrl = [targetUrl stringByRemovingPercentEncoding];
+            if (targetUrl) {
+                self.isHandlingUrlScheme = YES;
+                [[NSNotificationCenter defaultCenter]postNotificationName:ZXPasteboardStrLoadUrlNotification object:targetUrl];
+                [ZXDataStoreCache saveObj:targetUrl forKey:ZXPasteboardStrKey];
+            }
+        }
+        return YES;
+    }
+    
+    return NO;
 }
 
 @end
