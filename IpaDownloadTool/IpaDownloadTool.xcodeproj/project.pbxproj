@@ -11,10 +11,6 @@
 		041C409D29DFD3CF00B611EE /* ZXDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C409C29DFD3CF00B611EE /* ZXDeviceInfo.m */; };
 		041C40A129DFD5C300B611EE /* ZXDeviceInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40A029DFD5C300B611EE /* ZXDeviceInfoModel.m */; };
 		041C40A529DFEA8100B611EE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40A329DFEA8100B611EE /* MBProgressHUD.m */; };
-		041C40AF29DFF5F600B611EE /* NSURLSession+ZXHttpProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40A829DFF5F600B611EE /* NSURLSession+ZXHttpProxy.m */; };
-		041C40B029DFF5F600B611EE /* ZXURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40A929DFF5F600B611EE /* ZXURLProtocol.m */; };
-		041C40B129DFF5F600B611EE /* ZXRequestBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40AA29DFF5F600B611EE /* ZXRequestBlock.m */; };
-		041C40B229DFF5F600B611EE /* ZXHttpIPGet.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40AB29DFF5F600B611EE /* ZXHttpIPGet.m */; };
 		04C9937925B2A0910041B15E /* ZXIpaUrlHisVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9937725B2A0910041B15E /* ZXIpaUrlHisVC.m */; };
 		04C9937A25B2A0910041B15E /* ZXIpaUrlHisVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */; };
 		04C9938425B2A0D80041B15E /* ZXIpaUrlHisCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9938225B2A0D80041B15E /* ZXIpaUrlHisCell.m */; };
@@ -117,14 +113,6 @@
 		041C40A029DFD5C300B611EE /* ZXDeviceInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXDeviceInfoModel.m; sourceTree = "<group>"; };
 		041C40A329DFEA8100B611EE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		041C40A429DFEA8100B611EE /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		041C40A729DFF5F600B611EE /* ZXHttpIPGet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXHttpIPGet.h; sourceTree = "<group>"; };
-		041C40A829DFF5F600B611EE /* NSURLSession+ZXHttpProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+ZXHttpProxy.m"; sourceTree = "<group>"; };
-		041C40A929DFF5F600B611EE /* ZXURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXURLProtocol.m; sourceTree = "<group>"; };
-		041C40AA29DFF5F600B611EE /* ZXRequestBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXRequestBlock.m; sourceTree = "<group>"; };
-		041C40AB29DFF5F600B611EE /* ZXHttpIPGet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXHttpIPGet.m; sourceTree = "<group>"; };
-		041C40AC29DFF5F600B611EE /* NSURLSession+ZXHttpProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+ZXHttpProxy.h"; sourceTree = "<group>"; };
-		041C40AD29DFF5F600B611EE /* ZXRequestBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXRequestBlock.h; sourceTree = "<group>"; };
-		041C40AE29DFF5F600B611EE /* ZXURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXURLProtocol.h; sourceTree = "<group>"; };
 		04C9937625B2A0910041B15E /* ZXIpaUrlHisVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXIpaUrlHisVC.h; sourceTree = "<group>"; };
 		04C9937725B2A0910041B15E /* ZXIpaUrlHisVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXIpaUrlHisVC.m; sourceTree = "<group>"; };
 		04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZXIpaUrlHisVC.xib; sourceTree = "<group>"; };
@@ -296,21 +284,6 @@
 			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
-		041C40A629DFF5F600B611EE /* ZXRequestBlock */ = {
-			isa = PBXGroup;
-			children = (
-				041C40AD29DFF5F600B611EE /* ZXRequestBlock.h */,
-				041C40AA29DFF5F600B611EE /* ZXRequestBlock.m */,
-				041C40AE29DFF5F600B611EE /* ZXURLProtocol.h */,
-				041C40A929DFF5F600B611EE /* ZXURLProtocol.m */,
-				041C40A729DFF5F600B611EE /* ZXHttpIPGet.h */,
-				041C40AB29DFF5F600B611EE /* ZXHttpIPGet.m */,
-				041C40AC29DFF5F600B611EE /* NSURLSession+ZXHttpProxy.h */,
-				041C40A829DFF5F600B611EE /* NSURLSession+ZXHttpProxy.m */,
-			);
-			path = ZXRequestBlock;
-			sourceTree = "<group>";
-		};
 		04C9937325B2A06B0041B15E /* ZXIpaUrlHis(网页加载历史) */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,7 +431,6 @@
 		741B92DF2275D33D00F24EED /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				041C40A629DFF5F600B611EE /* ZXRequestBlock */,
 				041C409A29DFD3B100B611EE /* DeviceInfo */,
 				7436DAE1227757A6007AA858 /* BackButtonHandler */,
 				7436DADA22771E0E007AA858 /* FileManage */,
@@ -906,17 +878,14 @@
 				7436DAA622768B15007AA858 /* SGQRCodeGenerateManager.m in Sources */,
 				7436DADD22771E20007AA858 /* ZXFileManage.m in Sources */,
 				7436DAB922769D81007AA858 /* ZXPlaceView.m in Sources */,
-				041C40B129DFF5F600B611EE /* ZXRequestBlock.m in Sources */,
 				741B92FC2276025A00F24EED /* ALToastView.m in Sources */,
 				7436DAA422768B15007AA858 /* SGQRCodeScanningView.m in Sources */,
-				041C40B029DFF5F600B611EE /* ZXURLProtocol.m in Sources */,
 				04DED2F628FBBEED00E473C1 /* ZXIpaAboutVC.m in Sources */,
 				7436DAA322768B15007AA858 /* ScanSuccessJumpVC.m in Sources */,
 				7436DAA822768B15007AA858 /* SYFavoriteButton.m in Sources */,
 				04E62ACB28FBCF750063BD5E /* ZXIpaAboutModel.m in Sources */,
 				04C9939E25B2A4D10041B15E /* ZXIpaUrlHisModel.m in Sources */,
 				7436DAA722768B15007AA858 /* JHFeilterManager.m in Sources */,
-				041C40B229DFF5F600B611EE /* ZXHttpIPGet.m in Sources */,
 				041C409D29DFD3CF00B611EE /* ZXDeviceInfo.m in Sources */,
 				7436DABC2276B92D007AA858 /* ZXFileDownload.m in Sources */,
 				741B92F82275F93A00F24EED /* ZXIpaHisCell.m in Sources */,
@@ -938,7 +907,6 @@
 				7436DAB2227699E7007AA858 /* UIImage+Rendering.m in Sources */,
 				7436DABF2276CAE4007AA858 /* NSString+ZXMD5.m in Sources */,
 				7436DAE722776218007AA858 /* NSObject+ZXKVO.m in Sources */,
-				041C40AF29DFF5F600B611EE /* NSURLSession+ZXHttpProxy.m in Sources */,
 				7436DAA922768B15007AA858 /* SGQRCodeAlbumManager.m in Sources */,
 				741B92E22275D37700F24EED /* ZXIpaHttpRequest.m in Sources */,
 				7436DA9E22768B15007AA858 /* UIImage+SGHelper.m in Sources */,

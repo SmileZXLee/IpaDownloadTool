@@ -9,7 +9,6 @@
 #import "ZXIpaGetVC.h"
 #import "ZXIpaUrlHisModel.h"
 #import "ZXIpaHttpRequest.h"
-#import "ZXRequestBlock.h"
 #import "ZXIpaModel.h"
 #import "SGQRCodeScanningVC.h"
 #import "NJKWebViewProgress.h"
@@ -47,7 +46,6 @@ typedef enum {
 @property (copy, nonatomic)NSString *urlStr;
 @property (copy, nonatomic)NSString *currentUrlStr;
 @property (assign, nonatomic)BOOL urlStartHandled;
-@property (assign, nonatomic)BOOL fromMobileprovisionUrlDownload;
 @property (copy, nonatomic)NSString *ignoredIpaDownloadUrl;
 @end
 
@@ -144,99 +142,6 @@ typedef enum {
             [self showPlaceViewWithText:@"轻点【网址】开始，长按显示网址历史"];
         }
     });
-    
-    [ZXRequestBlock handleRequest:^NSURLRequest *(NSURLRequest *request) {
-        return request;
-    } responseBlock:^NSData *(NSURLResponse *response, NSData *data) {
-        //如果为http请求，则响应为NSHTTPURLResponse，可进行强制转换
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                NSString *urlStr = httpResponse.URL.absoluteString;
-                NSDictionary *headerDic = httpResponse.allHeaderFields;
-                if (headerDic && headerDic[@"Content-Type"] && [headerDic[@"Content-Type"] containsString:@"application/x-apple-aspen-config"]) {
-                    if (self.fromMobileprovisionUrlDownload) {
-                        self.fromMobileprovisionUrlDownload = NO;
-                        return;
-                    }
-                    //@"此网页想要安装一个描述文件，IPA提取器无法处理这个描述文件，请使用Safari打开并重新点击下载/安装按钮安装此描述文件，安装后Safari会自动加载一个新的链接，请在安装描述文件后复制Safari中的链接并粘贴到IPA提取器中即可获取IPA安装信息。"
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件以获取UDID，IPA提取器将尝试解析并提交虚假UDID信息，是否继续？" preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-                    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"继续" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //            NSURL *url = [NSURL URLWithString:self.urlStr];
-            //            if([[UIApplication sharedApplication]canOpenURL:url]){
-            //                [[UIApplication sharedApplication] openURL:url];
-            //            }else{
-            //                [ALToastView showToastWithText:@"无法安装此描述文件"];
-            //            }
-                        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                        self.fromMobileprovisionUrlDownload = YES;
-                        [ZXIpaHttpRequest downLoadWithUrlStr:urlStr path:ZXMobileprovisionCachePath callBack:^(BOOL result, id  _Nonnull data) {
-                            if(result){
-                                TCMobileProvision *mobileprovision = [[TCMobileProvision alloc] initWithData:
-                                    [NSData dataWithContentsOfFile:data]];
-                                
-                                if (mobileprovision && mobileprovision.dict && mobileprovision.dict[@"PayloadContent"]&& mobileprovision.dict[@"PayloadContent"][@"URL"]) {
-                                    NSString *checkUrl = mobileprovision.dict[@"PayloadContent"][@"URL"];
-                                    ZXDeviceInfoModel *deviceInfoModel = [ZXDeviceInfo getDeviceInfo];
-                                    NSString *getUdidXMLTemplateStr = [[NSString alloc] initWithData:[[NSData alloc]initWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"GetUdidXMLTemplate" ofType:nil]] encoding:NSUTF8StringEncoding];
-                                    
-                                    getUdidXMLTemplateStr = [getUdidXMLTemplateStr replaceKeysWithValuesInDict:[deviceInfoModel zx_toDic]];
-                                    
-                                    NSData *xmlData = [getUdidXMLTemplateStr dataUsingEncoding:NSUTF8StringEncoding];
-                                    NSMutableURLRequest *xmlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:checkUrl]];
-                                    [xmlRequest setValue:@"application/pkcs7-signature" forHTTPHeaderField:@"Content-Type"];
-                                    [xmlRequest setValue:@"Profile/1.0" forHTTPHeaderField:@"User-Agent"];
-                                    [xmlRequest setValue:@"zh-CN,zh-Hans;q=0.9" forHTTPHeaderField:@"Accept-Language"];
-                                    [xmlRequest setValue:@"gzip, deflate, br" forHTTPHeaderField:@"Accept-Encoding"];
-                                    [xmlRequest setValue:@"1" forHTTPHeaderField:@"Z-NO-REDIRCTION"];
-                                    [xmlRequest setHTTPMethod:@"POST"];
-                                    [xmlRequest setHTTPBody:xmlData];
-                                    
-                                    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-                                    config.HTTPShouldUsePipelining = NO;
-                                    config.HTTPShouldSetCookies = NO;
-                                    
-                                    NSURLSession *session = [NSURLSession sharedSession];
-                                
-                                    NSURLSessionDataTask *task = [session dataTaskWithRequest:xmlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                                                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                                                NSInteger statusCode = httpResponse.statusCode;
-                                                NSDictionary *headers = httpResponse.allHeaderFields;
-                                                NSString *location = [headers objectForKey:@"Location"];
-                                                
-                                                if (statusCode == 301 && location && location.length) {
-                                                    [self handleUrlLoad:location shouldCache:NO];
-                                                }
-                                            }
-                                            [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                        });
-                                    }];
-                                    [task resume];
-                                }
-                            }else{
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"错误" message:[NSString stringWithFormat:@"mobileprovision文件下载失败，失败原因为:%@",((NSError *)data).localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
-                                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:nil];
-                                    
-                                    [alertController addThemeAction:okAction];
-                                    [self presentViewController:alertController animated:YES completion:nil];
-                                });
-                            }
-                        }];
-                    }];
-                    [alertController addThemeAction:cancelAction];
-                    [alertController addThemeAction:confirmAction];
-                    [self presentViewController:alertController animated:YES completion:nil];
-                }
-            }
-        });
-        
-        return data;
-    }];
 }
 
 - (void)initWebViewProgressView{
@@ -336,6 +241,87 @@ typedef enum {
     }
     self.progressView.alpha = 1;
     NSString *urlStr = request.URL.absoluteString;
+    if([urlStr hasSuffix:@"/udid/get/"]){
+        //@"此网页想要安装一个描述文件，IPA提取器无法处理这个描述文件，请使用Safari打开并重新点击下载/安装按钮安装此描述文件，安装后Safari会自动加载一个新的链接，请在安装描述文件后复制Safari中的链接并粘贴到IPA提取器中即可获取IPA安装信息。"
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件以获取UDID，IPA提取器将尝试解析并提交虚假UDID信息，是否继续？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"继续" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            NSURL *url = [NSURL URLWithString:self.urlStr];
+//            if([[UIApplication sharedApplication]canOpenURL:url]){
+//                [[UIApplication sharedApplication] openURL:url];
+//            }else{
+//                [ALToastView showToastWithText:@"无法安装此描述文件"];
+//            }
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [ZXIpaHttpRequest downLoadWithUrlStr:urlStr path:ZXMobileprovisionCachePath callBack:^(BOOL result, id  _Nonnull data) {
+                if(result){
+                    TCMobileProvision *mobileprovision = [[TCMobileProvision alloc] initWithData:
+                        [NSData dataWithContentsOfFile:data]];
+                    
+                    if (mobileprovision && mobileprovision.dict && mobileprovision.dict[@"PayloadContent"]&& mobileprovision.dict[@"PayloadContent"][@"URL"]) {
+                        NSString *checkUrl = mobileprovision.dict[@"PayloadContent"][@"URL"];
+                        ZXDeviceInfoModel *deviceInfoModel = [ZXDeviceInfo getDeviceInfo];
+                        NSString *getUdidXMLTemplateStr = [[NSString alloc] initWithData:[[NSData alloc]initWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"GetUdidXMLTemplate" ofType:nil]] encoding:NSUTF8StringEncoding];
+                        
+                        getUdidXMLTemplateStr = [getUdidXMLTemplateStr replaceKeysWithValuesInDict:[deviceInfoModel zx_toDic]];
+                        
+                        NSData *xmlData = [getUdidXMLTemplateStr dataUsingEncoding:NSUTF8StringEncoding];
+                        NSMutableURLRequest *xmlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:checkUrl]];
+                        [xmlRequest setValue:@"application/pkcs7-signature" forHTTPHeaderField:@"Content-Type"];
+                        [xmlRequest setValue:@"Profile/1.0" forHTTPHeaderField:@"User-Agent"];
+                        [xmlRequest setValue:@"zh-CN,zh-Hans;q=0.9" forHTTPHeaderField:@"Accept-Language"];
+                        [xmlRequest setValue:@"gzip, deflate, br" forHTTPHeaderField:@"Accept-Encoding"];
+                        [xmlRequest setHTTPMethod:@"POST"];
+                        [xmlRequest setHTTPBody:xmlData];
+                        
+                        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+                        config.HTTPShouldUsePipelining = NO;
+                        config.HTTPShouldSetCookies = NO;
+                        NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+                        NSURLSessionDataTask *task = [session dataTaskWithRequest:xmlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                    NSInteger statusCode = httpResponse.statusCode;
+                                    NSDictionary *headers = httpResponse.allHeaderFields;
+                                    NSString *location = [headers objectForKey:@"Location"];
+                                    
+                                    if (statusCode == 301 && location && location.length) {
+                                        [ALToastView showToastWithText:@"成功解析描述文件安装后回调地址，正在跳转..."];
+                                        [self handleUrlLoad:location shouldCache:NO];
+                                    }
+                                }
+                                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                            });
+                        }];
+                        [task resume];
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+                            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"错误" message:@"mobileprovision文件解析失败" preferredStyle:UIAlertControllerStyleAlert];
+                            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:nil];
+                            
+                            [alertController addThemeAction:okAction];
+                            [self presentViewController:alertController animated:YES completion:nil];
+                        });
+                    }
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"错误" message:[NSString stringWithFormat:@"mobileprovision文件下载失败，失败原因为:%@",((NSError *)data).localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:nil];
+                        
+                        [alertController addThemeAction:okAction];
+                        [self presentViewController:alertController animated:YES completion:nil];
+                    });
+                }
+            }];
+        }];
+        [alertController addThemeAction:cancelAction];
+        [alertController addThemeAction:confirmAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return NO;
+    }
     if([[urlStr pathExtension] isEqualToString:@"ipa"] || [urlStr containsString:@".ipa&"]){
         if (!(self.self.ignoredIpaDownloadUrl && [self.ignoredIpaDownloadUrl isEqualToString:urlStr])){
             __block NSString *urlStrWithoutQuery = [urlStr regularWithPattern:@"^.*?\\.ipa"];
@@ -456,8 +442,6 @@ typedef enum {
 }
 #pragma mark 网页加载失败
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    self.urlStartHandled = NO;
-    self.webReloadBtn.enabled = YES;
     NSString *errInfo = error.localizedDescription;
     if(!errInfo)return;
     if(![errInfo isEqualToString:@"Frame load interrupted"]){
