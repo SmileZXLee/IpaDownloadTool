@@ -32,7 +32,7 @@
 #define ZXPasteboardStrKey @"ZXPasteboardStrKey"
 #define ZXMobileprovisionRegularCacheKey @"ZXMobileprovisionRegularCacheKey"
 #define ZXUDIDCacheKey @"ZXUDIDCacheKey"
-#define ZXMobileprovisionRegularDefault @[@"*.mobileconfig", @"*.mobileprovision", @"*/udid/get/"]
+#define ZXMobileprovisionRegularDefault @[@"*.mobileconfig", @"*.mobileprovision", @"*/tools/udid/get/"]
 #define ZXPasteboardStrLoadUrlNotification @"ZXPasteboardStrLoadUrlNotification"
 #define ZXMobileprovisionRegularUpdateNotification @"ZXMobileprovisionRegularUpdateNotification"
 #define ZXISiPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)

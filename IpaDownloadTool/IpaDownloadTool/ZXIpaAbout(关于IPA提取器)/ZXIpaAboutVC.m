@@ -37,7 +37,11 @@
     [self.copyrightBtn setTintColor:MainColor];
     self.copyrightBtn.userInteractionEnabled = NO;
     self.copyrightBtn.titleLabel.font = [UIFont systemFontOfSize: 11.0];
-    [self.copyrightBtn setTitle:@"Copyright © 2019-2023 IPA提取器. All rights reserved." forState:UIControlStateNormal];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSInteger year = [calendar component:NSCalendarUnitYear fromDate:[NSDate date]];
+    
+    [self.copyrightBtn setTitle:[NSString stringWithFormat:@"Copyright © 2019-%ld IPA提取器. All rights reserved.", year] forState:UIControlStateNormal];
     
     self.tableView.backgroundColor = [UIColor clearColor];
     __weak __typeof(self) weakSelf = self;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -86,7 +86,7 @@
                                 <constraint firstAttribute="height" constant="40" id="yh1-6F-oyg"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="about"/>
+                            <state key="normal" image="web_setting"/>
                             <connections>
                                 <action selector="aboutAction:" destination="-1" eventType="touchUpInside" id="8DG-9m-02X"/>
                             </connections>
@@ -127,9 +127,9 @@
         </view>
     </objects>
     <resources>
-        <image name="about" width="200" height="200"/>
         <image name="web_back" width="200" height="200"/>
         <image name="web_next" width="200" height="200"/>
         <image name="web_reload" width="200" height="200"/>
+        <image name="web_setting" width="200" height="200"/>
     </resources>
 </document>
