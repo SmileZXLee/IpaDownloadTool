@@ -14,6 +14,8 @@
 		041C40B729E053A600B611EE /* ZXMPRegularVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 041C40B529E053A600B611EE /* ZXMPRegularVC.m */; };
 		041C40B829E053A600B611EE /* ZXMPRegularVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041C40B629E053A600B611EE /* ZXMPRegularVC.xib */; };
 		047CDB9929E079BC0013AEAE /* ZXIpaAboutSpaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047CDB9829E079BC0013AEAE /* ZXIpaAboutSpaceView.m */; };
+		047CDBA129E119B30013AEAE /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 047CDBA029E119B30013AEAE /* AFNetworkReachabilityManager.m */; };
+		047CDBA629E11E840013AEAE /* UIViewController+ZXAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 047CDBA429E11E840013AEAE /* UIViewController+ZXAlert.m */; };
 		04C9937925B2A0910041B15E /* ZXIpaUrlHisVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9937725B2A0910041B15E /* ZXIpaUrlHisVC.m */; };
 		04C9937A25B2A0910041B15E /* ZXIpaUrlHisVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */; };
 		04C9938425B2A0D80041B15E /* ZXIpaUrlHisCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C9938225B2A0D80041B15E /* ZXIpaUrlHisCell.m */; };
@@ -121,6 +123,10 @@
 		041C40B629E053A600B611EE /* ZXMPRegularVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZXMPRegularVC.xib; sourceTree = "<group>"; };
 		047CDB9729E079BC0013AEAE /* ZXIpaAboutSpaceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXIpaAboutSpaceView.h; sourceTree = "<group>"; };
 		047CDB9829E079BC0013AEAE /* ZXIpaAboutSpaceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXIpaAboutSpaceView.m; sourceTree = "<group>"; };
+		047CDB9F29E119B30013AEAE /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		047CDBA029E119B30013AEAE /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		047CDBA429E11E840013AEAE /* UIViewController+ZXAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ZXAlert.m"; sourceTree = "<group>"; };
+		047CDBA529E11E840013AEAE /* UIViewController+ZXAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZXAlert.h"; sourceTree = "<group>"; };
 		04C9937625B2A0910041B15E /* ZXIpaUrlHisVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXIpaUrlHisVC.h; sourceTree = "<group>"; };
 		04C9937725B2A0910041B15E /* ZXIpaUrlHisVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXIpaUrlHisVC.m; sourceTree = "<group>"; };
 		04C9937825B2A0910041B15E /* ZXIpaUrlHisVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZXIpaUrlHisVC.xib; sourceTree = "<group>"; };
@@ -302,6 +308,15 @@
 			path = ZXMPRegular;
 			sourceTree = "<group>";
 		};
+		047CDB9E29E119B30013AEAE /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				047CDB9F29E119B30013AEAE /* AFNetworkReachabilityManager.h */,
+				047CDBA029E119B30013AEAE /* AFNetworkReachabilityManager.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
 		04C9937325B2A06B0041B15E /* ZXIpaUrlHis(网页加载历史) */ = {
 			isa = PBXGroup;
 			children = (
@@ -452,6 +467,7 @@
 		741B92DF2275D33D00F24EED /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				047CDB9E29E119B30013AEAE /* Reachability */,
 				041C409A29DFD3B100B611EE /* DeviceInfo */,
 				7436DAE1227757A6007AA858 /* BackButtonHandler */,
 				7436DADA22771E0E007AA858 /* FileManage */,
@@ -645,6 +661,8 @@
 				7436DAB422769A65007AA858 /* UIImage+ZXTheme.m */,
 				7436DABD2276CAE4007AA858 /* NSString+ZXMD5.h */,
 				7436DABE2276CAE4007AA858 /* NSString+ZXMD5.m */,
+				047CDBA529E11E840013AEAE /* UIViewController+ZXAlert.h */,
+				047CDBA429E11E840013AEAE /* UIViewController+ZXAlert.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -897,6 +915,7 @@
 				04C9938425B2A0D80041B15E /* ZXIpaUrlHisCell.m in Sources */,
 				741B930C22760BC800F24EED /* ZXIpaDetailModel.m in Sources */,
 				741B92A82275943700F24EED /* main.m in Sources */,
+				047CDBA129E119B30013AEAE /* AFNetworkReachabilityManager.m in Sources */,
 				7436DAA622768B15007AA858 /* SGQRCodeGenerateManager.m in Sources */,
 				7436DADD22771E20007AA858 /* ZXFileManage.m in Sources */,
 				7436DAB922769D81007AA858 /* ZXPlaceView.m in Sources */,
@@ -927,6 +946,7 @@
 				7436DAB522769A65007AA858 /* UIImage+ZXTheme.m in Sources */,
 				041C40A129DFD5C300B611EE /* ZXDeviceInfoModel.m in Sources */,
 				04C9937925B2A0910041B15E /* ZXIpaUrlHisVC.m in Sources */,
+				047CDBA629E11E840013AEAE /* UIViewController+ZXAlert.m in Sources */,
 				7436DAD92276D19E007AA858 /* ZXLocalIpaDownloadModel.m in Sources */,
 				7436DAB2227699E7007AA858 /* UIImage+Rendering.m in Sources */,
 				7436DABF2276CAE4007AA858 /* NSString+ZXMD5.m in Sources */,

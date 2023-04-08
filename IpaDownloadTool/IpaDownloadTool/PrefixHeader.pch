@@ -14,12 +14,14 @@
 #import "ZXFileDownload.h"
 #import "ZXFileManage.h"
 
+#import "MBProgressHUD.h"
 #import "NSString+ZXIpaRegular.h"
 #import "UIImage+Rendering.h"
 #import "UIAlertController+ZXTheme.h"
 #import "UIImage+ZXTheme.h"
 #import "NSObject+ZXKVO.h"
 #import "UIViewController+ZXPlaceView.h"
+#import "UIViewController+ZXAlert.h"
 
 #import "ALToastView.h"
 
@@ -35,6 +37,7 @@
 #define ZXMobileprovisionRegularDefault @[@"*.mobileconfig", @"*.mobileprovision", @"*/tools/udid/get/"]
 #define ZXPasteboardStrLoadUrlNotification @"ZXPasteboardStrLoadUrlNotification"
 #define ZXMobileprovisionRegularUpdateNotification @"ZXMobileprovisionRegularUpdateNotification"
+#define ZXMobileprovisionUrlRegularGetPath @"http://www.zxlee.cn/ipaDownloadTool/mobileprovisionUrlRegular.json"
 #define ZXISiPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define ZXUA @"com.apple.appstored/1.0 iOS/14.3 model/iPhone10,2 hwp/t8015 build/18C66 (6; dt:158) AMS/1"
 #define ZXWebUA @"Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1"

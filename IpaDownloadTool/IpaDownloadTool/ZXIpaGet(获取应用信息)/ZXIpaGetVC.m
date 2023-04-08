@@ -16,7 +16,7 @@
 #import "TCMobileProvision.h"
 #import "NSString+ZXMD5.h"
 #import "ZXDeviceInfo.h"
-#import "MBProgressHUD.h"
+#import "AFNetworkReachabilityManager.h"
 
 #import "ZXIpaHisVC.h"
 #import "ZXIpaDetailVC.h"
@@ -56,6 +56,7 @@ typedef enum {
     [super viewDidLoad];
     if([[NSUserDefaults standardUserDefaults]objectForKey:@"userAgreementAgreed"]){
         [self initUI];
+        [self addReachabilityMonitoring];
     }else{
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"用户协议&使用说明" message:[NSString stringWithFormat:@"%@\n\n点击同意即代表您已阅读协议并同意协议中包含的条款",ZXUserAgreement] preferredStyle:UIAlertControllerStyleAlert];
         UILabel *messageLabel = [alertController.view valueForKeyPath:@"_messageLabel"];
@@ -144,8 +145,6 @@ typedef enum {
             [self showPlaceViewWithText:@"轻点【网址】开始，长按显示网址历史"];
         }
     });
-    
-    [self updateMobileprovisionRegulaArr];
 }
 
 - (void)initWebViewProgressView{
@@ -246,16 +245,9 @@ typedef enum {
     self.progressView.alpha = 1;
     NSString *urlStr = request.URL.absoluteString;
     if([urlStr matchesAnyRegexInArr:self.mobileprovisionRegulaArr]){
-        //@"此网页想要安装一个描述文件，IPA提取器无法处理这个描述文件，请使用Safari打开并重新点击下载/安装按钮安装此描述文件，安装后Safari会自动加载一个新的链接，请在安装描述文件后复制Safari中的链接并粘贴到IPA提取器中即可获取IPA安装信息。"
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件以获取UDID，IPA提取器将尝试解析并提交虚假UDID信息，是否继续？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件以获取UDID，IPA提取器将尝试解析并跳转至描述文件安装后的回调地址，您也可以在Safari中继续操作。请选择您的操作以继续" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"继续" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            NSURL *url = [NSURL URLWithString:self.urlStr];
-//            if([[UIApplication sharedApplication]canOpenURL:url]){
-//                [[UIApplication sharedApplication] openURL:url];
-//            }else{
-//                [ALToastView showToastWithText:@"无法安装此描述文件"];
-//            }
+        UIAlertAction *analysisAction = [UIAlertAction actionWithTitle:@"解析此描述文件" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             [ZXIpaHttpRequest downLoadWithUrlStr:urlStr path:ZXMobileprovisionCachePath callBack:^(BOOL result, id  _Nonnull data) {
                 if(result){
@@ -291,7 +283,7 @@ typedef enum {
                                     NSString *location = [headers objectForKey:@"Location"];
                                     
                                     if (statusCode == 301 && location && location.length) {
-                                        [ALToastView showToastWithText:@"成功解析描述文件安装后回调地址，正在跳转..."];
+                                        [ALToastView showToastWithText:@"成功解析描述文件安装后回调地址，跳转中..."];
                                         [self handleUrlLoad:location shouldCache:NO];
                                     }
                                 }
@@ -302,27 +294,29 @@ typedef enum {
                     } else {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [MBProgressHUD hideHUDForView:self.view animated:YES];
-                            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"错误" message:@"mobileprovision文件解析失败" preferredStyle:UIAlertControllerStyleAlert];
-                            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:nil];
-                            
-                            [alertController addThemeAction:okAction];
-                            [self presentViewController:alertController animated:YES completion:nil];
+                            [self showAlertWithTitle:@"错误" message:@"mobileprovision文件解析失败"];
                         });
                     }
                 }else{
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [MBProgressHUD hideHUDForView:self.view animated:YES];
-                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"错误" message:[NSString stringWithFormat:@"mobileprovision文件下载失败，失败原因为:%@",((NSError *)data).localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
-                        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:nil];
-                        
-                        [alertController addThemeAction:okAction];
-                        [self presentViewController:alertController animated:YES completion:nil];
+                        [self showAlertWithTitle:@"错误" message:[NSString stringWithFormat:@"mobileprovision文件下载失败，失败原因为:%@",((NSError *)data).localizedDescription]];
                     });
                 }
             }];
         }];
+        UIAlertAction *toSafariAction = [UIAlertAction actionWithTitle:@"在Safari中打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSURL *url = [NSURL URLWithString:self.urlStr];
+            if ([[UIApplication sharedApplication]canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+            } else {
+                [ALToastView showToastWithText:@"跳转失败"];
+            }
+        }];
+        
+        [alertController addThemeAction:analysisAction];
+        [alertController addThemeAction:toSafariAction];
         [alertController addThemeAction:cancelAction];
-        [alertController addThemeAction:confirmAction];
         [self presentViewController:alertController animated:YES completion:nil];
         return NO;
     }
@@ -384,11 +378,7 @@ typedef enum {
                 });
             }else{
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"错误" message:[NSString stringWithFormat:@"plist文件下载失败，失败原因为:%@",((NSError *)data).localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:nil];
-                    
-                    [alertController addThemeAction:okAction];
-                    [self presentViewController:alertController animated:YES completion:nil];
+                    [self showAlertWithTitle:@"错误" message:[NSString stringWithFormat:@"plist文件下载失败，失败原因为:%@",((NSError *)data).localizedDescription]];
                 });
             }
         }];
@@ -500,11 +490,21 @@ typedef enum {
     [ipaModel zx_dbSave];
 }
 
-- (void)updateMobileprovisionRegulaArr{
+- (void)updateMobileprovisionRegulaArr {
     self.mobileprovisionRegulaArr = [ZXDataStoreCache readObjForKey:ZXMobileprovisionRegularCacheKey];
     if (self.mobileprovisionRegulaArr == nil) {
-        self.mobileprovisionRegulaArr = ZXMobileprovisionRegularDefault;
-        [ZXDataStoreCache saveObj:self.mobileprovisionRegulaArr forKey:ZXMobileprovisionRegularCacheKey];
+        [ZXIpaHttpRequest getUrl:ZXMobileprovisionUrlRegularGetPath callBack:^(BOOL result, id  _Nonnull data) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            if (result) {
+                NSDictionary *resultDic = [data zx_toDic];
+                NSArray *mobileprovisionRegulaArr = resultDic[@"matches"];
+                self.mobileprovisionRegulaArr = mobileprovisionRegulaArr;
+            } else {
+                self.mobileprovisionRegulaArr = ZXMobileprovisionRegularDefault;
+            }
+            [ZXDataStoreCache saveObj:self.mobileprovisionRegulaArr forKey:ZXMobileprovisionRegularCacheKey];
+        }];
+        
     }
 }
 
@@ -564,6 +564,18 @@ typedef enum {
         
     }];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)addReachabilityMonitoring{
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        if (status != AFNetworkReachabilityStatusNotReachable) {
+            [self updateMobileprovisionRegulaArr];
+        } else {
+            [self showAlertWithTitle:@"提示" message:@"网络错误，请检查网络设置"];
+        }
+    }];
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 
 #pragma mark setter

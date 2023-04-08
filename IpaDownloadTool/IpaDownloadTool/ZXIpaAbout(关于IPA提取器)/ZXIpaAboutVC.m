@@ -60,7 +60,7 @@
     self.tableView.zx_didSelectedAtIndexPath = ^(NSIndexPath *indexPath, NSString *title, id cell) {
         if([title isEqualToString:@"用户协议&使用说明"]){
             [weakSelf handleInstructionsClick];
-        }else if([title isEqualToString:@"开源地址"]){
+        }else if([title isEqualToString:@"开源地址(版本更新&反馈)"]){
             [weakSelf handleOpenSourceAddressClick];
         }else if([title isEqualToString:@"数据导出或导入"]){
             [weakSelf handleDataExportAndImportClick];
@@ -75,7 +75,7 @@
 
 - (void)initData{
     self.deviceInfoModel =  [ZXDeviceInfo getDeviceInfo];
-    self.tableView.zxDatas = [@[@[@"数据导出或导入",@"描述文件URL匹配规则",[NSString stringWithFormat:@"虚拟UDID(%@)",self.deviceInfoModel.UDID_RESULT]], @[@"用户协议&使用说明",@"开源地址"]] mutableCopy];
+    self.tableView.zxDatas = [@[@[@"数据导出或导入",@"描述文件URL匹配规则",[NSString stringWithFormat:@"虚拟UDID(%@)",self.deviceInfoModel.UDID_RESULT]], @[@"用户协议&使用说明",@"开源地址(版本更新&反馈)"]] mutableCopy];
 }
 
 #pragma mark 处理点击使用说明
