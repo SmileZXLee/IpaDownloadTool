@@ -7,17 +7,18 @@
 [![release](https://img.shields.io/github/v/release/SmileZXLee/IpaDownloadTool?style=flat)](https://github.com/SmileZXLee/IpaDownloadTool/releases)
 [![Support](https://img.shields.io/badge/support-iOS%209.0%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/SmileZXLee/IpaDownloadTool/blob/master/LICENSE)&nbsp;
-### Release版本(当前版本v2.0.1)
-* [点击此处直接下载最新IPA提取器安装包](https://static.ifafu.cn/IpaDownloadTool.ipa)
+### Release版本(点击👇🏻下载IPA)
+* [Release2.1.0(20230408)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.1.0.ipa)
+* [Release2.0.1(20221018)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.0.1.ipa)
 ### 反馈qq群：[790460711](https://jq.qq.com/?_wv=1027&k=vU2fKZZH)
 ### 功能
-* 此工具用来快捷下载/储存第三方来源的ipa
-* 支持蒲公英、fir下载页面拦截ipa地址、ipa下载
-* 支持其他网站自定义h5页面拦截ipa地址、ipa下载
+* 此工具用来快捷下载/储存第三方来源的IPA
+* 支持蒲公英、fir等下载页面拦截IPA地址、IPA下载
+* 支持自动解析安装UDID描述文件并继续提取IPA信息
 * 支持网址&二维码扫描方式录入网址
-* 支持下载历史记录列表，可以本地储存任意数量的ipa，无需担心下载页面失效导致ipa丢失
+* 支持下载历史记录列表，可以本地储存任意数量的IPA，无需担心下载页面失效导致IPA丢失
 * 支持ipa本地下载，分享给朋友或隔空投送发送至电脑
-* 不支持App Store ipa下载
+* 不支持App Store的IPA下载，也不支持提取本机已安装的IPA
 ### 使用须知
 “IPA提取器”是一个用于提取第三方网页中的ipa并进行测试的应用程序，仅限用于学习交流，不得将“IPA提取器”或其衍生版本用于任何违法违规的用途，不得用于提取任何违法违规的ipa！由于违规使用导致的任何后果开发者不承担任何责任！
 ### 预览
@@ -32,7 +33,13 @@
 * [NJKWebViewProgress](https://github.com/ninjinkun/NJKWebViewProgress)
 * [ZXTableView](https://github.com/SmileZXLee/ZXTableView)
 * [ZXDataHandle](https://github.com/SmileZXLee/ZXDataHandle)
+* [TCMobileProvision](https://github.com/tcurdt/TCMobileProvision)
 ### 更新日志
+#### 2023.04.08(v2.1.0)
+1.【新增】支持自动解析安装UDID描述文件并继续提取IPA信息。  
+2.【新增】描述文件URL匹配规则&自定义虚拟UDID。  
+3.【新增】添加URL Scheme，支持通过`ipadownloadtool://hander?url=`从Safari跳转至“IPA提取器”并打开对应页面。  
+4.【修复】从剪贴板中获取URL并加载时网页历史记录为更新的问题。  
 #### 2022.10.18(v2.0.1)
 1.【新增】支持直接下载网页中的ipa文件。  
 2.【新增】IPA提取器主页添加网页前进、后退、重新加载操作。  
@@ -56,10 +63,8 @@
 4.已下载页面支持侧滑删除所下载的ipa；  
 5.添加版本号相关信息
 #### 2021.01.16(v1.0.2)
-1.支持蒲公英超级签名(eucoming.com)及类似平台，新增对安装描述文件的检测和提示；  
+1.支持蒲公英超级签名及类似平台，新增对安装描述文件的检测和提示；  
 2.新增打开App自动从剪切板读取并询问是否加载；  
 3.支持修改本地应用名称，在ipa解析历史列表和下载列表中添加版本号的展示；  
 4.支持长按【网页】按钮查看访问的网页历史，单击打开对应网页；  
 5.体验优化。
-#### 2019.11.14(v1.0.1)
-修复在iOS13中重签名之后无法正常下载ipa的问题，感谢[@ningQAQ](https://github.com/ningQAQ)的帮助。
