@@ -56,7 +56,6 @@ typedef enum {
     [super viewDidLoad];
     if([[NSUserDefaults standardUserDefaults]objectForKey:@"userAgreementAgreed"]){
         [self initUI];
-        [self addReachabilityMonitoring];
     }else{
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"用户协议&使用说明" message:[NSString stringWithFormat:@"%@\n\n点击同意即代表您已阅读协议并同意协议中包含的条款",ZXUserAgreement] preferredStyle:UIAlertControllerStyleAlert];
         UILabel *messageLabel = [alertController.view valueForKeyPath:@"_messageLabel"];
@@ -145,6 +144,8 @@ typedef enum {
             [self showPlaceViewWithText:@"轻点【网址】开始，长按显示网址历史"];
         }
     });
+    
+    [self addReachabilityMonitoring];
 }
 
 - (void)initWebViewProgressView{
@@ -254,7 +255,7 @@ typedef enum {
                     TCMobileProvision *mobileprovision = [[TCMobileProvision alloc] initWithData:
                         [NSData dataWithContentsOfFile:data]];
                     
-                    if (mobileprovision && mobileprovision.dict && mobileprovision.dict[@"PayloadContent"]&& mobileprovision.dict[@"PayloadContent"][@"URL"]) {
+                    if (mobileprovision && mobileprovision.dict && mobileprovision.dict[@"PayloadContent"] && [mobileprovision.dict[@"PayloadContent"] isKindOfClass:[NSDictionary class]] && mobileprovision.dict[@"PayloadContent"][@"URL"]) {
                         NSString *checkUrl = mobileprovision.dict[@"PayloadContent"][@"URL"];
                         ZXDeviceInfoModel *deviceInfoModel = [ZXDeviceInfo getDeviceInfo];
                         NSString *getUdidXMLTemplateStr = [[NSString alloc] initWithData:[[NSData alloc]initWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"GetUdidXMLTemplate" ofType:nil]] encoding:NSUTF8StringEncoding];
