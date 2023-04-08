@@ -26,6 +26,7 @@
 
 +(void)baseReq:(NSURLRequest *)req callBack:(kGetDataEventHandler)_result{
     NSMutableURLRequest *mReq = [req mutableCopy];
+    mReq.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     [mReq addValue:ZXUA forHTTPHeaderField:@"User-Agent"];
     [NSURLConnection sendAsynchronousRequest:mReq queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
         if (connectionError) {
