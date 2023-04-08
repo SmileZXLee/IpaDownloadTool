@@ -141,7 +141,7 @@ typedef enum {
         if(cacheUrlStr && cacheUrlStr.length){
             self.urlStr = cacheUrlStr;
         }else{
-            [self showPlaceViewWithText:@"轻点【网址】开始，长按显示网址历史"];
+            [self showPlaceViewWithText:@"轻点【网址】开始，长按【网址】显示历史"];
         }
     });
     

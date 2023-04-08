@@ -41,5 +41,5 @@
 #define ZXISiPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define ZXUA @"com.apple.appstored/1.0 iOS/14.3 model/iPhone10,2 hwp/t8015 build/18C66 (6; dt:158) AMS/1"
 #define ZXWebUA @"Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1"
-#define ZXUserAgreement @"1.“IPA提取器”是一个用于提取第三方网页中的ipa并进行测试的应用程序，仅限用于学习交流，不得将“IPA提取器”或其衍生版本用于任何违法违规的用途，不得用于提取任何违法违规的ipa！由于违规使用导致的任何后果开发者不承担任何责任！\n2.“IPA提取器”不支持提取iPhone中已安装的ipa，也不支持提取AppStore中的ipa；\n3.长按主页“网址”按钮，可查看已加载的网页历史，点击主页“历史”按钮可查看已提取的ipa历史；\n4.点击已下载列表可分享对应ipa到其他应用；\n5.您的所有信息均为本地存储，不会传到云端，请妥善保管。"
+#define ZXUserAgreement @"1.“IPA提取器”是一个用于提取第三方网页中的ipa并进行测试的应用程序，仅限用于学习交流，不得将“IPA提取器”或其衍生版本用于任何违法违规的用途，不得用于提取任何违法违规的ipa！由于违规使用导致的任何后果开发者不承担任何责任！\n2.“IPA提取器”不支持提取iPhone中已安装的ipa，也不支持提取AppStore中的ipa；\n3.长按主页“网址”按钮，可查看已加载的网页历史，点击主页“历史”按钮可查看已提取的ipa历史；\n4.点击已下载列表可分享对应ipa到其他应用；\n5.通过ipadownloadtool://hander?url=可在Safari直接打开“IPA提取器”并加载对应网址\n6.您的所有信息均为本地存储，不会传到云端，请妥善保管。"
 #endif /* PrefixHeader_pch */
