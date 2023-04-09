@@ -24,7 +24,7 @@
 ### 预览
 操作演示 | 应用详情   
 -|-
-![](http://www.zxlee.cn/IpaDownloadToolDemo.gif) | ![](https://upload-images.jianshu.io/upload_images/17729343-ab4b953d0a0696a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240) |
+![](http://www.zxlee.cn/IpaDownloadToolDemo.gif) | ![](http://www.zxlee.cn/ipaDownloadTool/img/detail.png) |
 
 ### 项目中使用的第三方:
 * [ALToastView](https://github.com/alexleutgoeb/ALToastView)
