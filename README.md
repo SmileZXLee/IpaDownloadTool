@@ -8,8 +8,8 @@
 [![Support](https://img.shields.io/badge/support-iOS%209.0%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/SmileZXLee/IpaDownloadTool/blob/master/LICENSE)&nbsp;
 ### Release版本(点击👇🏻下载IPA)
-* [Release2.1.0(20230408)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.1.0.ipa)
-* [Release2.0.1(20221018)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.0.1.ipa)
+* [Release-2.1.0(20230408)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.1.0.ipa)
+* [Release-2.0.1(20221018)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.0.1.ipa)
 ### 反馈qq群：[790460711](https://jq.qq.com/?_wv=1027&k=vU2fKZZH)
 ### 功能
 * 此工具用来快捷下载/储存第三方来源的IPA
