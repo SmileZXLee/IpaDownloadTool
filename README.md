@@ -22,9 +22,11 @@
 ### 使用须知
 “IPA提取器”是一个用于提取第三方网页中的ipa并进行测试的应用程序，仅限用于学习交流，不得将“IPA提取器”或其衍生版本用于任何违法违规的用途，不得用于提取任何违法违规的ipa！由于违规使用导致的任何后果开发者不承担任何责任！
 ### 预览
-操作演示 | 应用详情   
--|-
-![](http://www.zxlee.cn/IpaDownloadToolDemo.gif) | ![](http://www.zxlee.cn/ipaDownloadTool/img/detail1.png) |
+|                        操作演示                        |                        应用详情                        |
+| :----------------------------------------------------: | :----------------------------------------------------: |
+| ![](http://www.zxlee.cn/ipaDownloadTool/img/demo3.gif) | ![](http://www.zxlee.cn/ipaDownloadTool/img/demo1.png) |
+|                  解析获取UDID描述文件                  |                     关于IPA提取器                      |
+| ![](http://www.zxlee.cn/ipaDownloadTool/img/demo4.gif) | ![](http://www.zxlee.cn/ipaDownloadTool/img/demo2.png) |
 
 ### 项目中使用的第三方:
 * [ALToastView](https://github.com/alexleutgoeb/ALToastView)
