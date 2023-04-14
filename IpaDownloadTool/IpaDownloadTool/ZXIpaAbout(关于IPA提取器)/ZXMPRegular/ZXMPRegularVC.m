@@ -74,7 +74,7 @@
                 [ZXDataStoreCache saveObj:mobileprovisionRegulaArr forKey:ZXMobileprovisionRegularCacheKey];
                 [self initData];
                 [ALToastView showToastWithText:@"配置文件重载成功"];
-                [ZXDataStoreCache saveObj:mobileprovisionRegulaArr forKey:ZXMobileprovisionRegularCacheKey];
+                [[NSNotificationCenter defaultCenter]postNotificationName:ZXMobileprovisionRegularUpdateNotification object:nil];
             } else {
                 [ALToastView showToastWithText:@"配置文件下载失败"];
             }
