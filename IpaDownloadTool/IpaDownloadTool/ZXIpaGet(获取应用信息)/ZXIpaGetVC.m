@@ -245,6 +245,12 @@ typedef enum {
     }
     self.progressView.alpha = 1;
     NSString *urlStr = request.URL.absoluteString;
+    NSString *host = request.URL.host;
+    if ([ZXAccessBlackHostList containsObject: host]) {
+        [self showAlertWithTitle:@"访问禁止" message:@"很抱歉，因网站方的要求，IPA提取器已禁止您的操作！"];
+        return false;
+    }
+    
     if([urlStr matchesAnyRegexInArr:self.mobileprovisionRegulaArr]){
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件以获取UDID，IPA提取器将尝试解析并跳转至描述文件安装后的回调地址，您也可以在Safari中继续操作。请选择您的操作以继续" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
