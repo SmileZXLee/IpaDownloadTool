@@ -13,12 +13,16 @@
 ### 反馈qq群：[371624008](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=avPmibADf2TNi4LxkIwjCE5vbfXpa-r1&authKey=dQ%2FVDAR87ONxI4b32Py%2BvmXbhnopjHN7%2FJPtdsqJdsCPFZB6zDQ17L06Uh0kITUZ&noverify=0&group_code=371624008)
 ### 功能
 * 此工具用来快捷下载/储存第三方来源的IPA
-* 支持蒲公英、fir等下载页面拦截IPA地址、IPA下载
+* ~~支持蒲公英、fir等下载页面拦截IPA地址、IPA下载~~
 * 支持自动解析安装UDID描述文件并继续提取IPA信息
 * 支持网址&二维码扫描方式录入网址
 * 支持下载历史记录列表，可以本地储存任意数量的IPA，无需担心下载页面失效导致IPA丢失
 * 支持ipa本地下载，分享给朋友或隔空投送发送至电脑
 * 不支持App Store的IPA下载，也不支持提取本机已安装的IPA
+
+### 通知
+因网站放要求，IPA提取器已禁止提取蒲公英和fir的IPA
+
 ### 使用须知
 “IPA提取器”是一个用于提取第三方网页中的ipa并进行测试的应用程序，仅限用于学习交流，不得将“IPA提取器”或其衍生版本用于任何违法违规的用途，不得用于提取任何违法违规的ipa！由于违规使用导致的任何后果开发者不承担任何责任！
 ### 预览
