@@ -21,7 +21,7 @@
 * 不支持App Store的IPA下载，也不支持提取本机已安装的IPA
 
 ### 通知
-因网站放要求，IPA提取器已禁止提取蒲公英和fir的IPA
+因网站方要求，IPA提取器已禁止提取蒲公英和fir的IPA
 
 ### 使用须知
 “IPA提取器”是一个用于提取第三方网页中的ipa并进行测试的应用程序，仅限用于学习交流，不得将“IPA提取器”或其衍生版本用于任何违法违规的用途，不得用于提取任何违法违规的ipa！由于违规使用导致的任何后果开发者不承担任何责任！
@@ -41,6 +41,8 @@
 * [ZXDataHandle](https://github.com/SmileZXLee/ZXDataHandle)
 * [TCMobileProvision](https://github.com/tcurdt/TCMobileProvision)
 ### 更新日志
+#### 2023.08.09(v2.1.1)
+1.【新增】添加访问禁止名单，禁止访问蒲公英&fir页面。  
 #### 2023.04.08(v2.1.0)
 1.【新增】支持自动解析安装UDID描述文件并继续提取IPA信息。  
 2.【新增】描述文件URL匹配规则&自定义虚拟UDID。  
