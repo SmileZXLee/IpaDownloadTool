@@ -66,7 +66,7 @@
     if(!self.isHandlingUrlScheme && [[NSUserDefaults standardUserDefaults]objectForKey:@"userAgreementAgreed"]){
         self.isHandlingUrlScheme = NO;
         NSString *pasteboardStr = [UIPasteboard generalPasteboard].string;
-        if([pasteboardStr hasPrefix:@"http"] || [pasteboardStr hasPrefix:@"https"]){
+        if([pasteboardStr hasPrefix:@"http"] || [pasteboardStr hasPrefix:@"https"] || [pasteboardStr hasPrefix:@"itms-services://"]){
             NSString *oldPasteboardStr = [ZXDataStoreCache readObjForKey:ZXPasteboardStrKey];
             NSString *cacheUrlStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"cacheUrlStr"];
             if(!(oldPasteboardStr && [oldPasteboardStr isEqualToString:pasteboardStr]) && !(cacheUrlStr && [cacheUrlStr isEqualToString:pasteboardStr]) && ![pasteboardStr hasSuffix:@".ipa"]){

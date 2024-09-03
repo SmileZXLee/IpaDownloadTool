@@ -516,7 +516,7 @@ typedef enum {
 }
 
 - (void)handleUrlLoad:(NSString *)urlStr shouldCache:(BOOL)shouldCache{
-    if(![urlStr hasPrefix:@"http://"] && ![urlStr hasPrefix:@"https://"]){
+    if(![urlStr hasPrefix:@"http://"] && ![urlStr hasPrefix:@"https://"] && ![urlStr hasPrefix:@"itms-services://"]){
         urlStr = [@"http://" stringByAppendingString:urlStr];
     }
     _urlStr = urlStr;
