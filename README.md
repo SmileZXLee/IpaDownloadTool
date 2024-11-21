@@ -12,7 +12,7 @@
 * [Release-2.1.1(20230809)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.1.1.ipa)
 * [Release-2.1.0(20230408)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.1.0.ipa)
 * [Release-2.0.1(20221018)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.0.1.ipa)
-### 反馈qq群：[371624008](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=avPmibADf2TNi4LxkIwjCE5vbfXpa-r1&authKey=dQ%2FVDAR87ONxI4b32Py%2BvmXbhnopjHN7%2FJPtdsqJdsCPFZB6zDQ17L06Uh0kITUZ&noverify=0&group_code=371624008)
+### 反馈qq群：[114310688](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=cUe6p9A7rLwr3S01feeTeMj0u6cwolDG&authKey=ZVjr8Tbi4%2F97gpNTYukHITpu4wKo2XVda0w%2FhxlOG6MtEip%2BsKm6eX2rmcTm7FBW&noverify=0&group_code=114310688)
 ### 功能
 * 此工具用来快捷下载/储存第三方来源的IPA
 * ~~支持蒲公英、fir等下载页面拦截IPA地址、IPA下载~~
