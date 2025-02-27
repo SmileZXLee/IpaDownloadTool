@@ -259,11 +259,11 @@ typedef enum {
     }
     NSString *urlStr = navigationAction.request.URL.absoluteString;
     NSString *host = navigationAction.request.URL.host;
-//    if ([ZXAccessBlackHostList containsObject: host]) {
-//        [self showAlertWithTitle:@"访问禁止" message:@"很抱歉，因网站方的要求，IPA提取器已禁止您的操作！"];
-//        decisionHandler(WKNavigationActionPolicyCancel);
-//        return;
-//    }
+    if ([ZXAccessBlackHostList containsObject: host]) {
+        [self showAlertWithTitle:@"访问禁止" message:@"很抱歉，因网站方的要求，IPA提取器已禁止您的操作！"];
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
+    }
     
     if([urlStr matchesAnyRegexInArr:self.mobileprovisionRegulaArr]){
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件以获取UDID，IPA提取器将尝试解析并跳转至描述文件安装后的回调地址，您也可以在Safari中继续操作。请选择您的操作以继续" preferredStyle:UIAlertControllerStyleAlert];
