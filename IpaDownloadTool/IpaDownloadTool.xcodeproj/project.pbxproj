@@ -1122,7 +1122,7 @@
 				DEVELOPMENT_TEAM = X3UA5897T2;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/IpaDownloadTool/PrefixHeader.pch";
 				INFOPLIST_FILE = IpaDownloadTool/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1144,7 +1144,7 @@
 				DEVELOPMENT_TEAM = X3UA5897T2;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/IpaDownloadTool/PrefixHeader.pch";
 				INFOPLIST_FILE = IpaDownloadTool/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

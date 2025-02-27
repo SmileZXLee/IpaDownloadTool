@@ -6,13 +6,12 @@
 //  Copyright © 2019 李兆祥. All rights reserved.
 //  https://github.com/SmileZXLee/IpaDownloadTool
 
+#import <WebKit/WebKit.h>
 #import "ZXIpaGetVC.h"
 #import "ZXIpaUrlHisModel.h"
 #import "ZXIpaHttpRequest.h"
 #import "ZXIpaModel.h"
 #import "SGQRCodeScanningVC.h"
-#import "NJKWebViewProgress.h"
-#import "NJKWebViewProgressView.h"
 #import "TCMobileProvision.h"
 #import "NSString+ZXMD5.h"
 #import "ZXDeviceInfo.h"
@@ -30,8 +29,8 @@ typedef enum {
     InputUrlFromEdit = 0x01,    // url键入来源于用户编辑
 }InputUrlFrom;
 
-@interface ZXIpaGetVC ()<UIWebViewDelegate,NJKWebViewProgressDelegate,UITextFieldDelegate,NSURLSessionDelegate>
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@interface ZXIpaGetVC ()<WKNavigationDelegate, WKUIDelegate, UITextFieldDelegate, NSURLSessionDelegate>
+@property (weak, nonatomic) IBOutlet WKWebView *webView;
 @property (weak, nonatomic) IBOutlet UIButton *webBackBtn;
 @property (weak, nonatomic) IBOutlet UIButton *webNextBtn;
 @property (weak, nonatomic) IBOutlet UIButton *webReloadBtn;
@@ -39,10 +38,7 @@ typedef enum {
 
 @property (weak, nonatomic) IBOutlet UITextField *webTitleTf;
 
-
-
-@property (strong, nonatomic)NJKWebViewProgressView *progressView;
-@property (strong, nonatomic)NJKWebViewProgress *progressProxy;
+@property (weak, nonatomic)CALayer *progressLayer;
 @property (copy, nonatomic)NSString *urlStr;
 @property (copy, nonatomic)NSString *currentUrlStr;
 @property (assign, nonatomic)BOOL urlStartHandled;
@@ -77,11 +73,10 @@ typedef enum {
 
 -(void)viewWillLayoutSubviews{
     [super viewWillLayoutSubviews];
-    if(self.progressView){
-        CGRect barFrame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 2);
-        self.progressView.frame = barFrame;
-        self.progressView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
-    }
+}
+
+- (void)dealloc{
+    [(WKWebView *)self.view removeObserver:self forKeyPath:@"estimatedProgress"];
 }
 
 #pragma mark - 初始化视图
@@ -115,16 +110,14 @@ typedef enum {
     UIBarButtonItem *inputItem = [[UIBarButtonItem alloc]initWithCustomView:inputBtn];
     UIBarButtonItem *qrcodeItem = [[UIBarButtonItem alloc]initWithTitle:@"二维码" style:UIBarButtonItemStyleDone target:self action:@selector(qrcodeItemAction)];
     self.navigationItem.rightBarButtonItems = @[inputItem,qrcodeItem];
-    self.webView.delegate = self;
+    
+    self.webView.navigationDelegate = self;
+    self.webView.UIDelegate = self;
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.opaque = NO;
-    self.webView.scalesPageToFit = YES;
-    UIScreenEdgePanGestureRecognizer *panGes = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(goBackAction:)];
-    panGes.edges = UIRectEdgeLeft;
-    [self.view addGestureRecognizer:panGes];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self initWebViewProgressView];
-    });
+    self.webView.customUserAgent = ZXWebUA;
+    [self.webView setAllowsBackForwardNavigationGestures:true];
+    [self initWebViewProgressView];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(pasteboardStrLoadUrl:) name:ZXPasteboardStrLoadUrlNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateMobileprovisionRegulaArr) name:ZXMobileprovisionRegularUpdateNotification object:nil];
@@ -149,16 +142,16 @@ typedef enum {
 }
 
 - (void)initWebViewProgressView{
-    self.progressProxy = [[NJKWebViewProgress alloc] init];
-    self.webView.delegate = _progressProxy;
-    self.progressProxy.webViewProxyDelegate = self;
-    self.progressProxy.progressDelegate = self;
-    CGRect barFrame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 2);
-    self.progressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
-    self.progressView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
-    self.progressView.progressBarView.backgroundColor = MainColor;
-    [self.view addSubview:self.progressView];
-    self.progressView.alpha = 0;
+    UIView *progress = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 2)];
+    progress.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:progress];
+
+    CALayer *layer = [CALayer layer];
+    layer.frame = CGRectMake(0, 0, 0, 2);
+    layer.backgroundColor = [MainColor CGColor];
+    [progress.layer addSublayer:layer];
+    self.progressLayer = layer;
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 #pragma mark - Actions
@@ -169,15 +162,19 @@ typedef enum {
 
 #pragma mark 点击了网页后退
 - (IBAction)webBackAction:(id)sender {
-    if(self.webView.canGoBack){
+    if (self.webView.canGoBack) {
         [self.webView goBack];
+    } else {
+        self.webBackBtn.enabled = NO;
     }
 }
 
 #pragma mark 点击了网页前进
 - (IBAction)webNextAction:(id)sender {
-    if(self.webView.canGoForward){
+    if (self.webView.canGoForward) {
         [self.webView goForward];
+    } else {
+        self.webNextBtn.enabled = NO;
     }
 }
 
@@ -232,24 +229,41 @@ typedef enum {
     [self handleInputUrlFrom:self.currentUrlStr && self.currentUrlStr.length ? InputUrlFromEdit : InputUrlFromInput];
 }
 
-#pragma mark 从左往右侧滑操作
-- (void)goBackAction:(UIScreenEdgePanGestureRecognizer *)panGes{
-    
+#pragma mark 监听wkWebview加载进度
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+    if ([keyPath isEqualToString:@"estimatedProgress"]) {
+        self.progressLayer.opacity = 1;
+        if ([change[@"new"] floatValue] < [change[@"old"] floatValue]) {
+            return;
+        }
+        self.progressLayer.frame = CGRectMake(0, 0, self.view.bounds.size.width * [change[@"new"] floatValue], self.progressLayer.frame.size.height);
+        if ([change[@"new"] floatValue] == 1) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                self.progressLayer.opacity = 0;
+            });
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                self.progressLayer.frame = CGRectMake(0, 0, 0, self.progressLayer.frame.size.height);
+            });
+        }
+    }else{
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
-#pragma mark - UIWebViewDelegate
+
+#pragma mark - WKNavigationDelegate
 #pragma mark 网页将要开始加载
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     self.title = @"加载中...";
     if(!self.webTitleTf.text.length){
         self.webTitleTf.placeholder = @"loading...";
     }
-    self.progressView.alpha = 1;
-    NSString *urlStr = request.URL.absoluteString;
-    NSString *host = request.URL.host;
-    if ([ZXAccessBlackHostList containsObject: host]) {
-        [self showAlertWithTitle:@"访问禁止" message:@"很抱歉，因网站方的要求，IPA提取器已禁止您的操作！"];
-        return false;
-    }
+    NSString *urlStr = navigationAction.request.URL.absoluteString;
+    NSString *host = navigationAction.request.URL.host;
+//    if ([ZXAccessBlackHostList containsObject: host]) {
+//        [self showAlertWithTitle:@"访问禁止" message:@"很抱歉，因网站方的要求，IPA提取器已禁止您的操作！"];
+//        decisionHandler(WKNavigationActionPolicyCancel);
+//        return;
+//    }
     
     if([urlStr matchesAnyRegexInArr:self.mobileprovisionRegulaArr]){
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"此网页想要安装一个描述文件以获取UDID，IPA提取器将尝试解析并跳转至描述文件安装后的回调地址，您也可以在Safari中继续操作。请选择您的操作以继续" preferredStyle:UIAlertControllerStyleAlert];
@@ -325,7 +339,8 @@ typedef enum {
         [alertController addThemeAction:toSafariAction];
         [alertController addThemeAction:cancelAction];
         [self presentViewController:alertController animated:YES completion:nil];
-        return NO;
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
     }
     if([[urlStr pathExtension] isEqualToString:@"ipa"] || [urlStr containsString:@".ipa&"]){
         if (!(self.self.ignoredIpaDownloadUrl && [self.ignoredIpaDownloadUrl isEqualToString:urlStr])){
@@ -354,7 +369,8 @@ typedef enum {
             [alertController addThemeAction:loadAction];
             [self presentViewController:alertController animated:YES completion:nil];
             self.title = MainTitle;
-            return NO;
+            decisionHandler(WKNavigationActionPolicyCancel);
+            return;
         }else{
             self.ignoredIpaDownloadUrl = NULL;
         }
@@ -363,7 +379,7 @@ typedef enum {
     if([urlStr hasPrefix:@"itms-services://"] || [urlStr containsString:@"itemService="]){
         urlStr = [urlStr getPlistPathUrlStr];
         NSMutableURLRequest *newPlistReq;
-        newPlistReq = [request mutableCopy];
+        newPlistReq = [navigationAction.request mutableCopy];
         newPlistReq.URL = [NSURL URLWithString:urlStr];
         [ZXIpaHttpRequest downLoadWithUrlStr:urlStr path:ZXPlistCachePath callBack:^(BOOL result, id  _Nonnull data) {
             if(result){
@@ -390,71 +406,76 @@ typedef enum {
             }
         }];
         if(![urlStr containsString:@"itemService="]){
-            return NO;
+            decisionHandler(WKNavigationActionPolicyCancel);
+            return;
         }
     }
-    return YES;
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
+
 #pragma mark 网页已经开始加载
--(void)webViewDidStartLoad:(UIWebView *)webView{
-    
+-(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
     
 }
+
 #pragma mark 网页加载完成
--(void)webViewDidFinishLoad:(UIWebView *)webView{
+-(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
     self.title = MainTitle;
     self.webBackBtn.enabled = self.webView.canGoBack;
     self.webNextBtn.enabled = self.webView.canGoForward;
     
-    NSString *jsGetFavicon = @"var getFavicon=function(){var favicon=undefined;var nodeList=document.getElementsByTagName('link');for(var i=0;i<nodeList.length;i++){if((nodeList[i].getAttribute('rel')=='icon')||(nodeList[i].getAttribute('rel')=='shortcut icon')){favicon=nodeList[i].getAttribute('href')}}return favicon};getFavicon();";
-    NSString *title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    NSString *urlStr = [webView stringByEvaluatingJavaScriptFromString:@"document.URL"];
-    NSURL *url = [NSURL URLWithString:urlStr];
-    self.currentUrlStr = urlStr;
-    self.webTitleTf.text = url ? url.host : @"未知域名";
+    [webView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
+        self.webTitleTf.text = title;
+    }];
+    
+    [webView evaluateJavaScript:@"document.URL" completionHandler:^(id _Nullable urlStr, NSError * _Nullable error) {
+        self.currentUrlStr = urlStr;
+    }];
+    
     self.webReloadBtn.enabled = YES;
     if(self.urlStartHandled){
-        NSString *protocol = [webView stringByEvaluatingJavaScriptFromString:@"location.protocol"];
-        NSString *host = [NSString stringWithFormat:@"%@//%@",protocol,[webView stringByEvaluatingJavaScriptFromString:@"location.host"]];
-        NSString *favicon = [webView stringByEvaluatingJavaScriptFromString:jsGetFavicon];
-        if(favicon.length > 0 && ![favicon hasPrefix:@"http"]){
-            favicon = [host stringByAppendingString:favicon];
-        }
-        if(!favicon.length){
-            favicon = [NSString stringWithFormat:@"%@/favicon.ico",host];
-        }
-        ZXIpaUrlHisModel *urlHisModel = [[ZXIpaUrlHisModel alloc]init];
-        urlHisModel.hostStr = host;
-        urlHisModel.urlStr = urlStr;
-        urlHisModel.title = title;
-        urlHisModel.favicon = favicon;
-        NSArray *sameArr = [ZXIpaUrlHisModel zx_dbQuaryWhere:[NSString stringWithFormat:@"urlStr='%@'",urlHisModel.urlStr]];
-        if(sameArr.count){
-            [ZXIpaUrlHisModel zx_dbDropWhere:[NSString stringWithFormat:@"urlStr='%@'",urlHisModel.urlStr]];
-            NSString *oldUrlStr = ((ZXIpaUrlHisModel *)sameArr[0]).urlStr;
-            if(oldUrlStr && oldUrlStr.length){
-                urlHisModel.title = ((ZXIpaUrlHisModel *)sameArr[0]).title;
-            }
-        }
-        [urlHisModel zx_dbSave];
+        [webView evaluateJavaScript:@"location.protocol" completionHandler:^(id _Nullable protocol, NSError * _Nullable error) {
+            [webView evaluateJavaScript:@"location.host" completionHandler:^(id _Nullable host, NSError * _Nullable error) {
+                NSString *hostStr = [NSString stringWithFormat:@"%@//%@", protocol, host];
+                [webView evaluateJavaScript:@"var getFavicon=function(){var favicon=undefined;var nodeList=document.getElementsByTagName('link');for(var i=0;i<nodeList.length;i++){if((nodeList[i].getAttribute('rel')=='icon')||(nodeList[i].getAttribute('rel')=='shortcut icon')){favicon=nodeList[i].getAttribute('href')}}return favicon};getFavicon();" completionHandler:^(id _Nullable favicon, NSError * _Nullable error) {
+                    if(favicon && ![favicon hasPrefix:@"http"]){
+                        favicon = [hostStr stringByAppendingString:favicon];
+                    }
+                    if(!favicon){
+                        favicon = [NSString stringWithFormat:@"%@/favicon.ico", hostStr];
+                    }
+                    ZXIpaUrlHisModel *urlHisModel = [[ZXIpaUrlHisModel alloc]init];
+                    urlHisModel.hostStr = hostStr;
+                    urlHisModel.urlStr = self.currentUrlStr;
+                    urlHisModel.title = self.webTitleTf.text;
+                    urlHisModel.favicon = favicon;
+                    NSArray *sameArr = [ZXIpaUrlHisModel zx_dbQuaryWhere:[NSString stringWithFormat:@"urlStr='%@'",urlHisModel.urlStr]];
+                    if(sameArr.count){
+                        [ZXIpaUrlHisModel zx_dbDropWhere:[NSString stringWithFormat:@"urlStr='%@'",urlHisModel.urlStr]];
+                        NSString *oldUrlStr = ((ZXIpaUrlHisModel *)sameArr[0]).urlStr;
+                        if(oldUrlStr && oldUrlStr.length){
+                            urlHisModel.title = ((ZXIpaUrlHisModel *)sameArr[0]).title;
+                        }
+                    }
+                    [urlHisModel zx_dbSave];
+                }];
+            }];
+        }];
     }
     self.urlStartHandled = NO;
-   
 }
+
 #pragma mark 网页加载失败
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+-(void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+    self.webBackBtn.enabled = self.webView.canGoBack;
+    self.webNextBtn.enabled = self.webView.canGoForward;
+    
     NSString *errInfo = error.localizedDescription;
     if(!errInfo)return;
     if(![errInfo isEqualToString:@"Frame load interrupted"]){
         self.title = @"加载失败";
-        self.progressView.alpha = 0;
         [ALToastView showToastWithText:errInfo];
     }
-}
-
-#pragma mark - NJKWebViewProgressDelegate
--(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress{
-    [self.progressView setProgress:progress animated:YES];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -523,7 +544,6 @@ typedef enum {
     NSURL *url = [NSURL URLWithString:(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)urlStr, (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]", NULL,kCFStringEncodingUTF8))];
     if(!url){
         self.title = @"URL无效";
-        self.progressView.alpha = 0;
         return;
     }
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
@@ -567,8 +587,6 @@ typedef enum {
         }else{
             textField.text = self.currentUrlStr;
         }
-        
-        
     }];
     [self presentViewController:alertController animated:YES completion:nil];
 }

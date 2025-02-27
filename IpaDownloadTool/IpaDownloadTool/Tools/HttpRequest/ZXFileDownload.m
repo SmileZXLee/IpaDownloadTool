@@ -85,7 +85,7 @@
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location{
-  self._result(YES,self.totalBytesWritten,self.totalBytesExpectedToWrite,location.absoluteString);
+    self._result(YES,self.totalBytesWritten,self.totalBytesExpectedToWrite,location.absoluteString);
     [session invalidateAndCancel];
 }
 

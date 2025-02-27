@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
                 <outlet property="webNextBtn" destination="vte-F8-aWq" id="s7c-p3-Epl"/>
                 <outlet property="webReloadBtn" destination="DSz-u9-30w" id="4Xm-Rv-1qx"/>
                 <outlet property="webTitleTf" destination="8o8-bO-A6w" id="hrh-zL-i32"/>
-                <outlet property="webView" destination="vxn-7K-wp1" id="Hkr-7v-8R0"/>
+                <outlet property="webView" destination="R2p-us-vjJ" id="EK6-S4-xI8"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -24,10 +24,6 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vxn-7K-wp1">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
-                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                </webView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4V2-ei-UyB">
                     <rect key="frame" x="0.0" y="812" width="414" height="50"/>
                     <subviews>
@@ -111,17 +107,29 @@
                         <constraint firstItem="8o8-bO-A6w" firstAttribute="leading" secondItem="vte-F8-aWq" secondAttribute="trailing" constant="10" id="xmq-d4-x8h"/>
                     </constraints>
                 </view>
+                <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R2p-us-vjJ">
+                    <rect key="frame" x="0.0" y="48" width="414" height="764"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <wkWebViewConfiguration key="configuration">
+                        <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                        <wkPreferences key="preferences"/>
+                    </wkWebViewConfiguration>
+                </wkWebView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="IUG-zQ-Wdc"/>
             <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="4V2-ei-UyB" firstAttribute="leading" secondItem="IUG-zQ-Wdc" secondAttribute="leading" id="0Er-Mr-zsc"/>
+                <constraint firstItem="4V2-ei-UyB" firstAttribute="top" secondItem="R2p-us-vjJ" secondAttribute="bottom" id="4hs-Da-qmi"/>
                 <constraint firstItem="IUG-zQ-Wdc" firstAttribute="bottom" secondItem="4V2-ei-UyB" secondAttribute="bottom" id="8Vk-6g-pfy"/>
-                <constraint firstAttribute="trailing" secondItem="vxn-7K-wp1" secondAttribute="trailing" id="NgL-IX-S9I"/>
-                <constraint firstItem="4V2-ei-UyB" firstAttribute="top" secondItem="vxn-7K-wp1" secondAttribute="bottom" id="UVv-c6-5kM"/>
+                <constraint firstItem="4V2-ei-UyB" firstAttribute="top" secondItem="R2p-us-vjJ" secondAttribute="bottom" id="9uY-qh-kxD"/>
+                <constraint firstItem="R2p-us-vjJ" firstAttribute="top" secondItem="IUG-zQ-Wdc" secondAttribute="top" id="GH8-yn-Wlp"/>
+                <constraint firstItem="R2p-us-vjJ" firstAttribute="top" secondItem="IUG-zQ-Wdc" secondAttribute="top" id="GVJ-i8-VJh"/>
+                <constraint firstItem="IUG-zQ-Wdc" firstAttribute="trailing" secondItem="R2p-us-vjJ" secondAttribute="trailing" id="IxD-bp-XVx"/>
+                <constraint firstItem="R2p-us-vjJ" firstAttribute="leading" secondItem="IUG-zQ-Wdc" secondAttribute="leading" id="Mj2-5a-auE"/>
+                <constraint firstItem="R2p-us-vjJ" firstAttribute="trailing" secondItem="IUG-zQ-Wdc" secondAttribute="trailing" id="a0e-tz-Npb"/>
+                <constraint firstItem="R2p-us-vjJ" firstAttribute="leading" secondItem="IUG-zQ-Wdc" secondAttribute="leading" id="b18-e9-oMl"/>
                 <constraint firstItem="4V2-ei-UyB" firstAttribute="trailing" secondItem="IUG-zQ-Wdc" secondAttribute="trailing" id="n1W-KQ-Cho"/>
-                <constraint firstItem="vxn-7K-wp1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="sIb-go-3Re"/>
-                <constraint firstItem="vxn-7K-wp1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zEt-qi-cTx"/>
             </constraints>
             <point key="canvasLocation" x="47.826086956521742" y="20.758928571428569"/>
         </view>
