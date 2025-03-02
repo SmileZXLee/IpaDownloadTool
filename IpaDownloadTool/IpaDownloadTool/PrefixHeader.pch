@@ -37,6 +37,7 @@
 #define ZXMobileprovisionRegularDefault @[@"*.mobileconfig", @"*.mobileprovision", @"*/tools/udid/get/"]
 #define ZXPasteboardStrLoadUrlNotification @"ZXPasteboardStrLoadUrlNotification"
 #define ZXMobileprovisionRegularUpdateNotification @"ZXMobileprovisionRegularUpdateNotification"
+#define ZXDeveloperModeUpdateNotification @"ZXDeveloperModeUpdateNotification"
 #define ZXMobileprovisionUrlRegularGetPath @"http://www.zxlee.cn/ipaDownloadTool/mobileprovisionUrlRegular.json"
 #define ZXISiPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define ZXUA @"com.apple.appstored/1.0 iOS/14.3 model/iPhone10,2 hwp/t8015 build/18C66 (6; dt:158) AMS/1"

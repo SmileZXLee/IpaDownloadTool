@@ -42,6 +42,7 @@ typedef enum {
 @property (copy, nonatomic)NSString *urlStr;
 @property (copy, nonatomic)NSString *currentUrlStr;
 @property (assign, nonatomic)BOOL urlStartHandled;
+@property (assign, nonatomic)BOOL isDeveloperMode;
 @property (copy, nonatomic)NSString *ignoredIpaDownloadUrl;
 @property (strong, nonatomic)NSArray *mobileprovisionRegulaArr;
 @end
@@ -69,6 +70,7 @@ typedef enum {
         [alertController addThemeAction:rejectAction];
         [self presentViewController:alertController animated:YES completion:nil];
     }
+    self.isDeveloperMode = [[NSUserDefaults standardUserDefaults]objectForKey:@"developerMode"] != nil;
 }
 
 -(void)viewWillLayoutSubviews{
@@ -121,6 +123,7 @@ typedef enum {
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(pasteboardStrLoadUrl:) name:ZXPasteboardStrLoadUrlNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateMobileprovisionRegulaArr) name:ZXMobileprovisionRegularUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateDeveloperMode) name:ZXDeveloperModeUpdateNotification object:nil];
     
     if (@available(iOS 15.0, *)) {
        UINavigationBarAppearance *appperance = [[UINavigationBarAppearance alloc]init];
@@ -243,6 +246,7 @@ typedef enum {
             });
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 self.progressLayer.frame = CGRectMake(0, 0, 0, self.progressLayer.frame.size.height);
+                self.title = MainTitle;
             });
         }
     }else{
@@ -259,8 +263,9 @@ typedef enum {
     }
     NSString *urlStr = navigationAction.request.URL.absoluteString;
     NSString *host = navigationAction.request.URL.host;
-    if ([ZXAccessBlackHostList containsObject: host]) {
+    if (!self.isDeveloperMode && [ZXAccessBlackHostList containsObject: host]) {
         [self showAlertWithTitle:@"访问禁止" message:@"很抱歉，因网站方的要求，IPA提取器已禁止您的操作！"];
+        self.title = @"访问禁止";
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
@@ -533,6 +538,15 @@ typedef enum {
             [ZXDataStoreCache saveObj:self.mobileprovisionRegulaArr forKey:ZXMobileprovisionRegularCacheKey];
         }];
         
+    }
+}
+
+- (void)updateDeveloperMode {
+    self.isDeveloperMode = [[NSUserDefaults standardUserDefaults]objectForKey:@"developerMode"] != nil;
+    NSString *cacheUrlStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"cacheUrlStr"];
+    if (cacheUrlStr) {
+        self.currentUrlStr = cacheUrlStr;
+        [self handleUrlLoad:self.currentUrlStr shouldCache:NO];
     }
 }
 
