@@ -8,6 +8,7 @@
 [![Support](https://img.shields.io/badge/support-iOS%209.0%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/SmileZXLee/IpaDownloadTool/blob/master/LICENSE)&nbsp;
 ### Release版本(点击👇🏻下载IPA)
+* [Release-2.2.0(20250302)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.2.0.ipa)
 * [Release-2.1.2(20240903)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.1.2.ipa)
 * [Release-2.1.1(20230809)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.1.1.ipa)
 * [Release-2.1.0(20230408)](http://www.zxlee.cn/ipaDownloadTool/release/ipaDownloadTool-2.1.0.ipa)
@@ -43,6 +44,10 @@
 * [ZXDataHandle](https://github.com/SmileZXLee/ZXDataHandle)
 * [TCMobileProvision](https://github.com/tcurdt/TCMobileProvision)
 ### 更新日志
+#### 2025.03.02(v2.2.0)
+1.【新增】使用`WKWebView`代替`UIWebview`，提升网页加载体验和性能。  
+2.【优化】提升ipa提取兼容性。  
+3.【优化】优化页面细节和逻辑。  
 #### 2024.09.03(v2.1.2)
 1.【新增】支持itms-services://链接的直接解析。 
 #### 2023.08.09(v2.1.1)
