@@ -1,0 +1,3 @@
+"CFBundleDisplayName" = "IPA提取器";
+"NSCameraUsageDescription" = "IPA提取器需要访问相机以扫描二维码。";
+"NSPhotoLibraryUsageDescription" = "IPA提取器需要访问相册以从图片中读取二维码。";

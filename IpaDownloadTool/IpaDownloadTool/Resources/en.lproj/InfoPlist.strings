@@ -1,0 +1,3 @@
+"CFBundleDisplayName" = "IPA Download Tool";
+"NSCameraUsageDescription" = "IPA Download Tool needs camera access to scan QR codes.";
+"NSPhotoLibraryUsageDescription" = "IPA Download Tool needs photo library access to read QR codes from images.";
